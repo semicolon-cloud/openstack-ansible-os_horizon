@@ -51,6 +51,7 @@
     - { state: absent, name: mpm_event }
     - { state: present, name: mpm_worker }
     - { state: present, name: rewrite }
+    - { state: present, name: headers }
   notify: Restart apache2
   tags:
     - horizon-apache-config
