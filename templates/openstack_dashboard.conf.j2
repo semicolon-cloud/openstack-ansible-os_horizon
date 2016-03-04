@@ -29,6 +29,9 @@
     SSLHonorCipherOrder On
     SSLCipherSuite {{ horizon_ssl_cipher_suite }}
     SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+{% else %}
+    RequestHeader set {{ horizon_secure_proxy_ssl_header }} "https"
+{% endif %}
 
     WSGIScriptAlias / {{ horizon_lib_wsgi_file }}
     WSGIDaemonProcess horizon user={{ horizon_system_user_name }} group={{ horizon_system_group_name }} processes={{ horizon_wsgi_processes | default(wsgi_threads) }} threads={{ horizon_wsgi_threads | default(wsgi_threads) }}
