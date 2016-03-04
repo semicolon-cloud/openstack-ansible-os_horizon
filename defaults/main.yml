@@ -98,7 +98,8 @@ horizon_ssl_self_signed_subject: "/C=US/ST=Texas/L=San Antonio/O=IT/CN={{ horizo
 
 # Set this to True if you do ssl termination on an external device, like the
 # load balancer
-horizon_ssl_external: true
+horizon_external_ssl: false
+
 # Set this to the header that your device sets when doing ssl termination
 horizon_secure_proxy_ssl_header: "X-Forwarded-Proto"
 horizon_secure_proxy_ssl_header_django: "HTTP_{{ horizon_secure_proxy_ssl_header | replace('-', '_') | upper }}"
