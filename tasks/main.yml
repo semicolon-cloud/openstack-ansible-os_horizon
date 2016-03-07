@@ -22,11 +22,12 @@
     inventory_hostname == groups['horizon_all'][0]
 
 - include: horizon_ssl_self_signed.yml
-  when: >
-    horizon_user_ssl_cert is not defined or
-    horizon_user_ssl_key is not defined
+  when:
+    - not horizon_external_ssl|bool
+    - horizon_user_ssl_cert is not defined or horizon_user_ssl_key is not defined
 
 - include: horizon_ssl_user_provided.yml
+  when: not horizon_external_ssl|bool
 
 - include: horizon_service_setup.yml
 
