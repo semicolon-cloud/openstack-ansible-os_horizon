@@ -53,7 +53,8 @@
   with_items:
     - { path: "/openstack/venvs" }
     - { path: "{{ horizon_venv_bin }}" }
-  when: horizon_venv_enabled | bool
+  when:
+    - horizon_venv_enabled | bool
   tags:
     - horizon-dirs
 
@@ -75,7 +76,9 @@
   stat:
     path: "/var/cache/{{ horizon_venv_download_url | basename }}"
     get_md5: False
-  when: horizon_venv_enabled | bool
+  when:
+    - not horizon_developer_mode | bool
+    - horizon_venv_enabled | bool
   register: local_venv_stat
   tags:
     - horizon-install
@@ -85,7 +88,9 @@
   uri:
     url: "{{ horizon_venv_download_url | replace('tgz', 'checksum') }}"
     return_content: True
-  when: horizon_venv_enabled | bool
+  when:
+    - not horizon_developer_mode | bool
+    - horizon_venv_enabled | bool
   register: remote_venv_checksum
   tags:
     - horizon-install
@@ -104,6 +109,7 @@
   ignore_errors: true
   register: get_venv
   when:
+    - not horizon_developer_mode | bool
     - horizon_venv_enabled | bool
     - (local_venv_stat.stat.exists == False or
         {{ local_venv_stat.stat.checksum is defined and local_venv_stat.stat.checksum != remote_venv_checksum.content | trim }})
@@ -135,6 +141,7 @@
     path: "{{ horizon_venv_bin | dirname }}"
     state: directory
   when:
+    - not horizon_developer_mode | bool
     - horizon_venv_enabled | bool
     - horizon_get_venv | changed
   tags:
@@ -147,6 +154,7 @@
     dest: "{{ horizon_venv_bin | dirname }}"
     copy: "no"
   when:
+    - not horizon_developer_mode | bool
     - horizon_venv_enabled | bool
     - horizon_get_venv | changed
   notify: Restart apache2
@@ -158,6 +166,7 @@
   command: >
     virtualenv-tools --update-path=auto {{ horizon_venv_bin | dirname }}
   when:
+    - not horizon_developer_mode | bool
     - horizon_venv_enabled | bool
     - horizon_get_venv | success
   tags:
@@ -175,7 +184,7 @@
     - "{{ horizon_requires_pip_packages }}"
   when:
     - horizon_venv_enabled | bool
-    - horizon_get_venv | failed
+    - horizon_get_venv | failed or horizon_developer_mode | bool
   tags:
     - horizon-install
     - horizon-pip-packages
@@ -190,7 +199,8 @@
   with_items:
     - src: "{{ horizon_lib_dir | dirname }}/site-packages"
       dest: "{{ horizon_lib_dir }}"
-  when: horizon_venv_enabled | bool
+  when:
+    - horizon_venv_enabled | bool
   tags:
     - horizon-install
     - horizon-configs

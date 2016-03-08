@@ -30,6 +30,28 @@
   tags:
     - horizon-apt-packages
 
+- name: Create developer mode constraint file
+  copy:
+    dest: "/opt/developer-pip-constraints.txt"
+    content: |
+      {% for item in horizon_developer_constraints %}
+      {{ item }}
+      {% endfor %}
+  when:
+    - horizon_developer_mode | bool
+  tags:
+    - horizon-install
+    - horizon-pip-packages
+
+- name: Set constraint file fact for developer mode
+  set_fact:
+    pip_install_options: "{{ pip_install_options|default('') }} --constraint /opt/developer-pip-constraints.txt"
+  when:
+    - horizon_developer_mode | bool
+  tags:
+    - horizon-install
+    - horizon-pip-packages
+
 - name: Install apt packages
   apt:
     pkg: "{{ item }}"
@@ -57,7 +79,7 @@
   with_items: horizon_pip_packages
   when:
     - horizon_venv_enabled | bool
-    - horizon_get_venv | failed
+    - horizon_get_venv | failed or horizon_developer_mode | bool
   notify: Restart apache2
   tags:
     - horizon-pip-packages
@@ -72,7 +94,9 @@
   retries: 5
   delay: 2
   with_items: horizon_pip_packages
-  when: not horizon_venv_enabled | bool
+  when:
+    - not horizon_developer_mode | bool
+    - not horizon_venv_enabled | bool
   notify: Restart apache2
   tags:
     - horizon-pip-packages
