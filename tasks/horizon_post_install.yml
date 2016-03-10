@@ -92,3 +92,26 @@
   tags:
     - horizon-configs
     - horizon-wsgi-venv
+
+- name: Create customization module directory
+  file:
+    path: "{{ horizon_lib_dir }}/horizon_customization"
+    state: directory
+    owner: "{{ horizon_system_user_name }}"
+    group: "{{ horizon_system_group_name }}"
+    mode: "0755"
+  when: horizon_customization_module is defined
+  tags:
+    - horizon-configs
+
+- name: Drop horizon customization module
+  template:
+    src: "{{ horizon_customization_module }}"
+    dest: "{{ horizon_lib_dir }}/horizon_customization/__init__.py"
+    owner: "{{ horizon_system_user_name }}"
+    group: "{{ horizon_system_group_name }}"
+    mode: "0644"
+  notify: Restart apache2
+  when: horizon_customization_module is defined
+  tags:
+    - horizon-configs

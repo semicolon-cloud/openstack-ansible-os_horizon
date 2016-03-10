@@ -142,6 +142,10 @@ horizon_swift_file_transfer_chunk_size: 524288
 ## Panel
 horizon_default_panel: overview
 
+## Customization module
+## See http://docs.openstack.org/developer/horizon/topics/customizing.html#horizon-customization-module-overrides
+# horizon_customization_module: /local/path/to/customization_module.py
+
 horizon_webroot: /
 
 horizon_listen_ports:
