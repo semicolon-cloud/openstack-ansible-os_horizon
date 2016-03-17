@@ -17,6 +17,12 @@
 debug: False
 verbose: True
 
+horizon_git_repo: https://git.openstack.org/openstack/horizon
+horizon_git_install_branch: master
+horizon_developer_mode: false
+horizon_developer_constraints:
+  - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
+
 ## APT Cache options
 cache_timeout: 600
 
@@ -155,10 +161,12 @@ horizon_listen_ports:
 horizon_apt_packages:
   - apache2
   - apache2-utils
+  - cron # required by the Ansible cron module
   - libapache2-mod-wsgi
   - libssl-dev
   - libxslt1.1
   - openssl
+  - python-mysqldb # required by the Ansible mysql_db module
 
 # horizon packages that must be installed before anything else
 horizon_requires_pip_packages:
