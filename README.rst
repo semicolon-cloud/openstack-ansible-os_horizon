@@ -52,8 +52,9 @@ Example Playbook
         rabbitmq_servers: 10.100.100.101
         rabbitmq_use_ssl: false
         rabbitmq_port: 5671
-        keystone_auth_admin_token: "SuperSecreteTestToken"
+        keystone_admin_user_name: admin
         keystone_auth_admin_password: "SuperSecretePassword"
+        keystone_admin_tenant_name: admin
         keystone_service_adminuri_insecure: false
         keystone_service_internaluri_insecure: false
         keystone_service_internaluri: "http://{{ internal_lb_vip_address }}:5000"

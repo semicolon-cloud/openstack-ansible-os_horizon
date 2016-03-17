@@ -18,14 +18,18 @@
 - name: Ensure default keystone user role
   keystone:
     command: "ensure_role"
-    token: "{{ keystone_auth_admin_token }}"
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     role_name: "{{ horizon_default_role_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
-  when: >
-    keystone_auth_admin_token is defined
-    and keystone_service_adminurl is defined
-    and keystone_service_adminuri_insecure is defined
+  when:
+    - keystone_admin_user_name is defined
+    - keystone_auth_admin_password is defined
+    - keystone_admin_tenant_name is defined
+    - keystone_service_adminurl is defined
+    - keystone_service_adminuri_insecure is defined
   register: add_member_role
   until: add_member_role|success
   retries: 5
