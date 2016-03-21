@@ -93,6 +93,7 @@
     keystone_venv_tag: "testing"
     keystone_developer_mode: true
     keystone_git_install_branch: a55128044f763f5cfe2fdc57c738eaca97636448
+    keystone_requirements_git_install_branch: 332278d456e06870150835564342570ec9d5f5a0
     keystone_auth_admin_token: "SuperSecreteTestToken"
     keystone_auth_admin_password: "SuperSecretePassword"
     keystone_service_password: "secrete"
@@ -116,6 +117,8 @@
     internal_lb_vip_address: 10.100.100.102
     horizon_developer_mode: true
     horizon_venv_tag: "testing"
+    horizon_git_install_branch: 18f1605bddd428a014d0e43ef52d1af6305e1e03
+    horizon_requirements_git_install_branch: 332278d456e06870150835564342570ec9d5f5a0
     horizon_galera_address: 10.100.100.101
     horizon_rabbitmq_password: "secrete"
     horizon_rabbitmq_userid: horizon
