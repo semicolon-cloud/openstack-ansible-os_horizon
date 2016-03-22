@@ -43,11 +43,33 @@
     - horizon-install
     - horizon-pip-packages
 
-- name: Set constraint file fact for developer mode
-  set_fact:
-    pip_install_options: "{{ pip_install_options|default('') }} --constraint /opt/developer-pip-constraints.txt"
+- name: Clone requirements git repository
+  git:
+    repo: "{{ horizon_requirements_git_repo }}"
+    dest: "/opt/requirements"
+    clone: yes
+    update: yes
+    version: "{{ horizon_requirements_git_install_branch }}"
   when:
     - horizon_developer_mode | bool
+  tags:
+    - horizon-install
+    - horizon-pip-packages
+
+- name: Add constraints to pip_install_options fact for developer mode
+  set_fact:
+    pip_install_options_fact: "{{ pip_install_options|default('') }} --constraint /opt/developer-pip-constraints.txt --constraint /opt/requirements/upper-constraints.txt"
+  when:
+    - horizon_developer_mode | bool
+  tags:
+    - horizon-install
+    - horizon-pip-packages
+
+- name: Set pip_install_options_fact when not in developer mode
+  set_fact:
+    pip_install_options_fact: "{{ pip_install_options|default('') }}"
+  when:
+    - not horizon_developer_mode | bool
   tags:
     - horizon-install
     - horizon-pip-packages
@@ -69,7 +91,7 @@
   pip:
     name: "{{ item }}"
     state: present
-    extra_args: "{{ pip_install_options|default('') }}"
+    extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
   until: install_packages|success
   retries: 5
@@ -186,7 +208,7 @@
     state: present
     virtualenv: "{{ horizon_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options|default('') }}"
+    extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
   until: install_packages|success
   retries: 5
@@ -203,7 +225,7 @@
   pip:
     name: "{{ item }}"
     state: present
-    extra_args: "{{ pip_install_options|default('') }}"
+    extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
   until: install_packages|success
   retries: 5
