@@ -92,8 +92,8 @@
     keystone_galera_database: keystone
     keystone_venv_tag: "testing"
     keystone_developer_mode: true
-    keystone_git_install_branch: stable/mitaka
-    keystone_requirements_git_install_branch: stable/mitaka
+    keystone_git_install_branch: master
+    keystone_requirements_git_install_branch: master
     keystone_auth_admin_token: "SuperSecreteTestToken"
     keystone_auth_admin_password: "SuperSecretePassword"
     keystone_service_password: "secrete"
@@ -117,8 +117,8 @@
     internal_lb_vip_address: 10.100.100.102
     horizon_developer_mode: true
     horizon_venv_tag: "testing"
-    horizon_git_install_branch: stable/mitaka
-    horizon_requirements_git_install_branch: stable/mitaka
+    horizon_git_install_branch: master
+    horizon_requirements_git_install_branch: master
     horizon_galera_address: 10.100.100.101
     horizon_rabbitmq_password: "secrete"
     horizon_rabbitmq_userid: horizon
