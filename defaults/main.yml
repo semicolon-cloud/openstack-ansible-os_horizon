@@ -89,6 +89,9 @@ horizon_enable_cinder_backup: False
 # Enables IPv6 support in Horizon, such as managing network subnets
 horizon_enable_ipv6: True
 
+# To enable ha router support in horizon set to True
+horizon_enable_ha_router: False
+
 # WSGI tuning parameters
 # horizon_wsgi_processes: 4
 # horizon_wsgi_threads: 4
