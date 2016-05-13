@@ -1,5 +1,26 @@
 [all]
 localhost ansible_connection=local ansible_become=True
+infra1 ansible_host=10.100.100.2 ansible_become=True ansible_user=root
+keystone1 ansible_host=10.100.100.3 ansible_become=True ansible_user=root
+horizon1 ansible_host=10.100.100.4 ansible_become=True ansible_user=root
 
-[hosts]
-localhost ansible_ssh_host=127.0.0.1
+[all_containers]
+infra1
+keystone1
+horizon1
+
+[rabbitmq_all]
+infra1
+
+[galera_all]
+infra1
+
+[service_all:children]
+rabbitmq_all
+galera_all
+
+[keystone_all]
+keystone1
+
+[horizon_all]
+horizon1
