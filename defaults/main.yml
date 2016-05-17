@@ -15,7 +15,6 @@
 
 ## Verbosity Options
 debug: False
-verbose: True
 
 horizon_git_repo: https://git.openstack.org/openstack/horizon
 horizon_git_install_branch: master
