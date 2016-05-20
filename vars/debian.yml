@@ -13,31 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-galaxy_info:
-  author: rcbops
-  description: Installation and setup of horizon
-  company: Rackspace
-  license: Apache2
-  min_ansible_version: 1.9
-  platforms:
-    - name: Ubuntu
-      versions:
-        - trusty
-  categories:
-    - cloud
-    - python
-    - horizon
-    - development
-    - openstack
-dependencies:
-  - role: pip_lock_down
-    when:
-      - not horizon_developer_mode | bool
-  - role: pip_install
-    when:
-      - horizon_developer_mode | bool
-  - role: apt_package_pinning
-    when:
-      - ansible_pkg_mgr == 'apt'
-  - galera_client
-  - openstack_openrc
+## APT Cache options
+cache_timeout: 600
+
+horizon_apt_packages:
+  - apache2
+  - apache2-utils
+  - cron # required by the Ansible cron module
+  - libapache2-mod-wsgi
+  - libssl-dev
+  - libxslt1.1
+  - openssl
+  - python-mysqldb # required by the Ansible mysql_db module

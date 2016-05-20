@@ -24,9 +24,6 @@ horizon_requirements_git_install_branch: master
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
 
-## APT Cache options
-cache_timeout: 600
-
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
 horizon_venv_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
@@ -166,16 +163,6 @@ horizon_webroot: /
 horizon_listen_ports:
   - "80"
   - "443"
-
-horizon_apt_packages:
-  - apache2
-  - apache2-utils
-  - cron # required by the Ansible cron module
-  - libapache2-mod-wsgi
-  - libssl-dev
-  - libxslt1.1
-  - openssl
-  - python-mysqldb # required by the Ansible mysql_db module
 
 # horizon packages that must be installed before anything else
 horizon_requires_pip_packages:
