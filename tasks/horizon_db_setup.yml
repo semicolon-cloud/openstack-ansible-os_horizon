@@ -13,32 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Create DB for service
-  mysql_db:
-    login_user: "{{ galera_root_user }}"
-    login_password: "{{ galera_root_password }}"
-    login_host: "{{ horizon_galera_address }}"
-    name: "{{ horizon_galera_database }}"
-    state: "present"
-  tags:
-    - horizon-db-setup
-
-- name: Grant access to the DB for the service
-  mysql_user:
-    login_user: "{{ galera_root_user }}"
-    login_password: "{{ galera_root_password }}"
-    login_host: "{{ horizon_galera_address }}"
-    name: "{{ horizon_galera_user }}"
-    password: "{{ horizon_container_mysql_password }}"
-    host: "{{ item }}"
-    state: "present"
-    priv: "{{ horizon_galera_database }}.*:ALL"
-  with_items:
-    - "localhost"
-    - "%"
-  tags:
-    - horizon-db-setup
-
 - name: Perform a horizon DB sync
   command: "{{ horizon_bin }}/horizon-manage.py syncdb --noinput"
   become: yes
