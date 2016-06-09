@@ -80,3 +80,7 @@ tempest_service_available_horizon: True
 tempest_service_available_neutron: False
 tempest_service_available_nova: False
 tempest_service_available_swift: False
+tempest_plugins:
+  - name: tempest-horizon
+    repo: https://git.openstack.org/openstack/tempest-horizon
+    branch: master
