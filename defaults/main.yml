@@ -134,6 +134,9 @@ horizon_default_role_name: _member_
 horizon_launch_instance_legacy: False
 horizon_launch_instance_ng: True
 
+## Ironic UI Panel
+horizon_enable_ironic_ui: False
+
 ## Neutron features to enable
 horizon_enable_neutron_lbaas: False
 horizon_enable_neutron_fwaas: False
@@ -210,6 +213,7 @@ horizon_pip_packages:
   - django-openstack-auth
   - greenlet
   - horizon
+  - ironic-ui
   - keystonemiddleware
   - MySQL-python
   - PyMySQL
