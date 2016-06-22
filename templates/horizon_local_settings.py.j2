@@ -268,6 +268,7 @@ OPENSTACK_NEUTRON_NETWORK = {
     'enable_quotas': True,
     'enable_ipv6': {{ horizon_enable_ipv6 | bool }},
     'enable_distributed_router': False,
+    'enable_lb': {{ horizon_enable_neutron_lbaas | bool }},
     'enable_ha_router': {{ horizon_enable_ha_router | bool }},
     'enable_firewall': {{ horizon_enable_neutron_fwaas | bool }},
     'enable_vpn': {{ horizon_enable_neutron_vpnaas | bool }},
