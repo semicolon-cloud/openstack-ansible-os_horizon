@@ -84,3 +84,5 @@ tempest_plugins:
   - name: tempest-horizon
     repo: https://git.openstack.org/openstack/tempest-horizon
     branch: master
+horizon_config_overrides:
+  X_TEST_OPTION: True
