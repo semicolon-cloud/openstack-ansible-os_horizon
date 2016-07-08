@@ -13,25 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Because there is no specific "horizon" command this method
-#  is looking for the "keystone" command to set the horizon
-#  command path.
-- name: Get horizon command path
-  command: which keystone
-  register: horizon_command_path
-  when:
-    - not horizon_venv_enabled | bool
-  tags:
-    - horizon-command-bin
-
-- name: Set horizon command path
-  set_fact:
-    horizon_bin: "{{ horizon_command_path.stdout | dirname }}"
-  when:
-    - not horizon_venv_enabled | bool
-  tags:
-    - horizon-command-bin
-
 - name: Setup Horizon config(s)
   template:
     src: "{{ item.src }}"
@@ -58,8 +39,8 @@
 
 - name: Enable the neutron-lbaas-dashboard Horizon panel
   file:
-    src: "{{ horizon_venv_lib_dir }}/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py"
-    path: "{{ horizon_venv_lib_dir }}/openstack_dashboard/local/enabled/_1481_project_ng_loadbalancersv2_panel.py"
+    src: "{{ horizon_lib_dir }}/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py"
+    path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1481_project_ng_loadbalancersv2_panel.py"
     state: "{{ (horizon_enable_neutron_lbaas | bool) | ternary('link', 'absent') }}"
   notify: Restart apache2
   tags:

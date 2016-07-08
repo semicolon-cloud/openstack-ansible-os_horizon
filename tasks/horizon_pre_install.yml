@@ -46,18 +46,6 @@
   tags:
     - horizon-dirs
 
-- name: Create horizon venv dir
-  file:
-    path: "{{ item.path }}"
-    state: directory
-  with_items:
-    - { path: "/openstack/venvs" }
-    - { path: "{{ horizon_venv_bin }}" }
-  when:
-    - horizon_venv_enabled | bool
-  tags:
-    - horizon-dirs
-
 - name: Test for log directory or link
   shell: |
     if [ -h "/var/log/horizon"  ]; then
