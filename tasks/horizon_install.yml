@@ -82,7 +82,6 @@
     get_md5: False
   when:
     - not horizon_developer_mode | bool
-    - horizon_venv_enabled | bool
   register: local_venv_stat
   tags:
     - horizon-install
@@ -94,7 +93,6 @@
     return_content: True
   when:
     - not horizon_developer_mode | bool
-    - horizon_venv_enabled | bool
   register: remote_venv_checksum
   tags:
     - horizon-install
@@ -114,7 +112,6 @@
   register: get_venv
   when:
     - not horizon_developer_mode | bool
-    - horizon_venv_enabled | bool
     - (local_venv_stat.stat.exists == False or
         {{ local_venv_stat.stat.checksum is defined and local_venv_stat.stat.checksum != remote_venv_checksum.content | trim }})
   tags:
@@ -124,17 +121,15 @@
 - name: Set horizon get_venv fact
   set_fact:
     horizon_get_venv: "{{ get_venv }}"
-  when: horizon_venv_enabled | bool
   tags:
     - horizon-install
     - horizon-pip-packages
 
 - name: Remove existing venv
   file:
-    path: "{{ horizon_venv_bin | dirname }}"
+    path: "{{ horizon_bin | dirname }}"
     state: absent
   when:
-    - horizon_venv_enabled | bool
     - horizon_get_venv | changed
   tags:
     - horizon-install
@@ -142,11 +137,11 @@
 
 - name: Create horizon venv dir
   file:
-    path: "{{ horizon_venv_bin | dirname }}"
+    path: "{{ horizon_bin | dirname }}"
     state: directory
+  register: horizon_venv_dir
   when:
     - not horizon_developer_mode | bool
-    - horizon_venv_enabled | bool
     - horizon_get_venv | changed
   tags:
     - horizon-install
@@ -155,33 +150,21 @@
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ horizon_venv_download_url | basename }}"
-    dest: "{{ horizon_venv_bin | dirname }}"
+    dest: "{{ horizon_bin | dirname }}"
     copy: "no"
   when:
     - not horizon_developer_mode | bool
-    - horizon_venv_enabled | bool
-    - horizon_get_venv | changed
+    - horizon_get_venv | changed or horizon_venv_dir | changed
   notify: Restart apache2
   tags:
     - horizon-install
     - horizon-pip-packages
 
-- name: Update virtualenv path
-  command: >
-    virtualenv-tools --update-path=auto {{ horizon_venv_bin | dirname }}
-  when:
-    - not horizon_developer_mode | bool
-    - horizon_venv_enabled | bool
-    - horizon_get_venv | success
-  tags:
-    - horizon-install
-    - horizon-pip-packages
-
-- name: Install pip packages (venv)
+- name: Install pip packages
   pip:
     name: "{{ item }}"
     state: latest
-    virtualenv: "{{ horizon_venv_bin | dirname }}"
+    virtualenv: "{{ horizon_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
@@ -190,41 +173,28 @@
   delay: 2
   with_items: "{{ horizon_pip_packages }}"
   when:
-    - horizon_venv_enabled | bool
     - horizon_get_venv | failed or horizon_developer_mode | bool
   notify: Restart apache2
   tags:
     - horizon-pip-packages
 
-- name: Install pip packages (no venv)
-  pip:
-    name: "{{ item }}"
-    state: latest
-    extra_args: "{{ pip_install_options_fact }}"
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  with_items: "{{ horizon_pip_packages }}"
+- name: Update virtualenv path
+  command: >
+    virtualenv-tools --update-path=auto {{ horizon_bin | dirname }}
   when:
     - not horizon_developer_mode | bool
-    - not horizon_venv_enabled | bool
-  notify: Restart apache2
+    - horizon_get_venv | success
   tags:
+    - horizon-install
     - horizon-pip-packages
 
-- name: Create horizon links for venv
+- name: Create horizon link for venv
   file:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: "{{ horizon_lib_dir | dirname }}/site-packages"
+    dest: "{{ horizon_lib_dir }}"
     owner: "{{ horizon_system_user_name }}"
     group: "{{ horizon_system_group_name }}"
     state: "link"
-  with_items:
-    - src: "{{ horizon_lib_dir | dirname }}/site-packages"
-      dest: "{{ horizon_lib_dir }}"
-  when:
-    - horizon_venv_enabled | bool
   tags:
     - horizon-install
     - horizon-configs

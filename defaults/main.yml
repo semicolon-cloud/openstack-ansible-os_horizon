@@ -26,15 +26,7 @@ horizon_developer_constraints:
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
-horizon_venv_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
-
-# Set this to enable or disable installing in a venv
-horizon_venv_enabled: true
-
-# The bin path defaults to the venv path however if installation in a
-#  venv is disabled the bin path will be dynamically set based on the
-#  system path used when the installing.
-horizon_bin: "{{ horizon_venv_bin }}"
+horizon_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
 
 horizon_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/horizon.tgz
 
@@ -62,9 +54,7 @@ horizon_session_timeout: 1800
 horizon_help_url: http://docs.openstack.org
 
 ## Installation directories
-horizon_venv_lib_dir: "{{ horizon_bin | dirname }}/lib/python2.7/dist-packages"
-horizon_non_venv_lib_dir: "/usr/local/lib/python2.7/dist-packages"
-horizon_lib_dir: "{{ (horizon_venv_enabled | bool) | ternary(horizon_venv_lib_dir, horizon_non_venv_lib_dir) }}"
+horizon_lib_dir: "{{ horizon_bin | dirname }}/lib/python2.7/dist-packages"
 horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi/django.wsgi"
 
 horizon_endpoint_type: internalURL
