@@ -18,8 +18,6 @@
     dest: "{{ horizon_ssl_cert }}"
     state: "absent"
   when: horizon_ssl_self_signed_regen | bool
-  tags:
-    - horizon-ssl
 
 - name: Create self-signed ssl cert
   command: >
@@ -31,5 +29,3 @@
     -extensions v3_ca
     creates={{ horizon_ssl_cert }}
   notify: Restart apache2
-  tags:
-    - horizon-ssl

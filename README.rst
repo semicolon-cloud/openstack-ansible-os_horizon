@@ -65,3 +65,12 @@ Example Playbook
         openrc_os_domain_name: "Default"
         memcached_servers: 10.100.100.101
         memcached_encryption_key: "secrete"
+
+Tags
+====
+
+This role supports two tags: ``horizon-install`` and ``horizon-config``
+
+The ``horizon-install`` tag can be used to install and upgrade.
+
+The ``horizon-config`` tag can be used to manage configuration.

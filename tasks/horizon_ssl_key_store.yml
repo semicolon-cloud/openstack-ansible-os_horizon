@@ -18,20 +18,14 @@
     src: "{{ horizon_ssl_cert }}"
   register: _horizon_ssl_cert
   changed_when: false
-  tags:
-    - horizon-ssl
 
 - name: Store ssl key
   slurp:
     src: "{{ horizon_ssl_key }}"
   register: _horizon_ssl_key
   changed_when: false
-  tags:
-    - horizon-ssl
 
 - name: Register a fact for the cert and key
   set_fact:
      horizon_ssl_cert_fact: "{{ _horizon_ssl_cert.content }}"
      horizon_ssl_key_fact: "{{ _horizon_ssl_key.content }}"
-  tags:
-    - horizon-ssl

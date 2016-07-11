@@ -18,8 +18,6 @@
     name: "{{ horizon_system_group_name }}"
     state: "present"
     system: "yes"
-  tags:
-    - horizon-group
 
 - name: Create the horizon system user
   user:
@@ -30,8 +28,6 @@
     system: "yes"
     createhome: "yes"
     home: "{{ horizon_system_user_home }}"
-  tags:
-    - horizon-user
 
 - name: Create horizon dir
   file:
@@ -43,8 +39,6 @@
     - { path: "/openstack", mode: "0755", owner: "root", group: "root" }
     - { path: "/etc/horizon", mode: "2755" }
     - { path: "{{ horizon_system_user_home }}", mode: "2755" }
-  tags:
-    - horizon-dirs
 
 - name: Test for log directory or link
   shell: |
@@ -57,9 +51,6 @@
   register: log_dir
   failed_when: false
   changed_when: log_dir.rc != 0
-  tags:
-    - horizon-dirs
-    - horizon-logs
 
 - name: Create horizon log dir
   file:
@@ -71,6 +62,3 @@
   with_items:
     - { path: "/var/log/horizon" }
   when: log_dir.rc != 0
-  tags:
-    - horizon-dirs
-    - horizon-logs
