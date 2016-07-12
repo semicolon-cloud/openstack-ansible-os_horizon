@@ -61,8 +61,8 @@ memcached_servers: 127.0.0.1
 openrc_os_auth_url: "http://127.0.0.1:5000/v3"
 openrc_os_domain_name: "Default"
 openrc_os_password: "{{ keystone_auth_admin_password }}"
-tempest_dashboard_login_url: "https://10.100.100.4/auth/login/"
-tempest_dashboard_url: "https://10.100.100.4/"
+tempest_dashboard_login_url: "https://{{ ansible_hostname }}/auth/login/"
+tempest_dashboard_url: "https://{{ ansible_hostname }}/"
 tempest_developer_mode: True
 tempest_git_install_branch: master
 tempest_venv_tag: "{{ tempest_git_install_branch }}"
