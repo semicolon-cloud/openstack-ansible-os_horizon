@@ -34,5 +34,3 @@
   until: add_member_role|success
   retries: 5
   delay: 10
-  tags:
-    - horizon-member-config

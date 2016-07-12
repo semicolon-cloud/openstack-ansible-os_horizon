@@ -23,10 +23,6 @@
     - { src: "horizon_apache_ports.conf.j2", dest: "/etc/apache2/ports.conf", owner: "root", group: "root" }
     - { src: "openstack_dashboard.conf.j2", dest: "/etc/apache2/sites-available/openstack-dashboard.conf" }
   notify: Restart apache2
-  tags:
-    - horizon-apache-config
-    - horizon-apache-ports
-    - horizon-apache-vhost
 
 - name: Enable Horizon Site
   file:
@@ -37,9 +33,6 @@
     - { state: link, name: openstack-dashboard.conf }
     - { state: absent, name: 000-default.conf }
   notify: Restart apache2
-  tags:
-    - horizon-apache-config
-    - horizon-apache-sites-enabled
 
 - name: Enable apache2 modules
   apache2_module:
@@ -53,17 +46,12 @@
     - { state: present, name: rewrite }
     - { state: present, name: headers }
   notify: Restart apache2
-  tags:
-    - horizon-apache-config
-    - horizon-apache-modules
 
 - name: Ensure Apache ServerName
   lineinfile:
     dest: "/etc/apache2/apache2.conf"
     line: "ServerName {{ horizon_server_name }}"
   notify: Restart apache2
-  tags:
-    - horizon-apache-config
 
 - name: Ensure Apache ServerTokens
   lineinfile:
@@ -71,8 +59,6 @@
     regexp: '^ServerTokens'
     line: "ServerTokens {{ horizon_apache_servertokens }}"
   notify: Restart apache2
-  tags:
-    - horizon-apache-config
 
 - name: Ensure Apache ServerSignature
   lineinfile:
@@ -80,5 +66,3 @@
     regexp: '^ServerSignature'
     line: "ServerSignature {{ horizon_apache_serversignature }}"
   notify: Restart apache2
-  tags:
-    - horizon-apache-config

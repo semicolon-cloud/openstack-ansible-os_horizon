@@ -20,8 +20,6 @@
     owner: "{{ horizon_system_user_name }}"
     group: "{{ horizon_system_group_name }}"
     mode: "0640"
-  tags:
-    - horizon-ssl
 
 - name: Distribute self signed ssl cert
   copy:
@@ -30,5 +28,3 @@
     owner: "{{ horizon_system_user_name }}"
     group: "{{ horizon_system_group_name }}"
     mode: "0640"
-  tags:
-    - horizon-ssl

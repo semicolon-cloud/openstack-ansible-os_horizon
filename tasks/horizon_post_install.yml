@@ -25,17 +25,12 @@
     - { src: "horizon-manage.py.j2", dest: "{{ horizon_bin }}/horizon-manage.py", mode: "0755" }
     - { src: "80_admin_default_panel.py.j2", dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_80_admin_default_panel.py", mode: "0755" }
   notify: Restart apache2
-  tags:
-    - horizon-configs
-    - horizon-branding
 
 - name: Uploading horizon custom files
   copy:
     src: "{{ item.value.src }}"
     dest: "{{ horizon_lib_dir }}/openstack_dashboard/static/dashboard/{{ item.value.dest }}"
   with_dict: "{{ horizon_custom_uploads | default({}) }}"
-  tags:
-    - horizon-branding
 
 - name: Enable the neutron-lbaas-dashboard Horizon panel
   file:
@@ -43,8 +38,6 @@
     path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1481_project_ng_loadbalancersv2_panel.py"
     state: "{{ (horizon_enable_neutron_lbaas | bool) | ternary('link', 'absent') }}"
   notify: Restart apache2
-  tags:
-    - horizon-configs
 
 - name: Create horizon links
   file:
@@ -55,8 +48,6 @@
     state: "link"
   with_items:
     - { src: "/etc/horizon/local_settings.py", dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/local_settings.py" }
-  tags:
-    - horizon-configs
 
 - name: Setup Horizon config(s)
   template:
@@ -67,9 +58,6 @@
   with_items:
     - { src: "horizon_django.wsgi.j2", dest: "{{ horizon_lib_wsgi_file }}" }
   notify: Restart apache2
-  tags:
-    - horizon-configs
-    - horizon-wsgi-venv
 
 - name: Create customization module directory
   file:
@@ -79,8 +67,6 @@
     group: "{{ horizon_system_group_name }}"
     mode: "0755"
   when: horizon_customization_module is defined
-  tags:
-    - horizon-configs
 
 - name: Drop horizon customization module
   template:
@@ -91,8 +77,6 @@
     mode: "0644"
   notify: Restart apache2
   when: horizon_customization_module is defined
-  tags:
-    - horizon-configs
 
 - name: Collect and compress static files
   command: "{{ item }}"
@@ -102,7 +86,3 @@
     - "{{ horizon_bin }}/horizon-manage.py collectstatic --noinput"
     - "{{ horizon_bin }}/horizon-manage.py compress --force"
   notify: Restart apache2
-  tags:
-    - horizon-configs
-    - horizon-static-collect
-    - horizon-command-bin
