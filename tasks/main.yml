@@ -56,6 +56,12 @@
     - horizon-install
     - horizon-config
 
+- name: Update the ca certificates
+  command: "update-ca-certificates -f"
+  when: not horizon_external_ssl|bool
+  tags:
+    - horizon-ssl
+
 - include: horizon_service_setup.yml
   tags:
     - horizon-install
