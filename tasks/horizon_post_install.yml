@@ -32,6 +32,15 @@
     dest: "{{ horizon_lib_dir }}/openstack_dashboard/static/dashboard/{{ item.value.dest }}"
   with_dict: "{{ horizon_custom_uploads | default({}) }}"
 
+- name: Enable the ironic-ui-dashboard Horizon panel
+  file:
+    src: "{{ horizon_lib_dir }}/ironic_ui/enabled/_2200_ironic.py"
+    path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_2200_ironic.py"
+    state: "{{ horizon_enable_ironic_ui | ternary('link', 'absent') }}"
+  notify: Restart apache2
+  tags:
+    - horizon-configs
+
 - name: Enable the neutron-lbaas-dashboard Horizon panel
   file:
     src: "{{ horizon_lib_dir }}/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py"
