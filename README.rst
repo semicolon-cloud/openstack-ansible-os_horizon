@@ -74,3 +74,4 @@ This role supports two tags: ``horizon-install`` and ``horizon-config``
 The ``horizon-install`` tag can be used to install and upgrade.
 
 The ``horizon-config`` tag can be used to manage configuration.
+
