@@ -16,6 +16,10 @@
 ## Verbosity Options
 debug: False
 
+# Set the package install state for distribution packages
+# Options are 'present' and 'latest'
+horizon_package_state: "latest"
+
 horizon_git_repo: https://git.openstack.org/openstack/horizon
 horizon_git_install_branch: master
 horizon_developer_mode: false
