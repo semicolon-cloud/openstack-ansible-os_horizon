@@ -41,6 +41,22 @@
   tags:
     - horizon-configs
 
+- name: Enable the magnum-ui-dashboard Horizon panel
+  file:
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    state: "{{ horizon_enable_magnum_ui | ternary('link', 'absent') }}"
+  notify: Restart apache2
+  with_items:
+    - src: "{{ horizon_lib_dir }}/magnum_ui/enabled/_1370_project_container-infra_panelgroup.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1370_project_container-infra_panelgroup.py"
+    - src: "{{ horizon_lib_dir }}/magnum_ui/enabled/_1371_project_container-infra_bays_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1371_project_container-infra_bays_panel.py"
+    - src: "{{ horizon_lib_dir }}/magnum_ui/enabled/_1372_project_container-infra_baymodels_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1372_project_container-infra_baymodels_panel.py"
+  tags:
+    - horizon-configs
+
 - name: Enable the neutron-lbaas-dashboard Horizon panel
   file:
     src: "{{ horizon_lib_dir }}/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py"

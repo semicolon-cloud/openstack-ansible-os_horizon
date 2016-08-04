@@ -20,13 +20,25 @@ debug: False
 # Options are 'present' and 'latest'
 horizon_package_state: "latest"
 
+## Toggle developer mode
+horizon_developer_mode: false
+
+## The git source/branch for Horizon
 horizon_git_repo: https://git.openstack.org/openstack/horizon
 horizon_git_install_branch: master
-horizon_developer_mode: false
+
+## The git source/branch for the upper-constraints (used in developer mode)
 horizon_requirements_git_repo: https://git.openstack.org/openstack/requirements
 horizon_requirements_git_install_branch: master
+
+## The git source/branch for the Magnum UI plugin
+magnum_dashboard_git_repo: https://git.openstack.org/openstack/magnum-ui
+magnum_dashboard_git_install_branch: master
+
+## The packages to build from source (used in developer mode)
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
+  - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
@@ -141,6 +153,9 @@ horizon_launch_instance_ng: True
 ## Ironic UI Panel
 horizon_enable_ironic_ui: False
 
+## Magnum UI Panel
+horizon_enable_magnum_ui: False
+
 ## Neutron features to enable
 horizon_enable_neutron_lbaas: False
 horizon_enable_neutron_fwaas: False
@@ -218,6 +233,7 @@ horizon_pip_packages:
   - greenlet
   - horizon
   - ironic-ui
+  - magnum-ui
   - keystonemiddleware
   - MySQL-python
   - PyMySQL
