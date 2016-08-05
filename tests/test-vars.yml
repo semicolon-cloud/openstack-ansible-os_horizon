@@ -58,6 +58,18 @@ keystone_service_password: "secrete"
 keystone_venv_tag: "testing"
 memcached_encryption_key: "secrete"
 memcached_servers: 127.0.0.1
+nova_service_name: nova
+nova_service_type: compute
+nova_service_description: "Nova Compute Service"
+nova_service_port: 8774
+nova_service_proto: http
+nova_service_region: RegionOne
+nova_service_publicuri: "{{ nova_service_proto }}://{{ external_lb_vip_address }}:{{ nova_service_port }}"
+nova_service_publicurl: "{{ nova_service_publicuri }}/v2.1/%(tenant_id)s"
+nova_service_adminuri: "{{ nova_service_proto }}://{{ internal_lb_vip_address }}:{{ nova_service_port }}"
+nova_service_adminurl: "{{ nova_service_adminuri }}/v2.1/%(tenant_id)s"
+nova_service_internaluri: "{{ nova_service_proto }}://{{ internal_lb_vip_address }}:{{ nova_service_port }}"
+nova_service_internalurl: "{{ nova_service_internaluri }}/v2.1/%(tenant_id)s"
 openrc_os_auth_url: "http://127.0.0.1:5000/v3"
 openrc_os_domain_name: "Default"
 openrc_os_password: "{{ keystone_auth_admin_password }}"
