@@ -57,11 +57,19 @@
       until: add_service|success
       retries: 5
       delay: 10
+  vars_files:
+    - playbooks/test-vars.yml
+    - test-vars.yml
+
+- name: Playbook for tempest testing of horizon
+  hosts: utility_all
+  user: root
+  gather_facts: false
+  tasks:
     - name: Run tempest
       shell: |
         . {{ tempest_bin }}/activate
-        {{ tempest_bin | dirname }}/run_tempest.sh --no-virtual-env ${RUN_TEMPEST_OPTS} tempest_horizon.tests.scenario.test_dashboard_basic_ops.TestDashboardBasicOps
-      environment:
-        RUN_TEMPEST_OPTS: "--serial"
+        {{ tempest_bin | dirname }}/run_tempest.sh --no-virtual-env --serial tempest_horizon.tests.scenario.test_dashboard_basic_ops.TestDashboardBasicOps
   vars_files:
+    - playbooks/test-vars.yml
     - test-vars.yml
