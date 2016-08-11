@@ -26,3 +26,4 @@ horizon_apt_packages:
   - libxslt1.1
   - openssl
   - python-mysqldb # required by the Ansible mysql_db module
+  - gettext
