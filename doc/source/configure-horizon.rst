@@ -19,7 +19,7 @@ options.
 Configuring a horizon customization module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Openstack-Ansible supports deployment of a horizon `customization module`_.
+OpenStack-Ansible supports deployment of a horizon `customization module`_.
 After building your customization module, configure the
 ``horizon_customization_module`` variable with a path to your module.
 
@@ -28,4 +28,3 @@ After building your customization module, configure the
    horizon_customization_module: /path/to/customization_module.py
 
 .. _customization module: http://docs.openstack.org/developer/horizon/topics/customizing.html#horizon-customization-module-overrides
-

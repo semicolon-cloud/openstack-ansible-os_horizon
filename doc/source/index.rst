@@ -9,7 +9,7 @@ OpenStack-Ansible Horizon
 
 This Ansible role installs and configures OpenStack Horizon served by the
 Apache webserver. Horizon is configured to use Galera for session caching and
-memcached for other caching.
+Memcached for other caching.
 
 Default variables
 ~~~~~~~~~~~~~~~~~
@@ -48,4 +48,3 @@ This role supports two tags: ``horizon-install`` and ``horizon-config``.
 The ``horizon-install`` tag can be used to install and upgrade.
 
 The ``horizon-config`` tag can be used to manage configuration.
-
