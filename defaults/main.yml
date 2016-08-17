@@ -252,3 +252,6 @@ horizon_role_project_group: horizon_all
 
 # Set arbitrary horizon configuration options
 horizon_config_overrides: {}
+
+horizon_keystone_admin_roles:
+  - admin
