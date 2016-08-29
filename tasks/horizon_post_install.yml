@@ -57,6 +57,22 @@
   tags:
     - horizon-configs
 
+- name: Enable the sahara-dashboard Horizon panel
+  file:
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    state: "{{ horizon_enable_sahara_ui | ternary('link', 'absent') }}"
+  notify: Restart apache2
+  with_items:
+    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1810_data_processing_panel_group.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1810_data_processing_panel_group.py"
+    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1820_data_processing_clusters_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1820_data_processing_clusters_panel.py"
+    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1840_data_processing_jobs_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1840_data_processing_jobs_panel.py"
+  tags:
+    - horizon-configs
+
 - name: Enable the neutron-lbaas-dashboard Horizon panel
   file:
     src: "{{ horizon_lib_dir }}/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py"
