@@ -16,7 +16,7 @@
 ## APT Cache options
 cache_timeout: 600
 
-horizon_apt_packages:
+horizon_distro_packages:
   - apache2
   - apache2-utils
   - cron # required by the Ansible cron module
