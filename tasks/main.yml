@@ -38,12 +38,13 @@
     - horizon-config
 
 - include: horizon_db_setup.yml
-  when: >
-    inventory_hostname == groups['horizon_all'][0]
+  static: no
+  when: inventory_hostname == groups['horizon_all'][0]
   tags:
     - horizon-install
 
 - include: horizon_ssl_self_signed.yml
+  static: no
   when:
     - not horizon_external_ssl|bool
     - horizon_user_ssl_cert is not defined or horizon_user_ssl_key is not defined
@@ -51,6 +52,7 @@
     - horizon-install
 
 - include: horizon_ssl_user_provided.yml
+  static: no
   when: not horizon_external_ssl|bool
   tags:
     - horizon-install
