@@ -38,7 +38,6 @@
     - horizon-config
 
 - include: horizon_db_setup.yml
-  static: no
   when: inventory_hostname == groups['horizon_all'][0]
   tags:
     - horizon-install

@@ -14,13 +14,10 @@
 # limitations under the License.
 
 - include: horizon_ssl_key_create.yml
-  static: no
   when: inventory_hostname == groups['horizon_all'][0]
 
 - include: horizon_ssl_key_store.yml
-  static: no
   when: inventory_hostname == groups['horizon_all'][0]
 
 - include: horizon_ssl_key_distribute.yml
-  static: no
   when: inventory_hostname != groups['horizon_all'][0]
