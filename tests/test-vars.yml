@@ -52,8 +52,8 @@ tempest_venv_tag: "{{ tempest_git_install_branch }}"
 tempest_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
 tempest_plugins:
   - name: tempest-horizon
-    repo: https://github.com/trumant/tempest-horizon
-    branch: toggle_cert_validation
+    repo: https://github.com/openstack/tempest-horizon
+    branch: master
 
 tempest_tempest_conf_overrides:
   dashboard:
