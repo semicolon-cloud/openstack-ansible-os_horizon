@@ -17,6 +17,7 @@
   command: "{{ horizon_bin }}/horizon-manage.py syncdb --noinput"
   become: yes
   become_user: "{{ horizon_system_user_name }}"
+  changed_when: false
 
 - name: Register DB session cleanup cron
   cron:
