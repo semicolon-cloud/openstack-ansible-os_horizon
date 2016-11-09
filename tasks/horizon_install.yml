@@ -29,7 +29,7 @@
 
 - name: Install requires pip packages
   pip:
-    name: "{{ horizon_requires_pip_packages | join(' ') }}"
+    name: "{{ horizon_requires_pip_packages }}"
     state: "{{ horizon_pip_package_state }}"
     extra_args: >-
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
@@ -74,7 +74,7 @@
 
 - name: Install pip packages
   pip:
-    name: "{{ horizon_pip_packages | join(' ') }}"
+    name: "{{ horizon_pip_packages }}"
     state: "{{ horizon_pip_package_state }}"
     virtualenv: "{{ horizon_bin | dirname }}"
     virtualenv_site_packages: "no"
@@ -91,7 +91,7 @@
 
 - name: Install optional pip packages
   pip:
-    name: "{{ horizon_optional_pip_packages | join(' ') }}"
+    name: "{{ horizon_optional_pip_packages }}"
     state: "{{ horizon_pip_package_state }}"
     virtualenv: "{{ horizon_bin | dirname }}"
     virtualenv_site_packages: "no"
