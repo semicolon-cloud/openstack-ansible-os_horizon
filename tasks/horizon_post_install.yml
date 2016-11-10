@@ -32,6 +32,24 @@
     dest: "{{ horizon_lib_dir }}/openstack_dashboard/static/dashboard/{{ item.value.dest }}"
   with_dict: "{{ horizon_custom_uploads | default({}) }}"
 
+- name: Enable the designate-ui-dashboard Horizon panel
+  file:
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    state: "{{ horizon_enable_designate_ui | ternary('link', 'absent') }}"
+  with_items:
+    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1710_project_dns_panel_group.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1710_project_dns_panel_group.py"
+    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1720_project_dns_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1720_project_dns_panel.py"
+    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1721_dns_zones_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1721_dns_zones_panel.py"
+    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1722_dns_reversedns_panel.py"
+      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1722_dns_reversedns_panel.py"
+  notify: Restart apache2
+  tags:
+    - horizon-configs
+
 - name: Enable the ironic-ui-dashboard Horizon panel
   file:
     src: "{{ horizon_lib_dir }}/ironic_ui/enabled/_2200_ironic.py"
