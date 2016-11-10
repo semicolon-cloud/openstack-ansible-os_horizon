@@ -36,11 +36,16 @@ magnum_dashboard_git_install_branch: master
 designate_dashboard_git_repo: https://git.openstack.org/openstack/designate-dashboard
 designate_dashboard_git_install_branch: master
 
+## The git source/branch for the Trove UI plugin
+trove_dashboard_git_repo: https://git.openstack.org/openstack/trove-dashboard
+trove_dashboard_git_install_branch: master
+
 ## The packages to build from source (used in developer mode)
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
+  - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
