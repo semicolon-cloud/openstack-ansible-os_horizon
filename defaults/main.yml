@@ -40,7 +40,7 @@ designate_dashboard_git_install_branch: master
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
-  - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designatedashboard"
+  - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
@@ -263,7 +263,7 @@ horizon_pip_packages:
   - python-keystoneclient
   - sahara_dashboard
   - trove_dashboard
-  - designatedashboard
+  - designate_dashboard
 
 # This variable is used to install additional pip packages
 # that could be needed for additional dashboards
