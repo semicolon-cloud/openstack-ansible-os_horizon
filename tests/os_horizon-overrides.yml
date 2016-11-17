@@ -43,17 +43,17 @@ nova_service_adminurl: "{{ nova_service_adminuri }}/v2.1/%(tenant_id)s"
 nova_service_internaluri: "{{ nova_service_proto }}://{{ internal_lb_vip_address }}:{{ nova_service_port }}"
 nova_service_internalurl: "{{ nova_service_internaluri }}/v2.1/%(tenant_id)s"
 
+tempest_run: yes
 tempest_dashboard_login_url: "https://{{ hostvars[groups['horizon_all'][0]]['ansible_host'] }}/auth/login/"
 tempest_dashboard_url: "https://{{ hostvars[groups['horizon_all'][0]]['ansible_host'] }}/"
 
-tempest_venv_tag: "{{ tempest_git_install_branch }}"
-# tempest_bin is the same as the default in os_tempest role, but we set
-# it again here so we can refer to it in test-horizon-functional.yml
-tempest_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
 tempest_plugins:
   - name: tempest-horizon
     repo: https://github.com/openstack/tempest-horizon
     branch: master
+
+tempest_test_whitelist:
+  - tempest_horizon.tests.scenario.test_dashboard_basic_ops.TestDashboardBasicOps
 
 tempest_tempest_conf_overrides:
   dashboard:

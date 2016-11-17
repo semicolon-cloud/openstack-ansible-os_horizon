@@ -25,8 +25,5 @@
 # Install Horizon
 - include: test-install-horizon.yml
 
-# Install Tempest
+# Install and execute Tempest
 - include: common/test-install-tempest.yml
-
-# Test Horizon
-- include: test-horizon-functional.yml
