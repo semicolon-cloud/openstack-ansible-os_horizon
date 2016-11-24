@@ -59,7 +59,9 @@
 
 - name: Update the ca certificates
   command: "update-ca-certificates -f"
-  when: not horizon_external_ssl|bool
+  when:
+   - not horizon_external_ssl|bool
+   - ansible_pkg_mgr == 'apt'
   tags:
     - horizon-ssl
 

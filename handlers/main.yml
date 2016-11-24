@@ -15,5 +15,5 @@
 
 - name: Restart apache2
   service:
-    name: "apache2"
+    name: "{{ horizon_system_service_name }}"
     state: "restarted"
