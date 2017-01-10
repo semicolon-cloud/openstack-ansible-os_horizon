@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: create the system group
+- name: Create the system group
   group:
     name: "{{ horizon_system_group_name }}"
     state: "present"
@@ -35,8 +35,9 @@
     state: "directory"
     owner: "{{ item.owner|default(horizon_system_user_name) }}"
     group: "{{ item.group|default(horizon_system_group_name) }}"
+    mode: "{{ item.mode|default('0755') }}"
   with_items:
-    - { path: "/openstack", mode: "0755", owner: "root", group: "root" }
+    - { path: "/openstack/venvs", mode: "0755", owner: "root", group: "root" }
     - { path: "/etc/horizon", mode: "2755" }
     - { path: "{{ horizon_system_user_home }}", mode: "2755" }
 

@@ -93,6 +93,7 @@
   file:
     path: "{{ horizon_bin | dirname }}"
     state: directory
+    mode: "0755"
   register: horizon_venv_dir
   when:
     - not horizon_developer_mode | bool
