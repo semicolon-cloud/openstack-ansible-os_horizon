@@ -28,6 +28,7 @@ horizon_distro_packages:
   - MySQL-python
   - openssl
   - openssl-libs
+  - which
 
 horizon_apache_conf: "/etc/httpd/conf/httpd.conf"
 horizon_apache_security_conf: "{{ horizon_apache_conf }}"
