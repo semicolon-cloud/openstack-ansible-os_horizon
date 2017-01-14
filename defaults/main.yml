@@ -51,6 +51,9 @@ horizon_developer_constraints:
 horizon_venv_tag: untagged
 horizon_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
 
+# venv_download, even when true, will use the fallback method of building the
+# venv from scratch if the venv download fails.
+horizon_venv_download: "{{ not horizon_developer_mode | bool }}"
 horizon_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/horizon.tgz
 
 ## System info

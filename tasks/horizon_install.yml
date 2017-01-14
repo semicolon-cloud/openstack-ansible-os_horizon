@@ -81,7 +81,7 @@
     dest: "/var/cache/{{ horizon_venv_download_url | basename }}"
     checksum: "sha1:{{ lookup('url', horizon_venv_download_url | replace('tgz', 'checksum')) }}"
   register: horizon_get_venv
-  when: not horizon_developer_mode | bool
+  when: horizon_venv_download | bool
 
 - name: Remove existing venv
   file:
@@ -95,18 +95,14 @@
     state: directory
     mode: "0755"
   register: horizon_venv_dir
-  when:
-    - not horizon_developer_mode | bool
-    - horizon_get_venv | changed
+  when: horizon_get_venv | changed
 
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ horizon_venv_download_url | basename }}"
     dest: "{{ horizon_bin | dirname }}"
     copy: "no"
-  when:
-    - not horizon_developer_mode | bool
-    - horizon_get_venv | changed or horizon_venv_dir | changed
+  when: horizon_get_venv | changed
   notify: Restart apache2
 
 - name: Install pip packages
@@ -123,7 +119,7 @@
   until: install_packages|success
   retries: 5
   delay: 2
-  when: horizon_developer_mode | bool
+  when: horizon_get_venv | failed or horizon_get_venv | skipped
   notify: Restart apache2
 
 - name: Install optional pip packages
@@ -148,15 +144,12 @@
     state: "absent"
   when:
     - ansible_pkg_mgr == 'yum'
-    - not horizon_developer_mode | bool
-    - horizon_get_venv | changed or horizon_venv_dir | changed
+    - horizon_get_venv | changed
 
 - name: Update virtualenv path
   command: >
     virtualenv-tools --update-path=auto --reinitialize {{ horizon_bin | dirname }}
-  when:
-    - not horizon_developer_mode | bool
-    - horizon_get_venv | changed or horizon_venv_dir | changed
+  when: horizon_get_venv | changed
 
 - name: Create horizon link for venv
   file:
