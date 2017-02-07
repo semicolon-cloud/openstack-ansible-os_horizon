@@ -10,7 +10,6 @@ Vagrant.configure(2) do |config|
     xenial.vm.provision "shell", inline: <<-SHELL
       sudo su -
       cd /vagrant
-      apt-get install -y python2.7
       ./run_tests.sh
     SHELL
   end
