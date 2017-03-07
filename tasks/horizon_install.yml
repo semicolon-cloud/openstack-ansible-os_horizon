@@ -44,6 +44,15 @@
     - { src: "/var/log/httpd", dest: "/var/log/apache2" }
   when: ansible_pkg_mgr == 'yum'
 
+# NOTE: The pip_install role configures the RDO repository to be at a higher
+#       priority than EPEL. Packages from RDO will be preferred over EPEL.
+- name: Install EPEL repository
+  yum:
+    name: epel-release
+    state: "{{ horizon_package_state }}"
+  when:
+    - ansible_pkg_mgr == 'yum'
+
 - name: Install distro packages
   package:
     name: "{{ item }}"
