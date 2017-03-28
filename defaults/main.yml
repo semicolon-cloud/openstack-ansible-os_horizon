@@ -218,11 +218,11 @@ horizon_default_panel: overview
 ## Replace default theme files with your own
 # horizon_custom_uploads:
 #   logo:
-#     src: "path_on_deployment_host_of_your_custom_logo.png"
-#     dest: "img/logo.png"
+#     src: "path_on_deployment_host_of_your_custom_logo.svg"
+#     dest: "img/logo.svg"
 #   logo_splash:
-#     src: "path_on_deployment_host_of_your_custom_logo-splash.png"
-#     dest: "img/logo-splash.png"
+#     src: "path_on_deployment_host_of_your_custom_logo-splash.svg"
+#     dest: "img/logo-splash.svg"
 
 _horizon_available_themes:
   default:
