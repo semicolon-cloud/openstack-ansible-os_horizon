@@ -176,7 +176,7 @@ OPENSTACK_KEYSTONE_DEFAULT_ROLE = "{{ horizon_default_role_name }}"
 WEBSSO_ENABLED = True
 
 # Determines which authentication choice to show as default.
-WEBSSO_INITIAL_CHOICE = "credentials"
+WEBSSO_INITIAL_CHOICE = "{{ horizon_websso_initial_choice }}"
 
 # The list of authentication mechanisms which include keystone
 # federation protocols and identity provider/federation protocol

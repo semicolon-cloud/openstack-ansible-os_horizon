@@ -301,3 +301,8 @@ horizon_config_overrides: {}
 
 horizon_keystone_admin_roles:
   - admin
+
+# Set the "credentials" authentication choice to show as default.
+# The list of authentication mechanisms which include keystone
+# federation protocols and identity provider/federation protocol
+horizon_websso_initial_choice: "credentials"
