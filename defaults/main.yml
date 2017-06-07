@@ -268,6 +268,7 @@ horizon_requires_pip_packages:
   - httplib2
 
 horizon_pip_packages:
+  - cryptography
   - django-appconf
   - django-openstack-auth
   - greenlet
@@ -280,7 +281,6 @@ horizon_pip_packages:
   - neutron-lbaas-dashboard
   - oslo.config
   - ply
-  - pycrypto
   - python-memcached
   - python-keystoneclient
   - sahara_dashboard
