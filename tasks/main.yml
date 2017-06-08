@@ -100,5 +100,10 @@
   tags:
     - horizon-config
 
+- include: horizon_translations_update.yml
+  when: horizon_translations_update | bool
+  tags:
+    - horizon-translations-update
+
 - name: Flush handlers
   meta: flush_handlers

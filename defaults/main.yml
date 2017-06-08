@@ -291,6 +291,11 @@ horizon_pip_packages:
 # that could be needed for additional dashboards
 horizon_optional_pip_packages: []
 
+# This variable is used to update the horizon translations from
+# Zanata, this can be set to "True" when testing translations,
+# but should otherwise be left as False.
+horizon_translations_update: False
+
 # This variable is used by the repo_build process to determine
 # which host group to check for members of before building the
 # pip packages required by this role. The value is picked up
