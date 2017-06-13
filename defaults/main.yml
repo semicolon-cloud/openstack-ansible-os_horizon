@@ -180,6 +180,14 @@ horizon_default_role_name: _member_
 ## Launch instance
 horizon_launch_instance_legacy: False
 horizon_launch_instance_ng: True
+horizon_launch_instance_defaults:
+  config_drive: False
+  enable_scheduler_hints: True
+  disable_image: False
+  disable_instance_snapshot: False
+  disable_volume: False
+  disable_volume_snapshot: False
+  create_volume: True
 
 ## Ironic UI Panel
 horizon_enable_ironic_ui: False

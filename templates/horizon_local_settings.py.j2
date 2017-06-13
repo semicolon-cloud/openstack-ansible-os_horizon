@@ -247,6 +247,10 @@ OPENSTACK_ENABLE_PASSWORD_RETRIEVE = {{ horizon_enable_password_retrieve }}
 LAUNCH_INSTANCE_LEGACY_ENABLED = {{ horizon_launch_instance_legacy }}
 LAUNCH_INSTANCE_NG_ENABLED = {{ horizon_launch_instance_ng }}
 
+# A dictionary of settings which can be used to provide the default values for
+# properties found in the Launch Instance modal.
+LAUNCH_INSTANCE_DEFAULTS = {{ horizon_launch_instance_defaults }}
+
 # The Xen Hypervisor has the ability to set the mount point for volumes
 # attached to instances (other Hypervisors currently do not). Setting
 # can_set_mount_point to True will add the option to set the mount point
