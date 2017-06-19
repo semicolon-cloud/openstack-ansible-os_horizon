@@ -13,6 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Ensure curl is installed
+  package:
+    name: curl
+    state: "{{ horizon_package_state }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+
 - name: Perform a Horizon Zanata Pull Catalog
   command: "{{ horizon_bin }}/horizon-manage.py pull_catalog"
   args:
