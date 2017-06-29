@@ -773,10 +773,10 @@ HORIZON_CONFIG["customization_module"] = 'horizon_customization.overrides'
 {% endif %}
 
 AVAILABLE_THEMES = [
-{% for key, value in _horizon_available_themes.iteritems() %}
+{% for key, value in _horizon_available_themes.items() %}
     ('{{ value.theme_name }}', '{{ value.theme_label }}', '{{ value.theme_path }}'),
 {% endfor %}
-{% for key, value in horizon_custom_themes.iteritems() %}
+{% for key, value in horizon_custom_themes.items() %}
     ('{{ value.theme_name }}', '{{ value.theme_label }}', '{{ value.theme_path }}'),
 {% endfor %}
 ]
