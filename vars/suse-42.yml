@@ -13,47 +13,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-## APT Cache options
-cache_timeout: 600
-
 horizon_system_service_name: apache2
 
 horizon_distro_packages:
+  - cronie
+  - cronie-anacron
+  - gettext
+  - git-core
   - apache2
   - apache2-utils
-  - cron # required by the Ansible cron module
-  - git
-  - libapache2-mod-wsgi
-  - libssl-dev
-  - libxslt1.1
+  - libxslt-devel
+  - apache2-mod_wsgi
+  - python-MySQL-python
   - openssl
-  - python-mysqldb # required by the Ansible mysql_db module
-  - gettext
+  - libopenssl-devel
+  - which
 
-horizon_apache_conf: "/etc/apache2/apache2.conf"
+horizon_apache_conf: "/etc/apache2/httpd.conf"
 horizon_apache_default_log_folder: "/var/log/apache2"
 horizon_apache_default_log_owner: "root"
-horizon_apache_default_log_grp: "adm"
-horizon_apache_security_conf: "/etc/apache2/conf-available/security.conf"
-
-horizon_apache_site_available: "/etc/apache2/sites-available/openstack-dashboard.conf"
-horizon_apache_site_enabled: "/etc/apache2/sites-enabled/openstack-dashboard.conf"
+horizon_apache_default_log_grp: "root"
+horizon_apache_security_conf: "{{ horizon_apache_conf }}"
 
 horizon_apache_configs:
-  - { src: "horizon_apache_ports.conf.j2", dest: "/etc/apache2/ports.conf", owner: "root", group: "root" }
-  - { src: "openstack_dashboard.conf.j2", dest: "{{ horizon_apache_site_available }}", owner: "root", group: "root" }
+  - { src: "horizon_apache_ports.conf.j2", dest: "/etc/apache2/conf.d/ports.conf", owner: "root", group: "root" }
+  - { src: "openstack_dashboard.conf.j2", dest: "/etc/apache2/conf.d/openstack-dashboard.conf", owner: "root", group: "root" }
 
 horizon_apache_default_sites:
-  - "/etc/apache2/sites-enabled/000-default.conf"
+  - "/etc/apache2/conf.d/gitweb.conf"
 
 horizon_apache_modules:
-  - name: "wsgi"
+  - name: "authz_host"
+    state: "present"
+  - name: "access_compat"
+    state: "present"
+  - name: "version"
     state: "present"
   - name: "ssl"
     state: "present"
-  - name: "mpm_event"
-    state: "absent"
-  - name: "mpm_worker"
+  - name: "wsgi"
     state: "present"
   - name: "rewrite"
     state: "present"
