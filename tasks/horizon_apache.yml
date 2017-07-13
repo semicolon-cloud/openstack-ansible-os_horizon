@@ -20,12 +20,13 @@
     owner: "{{ horizon_apache_default_log_owner }}"
     group: "{{ horizon_apache_default_log_grp }}"
 
-# Workaround for https://github.com/ansible/ansible-modules-core/issues/5328
-# TODO: Replace using apache2_module when fixed in Ansible release
+# NOTE(hwoarang): Module enable/disable process is only functional on Debian
+# and SUSE based systems.
 - name: Enable apache2 modules
-  command: "{{ (item.state == 'present') | ternary('a2enmod','a2dismod') }} {{ item.name }}"
-  register: horizon_apache2_module
-  changed_when: horizon_apache2_module.stdout.find('{{ item.name }} already') == -1
+  apache2_module:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    ignore_configcheck: yes
   with_items:
     - { state: present, name: wsgi }
     - { state: present, name: ssl }
