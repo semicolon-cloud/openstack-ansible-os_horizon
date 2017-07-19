@@ -249,7 +249,12 @@ LAUNCH_INSTANCE_NG_ENABLED = {{ horizon_launch_instance_ng }}
 
 # A dictionary of settings which can be used to provide the default values for
 # properties found in the Launch Instance modal.
-LAUNCH_INSTANCE_DEFAULTS = {{ horizon_launch_instance_defaults }}
+LAUNCH_INSTANCE_DEFAULTS = {
+{%- for key, value in (horizon_launch_instance_defaults | dictsort) %}
+'{{ key }}': {{ value }}
+{%- if not loop.last %}, {% endif %}
+{%- endfor %}
+}
 
 # The Xen Hypervisor has the ability to set the mount point for volumes
 # attached to instances (other Hypervisors currently do not). Setting
@@ -773,10 +778,10 @@ HORIZON_CONFIG["customization_module"] = 'horizon_customization.overrides'
 {% endif %}
 
 AVAILABLE_THEMES = [
-{% for key, value in _horizon_available_themes.items() %}
+{% for key, value in (_horizon_available_themes | dictsort) %}
     ('{{ value.theme_name }}', '{{ value.theme_label }}', '{{ value.theme_path }}'),
 {% endfor %}
-{% for key, value in horizon_custom_themes.items() %}
+{% for key, value in (horizon_custom_themes | dictsort) %}
     ('{{ value.theme_name }}', '{{ value.theme_label }}', '{{ value.theme_path }}'),
 {% endfor %}
 ]
