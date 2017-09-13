@@ -106,6 +106,7 @@
   when: horizon_translations_update | bool
   tags:
     - horizon-config
+    - horizon-translations
 
 - name: Flush handlers
   meta: flush_handlers
