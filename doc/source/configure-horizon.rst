@@ -27,4 +27,4 @@ After building your customization module, configure the
 
    horizon_customization_module: /path/to/customization_module.py
 
-.. _customization module: http://docs.openstack.org/developer/horizon/topics/customizing.html#horizon-customization-module-overrides
+.. _customization module: https://docs.openstack.org/horizon/latest/configuration/customizing.html#horizon-customization-module-overrides
