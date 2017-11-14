@@ -222,7 +222,7 @@ horizon_default_panel: overview
 #   - "SimpleTenantUsage"
 
 ## Customization module
-## See http://docs.openstack.org/developer/horizon/topics/customizing.html#horizon-customization-module-overrides
+## See https://docs.openstack.org/horizon/latest/configuration/customizing.html#horizon-customization-module-overrides
 # horizon_customization_module: /local/path/to/customization_module.py
 
 ## Replace default theme files with your own
@@ -247,7 +247,7 @@ _horizon_available_themes:
 # Add custom themes. Deployers need to place the theme directories
 # and files on the horizon containers in:
 #   {{ horizon_lib_dir }}/openstack_dashboard/themes
-# See http://docs.openstack.org/developer/horizon/topics/customizing.html#themes
+# See https://docs.openstack.org/horizon/latest/configuration/themes.html
 # for more details on custom themes
 # Example:
 #

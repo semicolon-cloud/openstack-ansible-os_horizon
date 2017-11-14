@@ -16,7 +16,7 @@ Apache webserver. Horizon is configured to use Galera for session caching and
 Memcached for other caching.
 
 Documentation for the project can be found at:
-  http://docs.openstack.org/developer/openstack-ansible-os_horizon/
+  https://docs.openstack.org/openstack-ansible-os_horizon/latest/
 
 The project home is at:
   http://launchpad.net/openstack-ansible
