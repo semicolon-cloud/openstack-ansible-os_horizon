@@ -41,7 +41,7 @@ import os
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'oslosphinx',
+    'openstackdocstheme',
     'sphinxmark'
 ]
 
@@ -68,6 +68,11 @@ project = 'OpenStack-Ansible'
 role_name = 'os_horizon'
 target_name = 'openstack-ansible-' + role_name
 title = 'OpenStack-Ansible Documentation: ' + role_name + 'role'
+
+# openstackdocstheme options
+repository_name = 'openstack/openstack-ansible-os_horizon'
+bug_project = 'openstack-ansible-os_horizon'
+bug_tag = ''
 
 # The link to the browsable source code (for the left hand menu)
 oslosphinx_cgit_link = (

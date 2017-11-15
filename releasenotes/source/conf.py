@@ -63,6 +63,11 @@ target_name = 'openstack-ansible-' + role_name
 title = 'OpenStack-Ansible Release Notes: ' + role_name + 'role'
 
 # openstackdocstheme options
+repository_name = 'openstack/openstack-ansible-os_horizon'
+bug_project = 'openstack-ansible-os_horizon'
+bug_tag = ''
+
+# openstackdocstheme options
 repository_name = 'openstack/' + target_name
 bug_project = project.lower()
 bug_tag = ''
