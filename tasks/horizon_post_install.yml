@@ -32,93 +32,12 @@
     dest: "{{ horizon_lib_dir }}/openstack_dashboard/static/dashboard/{{ item.value.dest }}"
   with_dict: "{{ horizon_custom_uploads | default({}) }}"
 
-- name: Enable the designate-ui-dashboard Horizon panel
+- name: Enable project panels
   file:
     src: "{{ item.src }}"
     path: "{{ item.path }}"
-    state: "{{ horizon_enable_designate_ui | ternary('link', 'absent') }}"
-  with_items:
-    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1710_project_dns_panel_group.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1710_project_dns_panel_group.py"
-    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1720_project_dns_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1720_project_dns_panel.py"
-    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1721_dns_zones_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1721_dns_zones_panel.py"
-    - src: "{{ horizon_lib_dir }}/designatedashboard/enabled/_1722_dns_reversedns_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1722_dns_reversedns_panel.py"
-  notify: Restart apache2
-
-- name: Enable the ironic-ui-dashboard Horizon panel
-  file:
-    src: "{{ horizon_lib_dir }}/ironic_ui/enabled/_2200_ironic.py"
-    path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_2200_ironic.py"
-    state: "{{ horizon_enable_ironic_ui | ternary('link', 'absent') }}"
-  notify: Restart apache2
-
-- name: Enable the magnum-ui-dashboard Horizon panel
-  file:
-    src: "{{ item.src }}"
-    path: "{{ item.path }}"
-    state: "{{ horizon_enable_magnum_ui | ternary('link', 'absent') }}"
-  notify: Restart apache2
-  with_items:
-    - src: "{{ horizon_lib_dir }}/magnum_ui/enabled/_1370_project_container_infra_panel_group.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1370_project_container_infra_panel_group.py"
-    - src: "{{ horizon_lib_dir }}/magnum_ui/enabled/_1371_project_container_infra_clusters_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1371_project_container_infra_clusters_panel.py"
-    - src: "{{ horizon_lib_dir }}/magnum_ui/enabled/_1372_project_container_infra_cluster_templates_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1372_project_container_infra_cluster_templates_panel.py"
-
-- name: Enable the sahara-dashboard Horizon panel
-  file:
-    src: "{{ item.src }}"
-    path: "{{ item.path }}"
-    state: "{{ horizon_enable_sahara_ui | ternary('link', 'absent') }}"
-  notify: Restart apache2
-  with_items:
-    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1810_data_processing_panel_group.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1810_data_processing_panel_group.py"
-    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1820_data_processing_clusters_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1820_data_processing_clusters_panel.py"
-    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1830_data_processing_plugins_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1830_data_processing_plugins_panel.py"
-    - src: "{{ horizon_lib_dir }}/sahara_dashboard/enabled/_1840_data_processing_jobs_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1840_data_processing_jobs_panel.py"
-    - src: "{{ horizon_lib_dir }}/sahara_dashboard/local_settings.d/_12_toggle_data_upload_max_number_fields.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/local/local_settings.d/_12_toggle_data_upload_max_number_fields.py"
-
-- name: Enable the trove-dashboard Horizon panel
-  file:
-    src: "{{ item.src }}"
-    path: "{{ item.path }}"
-    state: "{{ horizon_enable_trove_ui | ternary('link', 'absent') }}"
-  notify: Restart apache2
-  with_items:
-    - src: "{{ horizon_lib_dir }}/trove_dashboard/enabled/_1710_database_panel_group.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1710_database_panel_group.py"
-    - src: "{{ horizon_lib_dir }}/trove_dashboard/enabled/_1720_project_databases_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1720_project_databases_panel.py"
-    - src: "{{ horizon_lib_dir }}/trove_dashboard/enabled/_1730_project_database_backups_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1730_project_database_backups_panel.py"
-    - src: "{{ horizon_lib_dir }}/trove_dashboard/enabled/_1731_project_database_backups_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1731_project_database_backups_panel.py"
-    - src: "{{ horizon_lib_dir }}/trove_dashboard/enabled/_1740_project_database_clusters_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1740_project_database_clusters_panel.py"
-    - src: "{{ horizon_lib_dir }}/trove_dashboard/enabled/_1760_project_database_configurations_panel.py"
-      path: "{{ horizon_lib_dir }}/openstack_dashboard/enabled/_1760_project_database_configurations_panel.py"
-
-- name: Enable the neutron-lbaas-dashboard Horizon panel
-  file:
-    src: "{{ horizon_lib_dir }}/neutron_lbaas_dashboard/enabled/_1481_project_ng_loadbalancersv2_panel.py"
-    path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1481_project_ng_loadbalancersv2_panel.py"
-    state: "{{ (horizon_enable_neutron_lbaas | bool) | ternary('link', 'absent') }}"
-  notify: Restart apache2
-
-- name: Enable the neutron-fwaas-dashboard Horizon panel
-  file:
-    src: "{{ horizon_lib_dir }}/neutron_fwaas_dashboard/enabled/_7010_project_firewalls_panel.py"
-    path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_7010_project_firewalls_panel.py"
-    state: "{{ (horizon_enable_neutron_fwaas | bool) | ternary('link', 'absent') }}"
+    state: "{{ item.state }}"
+  with_items: "{{ horizon_panels }}"
   notify: Restart apache2
 
 - name: Create horizon links

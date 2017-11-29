@@ -322,3 +322,5 @@ horizon_keystone_admin_roles:
 # The list of authentication mechanisms which include keystone
 # federation protocols and identity provider/federation protocol
 horizon_websso_initial_choice: "credentials"
+
+horizon_panels: "{{ _horizon_panels }}"
