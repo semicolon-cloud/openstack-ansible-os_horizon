@@ -22,11 +22,12 @@ Default variables
    :start-after: under the License.
 
 
-Required variables
-~~~~~~~~~~~~~~~~~~
+Dependencies
+~~~~~~~~~~~~
 
-This list is not exhaustive. See role internals for further
-details.
+This role needs pip >= 7.1 installed on the target host.
+
+To use this role, define the following variables:
 
 .. code-block:: yaml
 
@@ -34,6 +35,8 @@ details.
       horizon_container_mysql_password: "SuperSecrete"
       horizon_secret_key: "SuperSecreteHorizonKey"
 
+This list is not exhaustive. See role internals for further
+details.
 
 Example playbook
 ~~~~~~~~~~~~~~~~
