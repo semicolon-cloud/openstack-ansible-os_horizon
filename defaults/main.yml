@@ -68,9 +68,11 @@ horizon_system_user_home: "/var/lib/{{ horizon_system_user_name }}"
 horizon_service_region: RegionOne
 horizon_service_name: horizon
 
-## DB info
+## Database info
 horizon_galera_database: dash
 horizon_galera_user: dash
+horizon_galera_use_ssl: "{{ galera_use_ssl | default(False) }}"
+horizon_galera_ssl_ca_cert: "{{ galera_ssl_ca_cert | default('/etc/ssl/certs/galera-ca.pem') }}"
 
 ## Session configuration
 # Specifies the timespan in seconds inactivity, until a user is considered as

@@ -140,6 +140,9 @@ DATABASES = {
         'USER': '{{ horizon_galera_user }}',
         'PASSWORD': '{{ horizon_container_mysql_password }}',
         'default-character-set': 'utf8'
+        {% if horizon_galera_use_ssl | bool -%}
+        ,'ssl-ca': '{{ horizon_galera_ssl_ca_cert }}'
+        {% endif -%}
     },
 }
 
