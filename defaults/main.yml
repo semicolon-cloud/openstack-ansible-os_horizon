@@ -272,7 +272,6 @@ horizon_listen_ports:
 # horizon packages that must be installed before anything else
 horizon_requires_pip_packages:
   - virtualenv
-  - virtualenv-tools
   - python-keystoneclient # Keystoneclient needed to OSA keystone lib
   - httplib2
 
