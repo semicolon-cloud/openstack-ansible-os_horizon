@@ -213,7 +213,7 @@ horizon_enable_trove_ui: False
 horizon_enable_designate_ui: False
 
 ## Heat UI Panel
-horizon_enable_heat_ui: True
+horizon_enable_heat_ui: False
 
 ## Neutron features to enable
 horizon_enable_neutron_lbaas: False
