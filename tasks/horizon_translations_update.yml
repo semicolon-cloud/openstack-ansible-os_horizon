@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Perform a Horizon Zanata Pull Catalog
-  command: "{{ horizon_bin }}/horizon-manage.py pull_catalog"
+  command: "{{ horizon_bin }}/horizon-manage.py pull_catalog -v {{ horizon_translations_project_version | replace('/', '-') }}"
   args:
     chdir: "{{ horizon_lib_dir }}/"
   changed_when: false

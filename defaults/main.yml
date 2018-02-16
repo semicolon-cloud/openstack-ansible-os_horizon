@@ -323,6 +323,11 @@ horizon_optional_pip_packages: []
 # but should otherwise be left as False.
 horizon_translations_update: False
 
+# This variable is used to define the version of the project
+# (horizon) to pull from Zanata. Default value is master,
+# other possibly values are stable/pike, stable/queens...
+horizon_translations_project_version: master
+
 # This variable is used by the repo_build process to determine
 # which host group to check for members of before building the
 # pip packages required by this role. The value is picked up
