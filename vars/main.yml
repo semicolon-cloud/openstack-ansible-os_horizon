@@ -101,3 +101,10 @@ _horizon_panels:
   - src: "{{ horizon_lib_dir }}/octavia_dashboard/enabled/_1482_project_load_balancer_panel.py"
     path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_1482_project_load_balancer_panel.py"
     state: "{{ (horizon_enable_octavia_ui | bool) | ternary('link', 'absent') }}"
+
+_horizon_translations_pull:
+  - project: "horizon"
+    enabled: True
+  - project: "heat-dashboard"
+    enabled: "{{ horizon_enable_heat_ui }}"
+

@@ -326,7 +326,12 @@ horizon_translations_update: False
 # This variable is used to define the version of the project
 # (horizon) to pull from Zanata. Default value is master,
 # other possibly values are stable/pike, stable/queens...
-horizon_translations_project_version: master
+horizon_translations_project_version: "master"
+
+# This variable is used to be able to fully override or
+# partially union/intersect lists in order to change the
+# behaviour of the pull of the translations per component.
+horizon_translations_pull: "{{ _horizon_translations_pull }}"
 
 # This variable is used by the repo_build process to determine
 # which host group to check for members of before building the
