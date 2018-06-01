@@ -11,7 +11,6 @@
     horizon_container_mysql_password: "SuperSecrete"
     horizon_secret_key: "SuperSecreteHorizonKey"
     horizon_external_ssl: true
-    galera_root_password: "secrete"
     rabbitmq_servers: 10.100.100.101
     rabbitmq_use_ssl: false
     rabbitmq_port: 5671
@@ -28,3 +27,7 @@
     openrc_os_domain_name: "Default"
     memcached_servers: 10.100.100.101
     memcached_encryption_key: "secrete"
+    galera_root_user: root
+  vars_prompt:
+    - name: "galera_root_password"
+      prompt: "What is galera_root_password?"
