@@ -28,6 +28,7 @@ horizon_distro_packages:
   - openssl
   - libopenssl-devel
   - which
+  - MariaDB-devel           # required to build MySQL-python
 
 horizon_apache_conf: "/etc/apache2/httpd.conf"
 horizon_apache_default_log_folder: "/var/log/apache2"
