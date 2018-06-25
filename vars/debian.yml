@@ -24,6 +24,7 @@ horizon_distro_packages:
   - cron # required by the Ansible cron module
   - git
   - libapache2-mod-wsgi
+  - libmariadbclient-dev    # required to build MySQL-python
   - libssl-dev
   - libxslt1.1
   - openssl
