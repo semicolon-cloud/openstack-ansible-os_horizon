@@ -16,6 +16,11 @@
 ## Verbosity Options
 debug: False
 
+# Set the host which will execute the shade modules
+# for the service setup. The host must already have
+# clouds.yaml properly configured.
+horizon_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
+
 # Set the package install state for distribution and pip packages
 # Options are 'present' and 'latest'
 horizon_package_state: "latest"
@@ -203,7 +208,7 @@ horizon_launch_instance_defaults:
   disable_volume_snapshot: False
   create_volume: True
 
-## Ironic UI Panel
+## horizon UI Panel
 horizon_enable_ironic_ui: False
 
 ## Magnum UI Panel
@@ -286,12 +291,6 @@ horizon_webroot: /
 horizon_listen_ports:
   - "80"
   - "443"
-
-# horizon packages that must be installed before anything else
-horizon_requires_pip_packages:
-  - virtualenv
-  - python-keystoneclient # Keystoneclient needed to OSA keystone lib
-  - httplib2
 
 horizon_pip_packages:
   - cryptography

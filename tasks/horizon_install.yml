@@ -57,18 +57,6 @@
       {% endfor %}
   when: horizon_developer_mode | bool
 
-- name: Install requires pip packages
-  pip:
-    name: "{{ horizon_requires_pip_packages }}"
-    state: "{{ horizon_pip_package_state }}"
-    extra_args: >-
-      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
-      {{ pip_install_options | default('') }}
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-
 - name: Retrieve checksum for venv download
   uri:
     url: "{{ horizon_venv_download_url | replace('tgz', 'checksum') }}"
