@@ -44,7 +44,7 @@
     update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
     cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
   register: install_packages
-  until: install_packages|success
+  until: install_packages is success
   retries: 5
   delay: 2
 
@@ -72,14 +72,14 @@
   register: horizon_get_venv
   retries: 5
   delay: 5
-  until: horizon_get_venv | succeeded
+  until: horizon_get_venv  is succeeded
   when: horizon_venv_download | bool
 
 - name: Remove existing venv
   file:
     path: "{{ horizon_bin | dirname }}"
     state: absent
-  when: horizon_get_venv | changed
+  when: horizon_get_venv  is changed
 
 - name: Create horizon venv dir
   file:
@@ -87,14 +87,14 @@
     state: directory
     mode: "0755"
   register: horizon_venv_dir
-  when: horizon_get_venv | changed
+  when: horizon_get_venv  is changed
 
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ horizon_venv_download_url | basename }}"
     dest: "{{ horizon_bin | dirname }}"
     copy: "no"
-  when: horizon_get_venv | changed
+  when: horizon_get_venv  is changed
   notify: Restart apache2
 
 - name: Install pip packages
@@ -108,7 +108,7 @@
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
-  until: install_packages|success
+  until: install_packages is success
   retries: 5
   delay: 2
   when: horizon_get_venv | failed or horizon_get_venv | skipped
@@ -125,7 +125,7 @@
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
-  until: install_packages|success
+  until: install_packages is success
   retries: 5
   delay: 2
   when: horizon_optional_pip_packages | length > 0
@@ -136,7 +136,7 @@
     state: "absent"
   when:
     - ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
-    - horizon_get_venv | changed
+    - horizon_get_venv  is changed
 
 # NOTE(odyssey4me):
 # We reinitialize the venv to ensure that the right
@@ -154,7 +154,7 @@
         --no-pip \
         --no-setuptools \
         --no-wheel
-  when: horizon_get_venv | changed
+  when: horizon_get_venv  is changed
   tags:
     - skip_ansible_lint
 
