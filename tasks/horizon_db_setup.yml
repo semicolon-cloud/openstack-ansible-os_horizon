@@ -40,7 +40,7 @@
   no_log: True
 
 - name: Perform a horizon DB sync
-  command: "{{ horizon_bin }}/horizon-manage.py migrate --noinput"
+  command: "{{ horizon_manage }} migrate --noinput"
   become: yes
   become_user: "{{ horizon_system_user_name }}"
   changed_when: false
@@ -50,6 +50,6 @@
     name: "Clear out expired sessions"
     minute: "{{ 58 | random(start=2) }}"
     hour: 21
-    job: "{{ horizon_bin }}/horizon-manage.py clearsessions"
+    job: "{{ horizon_manage }} clearsessions"
     user: "{{ horizon_system_user_name }}"
     state: present

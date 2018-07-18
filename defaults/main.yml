@@ -26,6 +26,9 @@ horizon_service_setup_host: "{{ openstack_service_setup_host | default('localhos
 horizon_package_state: "latest"
 horizon_pip_package_state: "latest"
 
+# Set installation method.
+horizon_install_method: "source"
+
 ## Toggle developer mode
 horizon_developer_mode: false
 
@@ -63,7 +66,7 @@ horizon_developer_constraints:
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: untagged
-horizon_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
+horizon_bin: "{{ _horizon_bin }}"
 
 # venv_download, even when true, will use the fallback method of building the
 # venv from scratch if the venv download fails.
@@ -99,7 +102,7 @@ horizon_session_timeout: 1800
 horizon_help_url: http://docs.openstack.org
 
 ## Installation directories
-horizon_lib_dir: "{{ horizon_bin | dirname }}/lib/python2.7/dist-packages"
+horizon_lib_dir: "{{ _horizon_lib_dir }}"
 horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi/django.wsgi"
 
 horizon_endpoint_type: internalURL

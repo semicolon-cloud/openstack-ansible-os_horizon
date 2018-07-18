@@ -15,20 +15,42 @@
 
 horizon_system_service_name: apache2
 
+horizon_devel_distro_packages:
+  - git-core
+  - libxslt-devel
+  - openssl
+  - libopenssl-devel
+
 horizon_distro_packages:
+  - apache2
+  - apache2-utils
+  - apache2-mod_wsgi
   - cronie
   - cronie-anacron
   - gettext
-  - git-core
-  - apache2
-  - apache2-utils
-  - libxslt-devel
-  - apache2-mod_wsgi
   - python-MySQL-python
-  - openssl
-  - libopenssl-devel
   - which
   - MariaDB-devel           # required to build MySQL-python
+
+horizon_service_distro_packages:
+  - openstack-horizon-plugin-designate-ui
+  - openstack-horizon-plugin-gbp-ui
+  - openstack-horizon-plugin-ironic-ui
+  - openstack-horizon-plugin-magnum-ui
+  - openstack-horizon-plugin-manila-ui
+  - openstack-horizon-plugin-monasca-ui
+  - openstack-horizon-plugin-neutron-fwaas-ui
+  - openstack-horizon-plugin-neutron-lbaas-ui
+  - openstack-horizon-plugin-neutron-vpnaas-ui
+  - openstack-horizon-plugin-sahara-ui
+  - openstack-horizon-plugin-trove-ui
+  - python-horizon
+  - python-memcached
+
+# SUSE does not currently have packages for the following dashboards
+horizon_enable_heat_ui: False
+horizon_enable_octavia_ui: False
+horizon_enable_designate_ui: False # SUSE package is missing _1721_dns_zones_panel.py and _1722_dns_reversedns_panel.py
 
 horizon_apache_conf: "/etc/apache2/httpd.conf"
 horizon_apache_default_log_folder: "/var/log/apache2"
@@ -58,3 +80,7 @@ horizon_apache_modules:
     state: "present"
   - name: "headers"
     state: "present"
+
+_horizon_lib_dir: "/srv/www/openstack-dashboard"
+horizon_python_lib_dir: "/usr/lib/python2.7/site-packages"
+horizon_dashboard_panel_dir: "{{ _horizon_lib_dir }}/openstack_dashboard/enabled"
