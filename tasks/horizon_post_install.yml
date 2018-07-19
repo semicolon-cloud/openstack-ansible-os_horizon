@@ -90,6 +90,8 @@
 
 - name: Compile messages for translation
   command: "{{ horizon_bin }}/horizon-manage.py compilemessages"
+  become: yes
+  become_user: "{{ horizon_system_user_name }}"
   args:
     chdir: "{{ horizon_lib_dir }}/{{ item }}"
   changed_when: false
