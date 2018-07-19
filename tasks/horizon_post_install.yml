@@ -13,6 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Ensure horizon local dir is accessible by user
+  file:
+    path: "{{ horizon_lib_dir }}"
+    state: directory
+    owner: "{{ horizon_system_user_name }}"
+    group: "{{ horizon_system_group_name }}"
+    mode: "0755"
+    recurse: yes
+
 - name: Setup Horizon config(s)
   template:
     src: "{{ item.src }}"
