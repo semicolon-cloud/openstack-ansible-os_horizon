@@ -135,6 +135,9 @@ horizon_simple_ip_management: True
 # To enable ha router support in horizon set to True
 horizon_enable_ha_router: False
 
+# Provide default DNS servers to use when a subnet is created.
+horizon_default_dns_nameservers: []
+
 # DISALLOW_IFRAME_EMBED can be used to prevent Horizon from being embedded
 # within an iframe. Legacy browsers are still vulnerable to a Cross-Frame
 # Scripting (XFS) vulnerability, so this option allows extra security hardening

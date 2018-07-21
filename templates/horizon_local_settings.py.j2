@@ -315,7 +315,18 @@ OPENSTACK_NEUTRON_NETWORK = {
     # port.
     # VNIC types include 'normal', 'macvtap' and 'direct'.
     # Set to empty list or None to disable VNIC type selection.
-    'supported_vnic_types': ['*']
+    'supported_vnic_types': ['*'],
+
+    {% if horizon_default_dns_nameservers is defined %}
+    # Default DNS servers you would like to use when a subnet is created.
+    # This is only a default. Users can still choose a different list of
+    # dns servers.
+    'default_dns_nameservers': [
+      {% for item in horizon_default_dns_nameservers %}
+        '{{ item }}',
+      {% endfor %}
+    ]
+    {% endif %}
 }
 
 # The OPENSTACK_HEAT_STACK settings can be used to disable password
