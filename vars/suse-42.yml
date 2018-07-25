@@ -50,7 +50,6 @@ horizon_service_distro_packages:
 # SUSE does not currently have packages for the following dashboards
 horizon_enable_heat_ui: False
 horizon_enable_octavia_ui: False
-horizon_enable_designate_ui: False # SUSE package is missing _1721_dns_zones_panel.py and _1722_dns_reversedns_panel.py
 
 horizon_apache_conf: "/etc/apache2/httpd.conf"
 horizon_apache_default_log_folder: "/var/log/apache2"
