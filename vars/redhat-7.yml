@@ -15,21 +15,36 @@
 
 horizon_system_service_name: httpd
 
+horizon_devel_distro_packages:
+  - git
+  - libxslt-devel
+  - openssl
+  - openssl-libs
+
 horizon_distro_packages:
   - cronie
   - cronie-anacron
   - gettext
-  - git
   - httpd
   - httpd-tools
-  - libxslt-devel
   - mod_ssl
   - mod_wsgi
   - MySQL-python
-  - openssl
-  - openssl-libs
   - which
   - MariaDB-devel           # required to build MySQL-python
+
+horizon_service_distro_packages:
+  - openstack-designate-ui
+  - openstack-heat-ui
+  - openstack-ironic-ui
+  - openstack-magnum-ui
+  - openstack-manila-ui
+  - openstack-neutron-lbaas-ui
+  - openstack-sahara-ui
+  - openstack-trove-ui
+  - openstack-octavia-ui
+  - python-django-horizon
+  - python-memcached
 
 horizon_apache_conf: "/etc/httpd/conf/httpd.conf"
 horizon_apache_default_log_folder: "/var/log/httpd"
@@ -45,3 +60,7 @@ horizon_apache_default_sites:
   - "/etc/httpd/conf.d/userdir.conf"
   - "/etc/httpd/conf.d/welcome.conf"
   - "/etc/httpd/conf.d/ssl.conf"
+
+_horizon_lib_dir: "/usr/share/openstack-dashboard"
+horizon_python_lib_dir: "/usr/lib/python2.7/site-packages"
+horizon_dashboard_panel_dir: "{{ _horizon_lib_dir }}/openstack_dashboard/local/enabled"

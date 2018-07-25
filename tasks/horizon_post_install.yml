@@ -13,15 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Ensure horizon local dir is accessible by user
+- name: Ensure horizon dirs are accessible by user
   file:
-    path: "{{ horizon_lib_dir }}"
+    path: "{{ item.path }}"
     state: directory
     owner: "{{ horizon_system_user_name }}"
     group: "{{ horizon_system_group_name }}"
     mode: "0755"
     recurse: yes
+  with_items:
+    - { path: "{{ horizon_lib_dir }}", fixup: True }
+    - { path: "/etc/openstack-dashboard", fixup: "{{ (ansible_os_family | lower) == 'redhat' }}" }
+  when: item.fixup
 
+# TODO(hwoarang): See if we can use local_settings.py from the distribution packages
+# when horizon_install_method == 'distro'
 - name: Setup Horizon config(s)
   template:
     src: "{{ item.src }}"
@@ -30,9 +36,10 @@
     group: "{{ horizon_system_group_name }}"
     mode: "{{ item.mode }}"
   with_items:
-    - { src: "horizon_local_settings.py.j2", dest: "/etc/horizon/local_settings.py", owner: "root", mode: "0640" }
-    - { src: "horizon-manage.py.j2", dest: "{{ horizon_bin }}/horizon-manage.py", mode: "0755" }
-    - { src: "80_admin_default_panel.py.j2", dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_80_admin_default_panel.py", mode: "0755" }
+    - { src: "horizon_local_settings.py.j2", dest: "/etc/horizon/local_settings.py", owner: "root", mode: "0640", always_install: True }
+    - { src: "horizon-manage.py.j2", dest: "{{ horizon_bin }}/horizon-manage.py", mode: "0755", always_install: "{{ (horizon_install_method == 'source') }}" }
+    - { src: "80_admin_default_panel.py.j2", dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_80_admin_default_panel.py", mode: "0755", always_install: True }
+  when: item.always_install
   notify: Restart apache2
 
 - name: Uploading horizon custom files
@@ -90,15 +97,15 @@
   when: horizon_customization_module is defined
 
 - name: Compile messages for translation
-  command: "{{ horizon_bin }}/horizon-manage.py compilemessages"
+  command: "{{ horizon_manage }} compilemessages"
   become: yes
   become_user: "{{ horizon_system_user_name }}"
   args:
-    chdir: "{{ horizon_lib_dir }}/{{ item }}"
+    chdir: "{{ item }}"
   changed_when: false
   with_items:
-    - horizon
-    - openstack_dashboard
+    - "{{ horizon_python_lib_dir }}/horizon"
+    - "{{ horizon_lib_dir }}/openstack_dashboard"
   register: async_compile_messages
   async: 600
   poll: 0
@@ -109,8 +116,8 @@
   become_user: "{{ horizon_system_user_name }}"
   changed_when: false
   with_items:
-    - "{{ horizon_bin }}/horizon-manage.py collectstatic --noinput"
-    - "{{ horizon_bin }}/horizon-manage.py compress --force"
+    - "{{ horizon_manage }} collectstatic --noinput"
+    - "{{ horizon_manage }} compress --force"
   notify: Restart apache2
   register: async_compress_static_files
   async: 600

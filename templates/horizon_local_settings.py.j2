@@ -444,7 +444,14 @@ ENFORCE_PASSWORD_CHECK = {{ horizon_enforce_password_check }}
 # target installation.
 
 # Path to directory containing policy.json files
+{% if horizon_install_method == 'distro' and (ansible_os_family | lower) == 'redhat' %}
+# CentOS has policy files in /etc/openstack-dashboard
+POLICY_FILES_PATH = '/etc/openstack-dashboard'
+{% else %}
+# Path to directory containing policy.json files
 #POLICY_FILES_PATH = os.path.join(ROOT_PATH, "conf")
+{% endif %}
+
 # Map of local copy of service policy files.
 # Please insure that your identity policy file matches the one being used on
 # your keystone servers. There is an alternate policy file that may be used
