@@ -72,6 +72,8 @@
 - name: Ensure messages are compiled for translation
   async_status:
     jid: "{{ item.ansible_job_id }}"
+  become: yes
+  become_user: "{{ horizon_system_user_name }}"
   register: async_compile_messages_check
   until: async_compile_messages_check.finished
   retries: 300
