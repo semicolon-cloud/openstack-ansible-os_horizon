@@ -119,7 +119,6 @@
     - horizon-config
 
 - include: horizon_translations_update.yml
-  static: no
   when: horizon_translations_update | bool
   tags:
     - horizon-config
