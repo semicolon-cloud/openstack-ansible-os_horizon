@@ -227,7 +227,7 @@ horizon_launch_instance_defaults:
   disable_volume_snapshot: False
   create_volume: True
 
-## horizon UI Panel
+## Ironic UI Panel
 horizon_enable_ironic_ui: False
 
 ## Magnum UI Panel
