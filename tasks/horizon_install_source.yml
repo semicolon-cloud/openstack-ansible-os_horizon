@@ -37,6 +37,12 @@
     - { src: "/var/log/httpd", dest: "/var/log/apache2" }
   when: ansible_pkg_mgr in ['yum', 'dnf']
 
+# TODO(odyssey4me):
+# This can be simplified once all the roles are using
+# python_venv_build. We can then switch to using a
+# set of constraints in pip.conf inside the venv,
+# perhaps prepared by giving a giving a list of
+# constraints to the role.
 - name: Create developer mode constraint file
   copy:
     dest: "/opt/developer-pip-constraints.txt"
@@ -46,106 +52,26 @@
       {% endfor %}
   when: horizon_developer_mode | bool
 
-- name: Retrieve checksum for venv download
-  uri:
-    url: "{{ horizon_venv_download_url | replace('tgz', 'checksum') }}"
-    return_content: yes
-  register: horizon_venv_checksum
-  when: horizon_venv_download | bool
-
-- name: Attempt venv download
-  get_url:
-    url: "{{ horizon_venv_download_url }}"
-    dest: "/var/cache/{{ horizon_venv_download_url | basename }}"
-    checksum: "sha1:{{ horizon_venv_checksum.content | trim }}"
-  register: horizon_get_venv
-  retries: 5
-  delay: 5
-  until: horizon_get_venv is succeeded
-  when: horizon_venv_download | bool
-
-- name: Remove existing venv
-  file:
-    path: "{{ horizon_bin | dirname }}"
-    state: absent
-  when: horizon_get_venv is changed
-
-- name: Create horizon venv dir
-  file:
-    path: "{{ horizon_bin | dirname }}"
-    state: directory
-    mode: "0755"
-  register: horizon_venv_dir
-  when: horizon_get_venv is changed
-
-- name: Unarchive pre-built venv
-  unarchive:
-    src: "/var/cache/{{ horizon_venv_download_url | basename }}"
-    dest: "{{ horizon_bin | dirname }}"
-    copy: "no"
-  when: horizon_get_venv is changed
-  notify: Restart apache2
-
-- name: Install pip packages
-  pip:
-    name: "{{ horizon_pip_packages }}"
-    state: "{{ horizon_pip_package_state }}"
-    virtualenv: "{{ horizon_bin | dirname }}"
-    virtualenv_site_packages: "no"
-    extra_args: >-
-      {{ horizon_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
-      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
-      {{ pip_install_options | default('') }}
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  when: horizon_get_venv is failed or horizon_get_venv is skipped
-  notify: Restart apache2
-
-- name: Install optional pip packages
-  pip:
-    name: "{{ horizon_optional_pip_packages }}"
-    state: "{{ horizon_pip_package_state }}"
-    virtualenv: "{{ horizon_bin | dirname }}"
-    virtualenv_site_packages: "no"
-    extra_args: >-
-      {{ horizon_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
-      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
-      {{ pip_install_options | default('') }}
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  when: horizon_optional_pip_packages | length > 0
-
-- name: Remove python from path first (CentOS, openSUSE)
-  file:
-    path:  "{{ horizon_bin | dirname }}/bin/python2.7"
-    state: "absent"
+- name: Ensure remote wheel building is disabled in developer mode
+  set_fact:
+    venv_build_host: "{{ ansible_hostname }}"
   when:
-    - ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
-    - horizon_get_venv is changed
+    - horizon_developer_mode | bool
 
-# NOTE(odyssey4me):
-# We reinitialize the venv to ensure that the right
-# version of python is in the venv, but we do not
-# want virtualenv to also replace pip, setuptools
-# and wheel so we tell it not to.
-# We do not use --always-copy for CentOS/SuSE due
-# to https://github.com/pypa/virtualenv/issues/565
-- name: Update virtualenv path
-  shell: |
-    find {{ horizon_bin }} -name \*.pyc -delete
-    sed -si '1s/^.*python.*$/#!{{ horizon_bin | replace ('/','\/') }}\/python/' {{ horizon_bin }}/*
-    virtualenv {{ horizon_bin | dirname }} \
-        {{ (ansible_pkg_mgr == 'apt') | ternary('--always-copy', '') }} \
-        --no-pip \
-        --no-setuptools \
-        --no-wheel
-  when: horizon_get_venv is changed
-  tags:
-    - skip_ansible_lint
+- name: Install the python venv
+  include_role:
+    name: "python_venv_build"
+    private: yes
+  vars:
+    venv_build_distro_package_list: "{{ horizon_devel_distro_packages }}"
+    venv_install_destination_path: "{{ horizon_bin | dirname }}"
+    venv_install_distro_package_list: "{{ horizon_distro_packages }}"
+    venv_pip_install_args: "{{ horizon_pip_install_args }}"
+    venv_pip_packages: "{{ horizon_pip_packages + horizon_optional_pip_packages }}"
+    venv_facts_when_changed:
+      - section: "horizon"
+        option: "venv_tag"
+        value: "{{ horizon_venv_tag }}"
 
 - name: Create horizon link for venv
   file:
@@ -166,10 +92,3 @@
     - { path: "{{ horizon_lib_dir }}/openstack_dashboard", mode: "2755" }
     - { path: "{{ horizon_lib_dir }}/openstack_dashboard/local", mode: "2755" }
     - { path: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled", mode: "2755" }
-
-- name: Record the venv tag deployed
-  ini_file:
-    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
-    section: horizon
-    option: venv_tag
-    value: "{{ horizon_venv_tag }}"
