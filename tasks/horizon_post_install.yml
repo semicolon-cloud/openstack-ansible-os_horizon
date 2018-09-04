@@ -48,14 +48,6 @@
     dest: "{{ horizon_lib_dir }}/openstack_dashboard/static/dashboard/{{ item.value.dest }}"
   with_dict: "{{ horizon_custom_uploads | default({}) }}"
 
-- name: Enable project panels
-  file:
-    src: "{{ item.src }}"
-    path: "{{ item.path }}"
-    state: "{{ item.state }}"
-  with_items: "{{ horizon_panels }}"
-  notify: Restart apache2
-
 - name: Create horizon links
   file:
     src: "{{ item.src }}"

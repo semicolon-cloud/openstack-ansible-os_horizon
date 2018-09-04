@@ -51,7 +51,7 @@
 
 - name: Install distro packages
   package:
-    name: "{{ horizon_package_list}}"
+    name: "{{ horizon_package_list }}"
     state: "{{ horizon_package_state }}"
     update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
     cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"

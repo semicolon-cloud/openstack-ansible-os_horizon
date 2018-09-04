@@ -320,23 +320,23 @@ horizon_pip_packages:
   - django-appconf
   - django-openstack-auth
   - greenlet
-  - heat_dashboard
   - horizon
-  - ironic-ui
-  - magnum-ui
   - keystonemiddleware
   - MySQL-python
   - PyMySQL
-  - neutron-lbaas-dashboard
-  - neutron-fwaas-dashboard
   - oslo.config
   - ply
   - python-memcached
   - python-keystoneclient
-  - sahara_dashboard
-  - trove_dashboard
-  - designate_dashboard
-  - octavia_dashboard
+  - "{{ horizon_enable_sahara_ui | ternary('sahara_dashboard', '') }}"
+  - "{{ horizon_enable_trove_ui | ternary('trove_dashboard', '') }}"
+  - "{{ horizon_enable_magnum_ui | ternary('magnum-ui', '') }}"
+  - "{{ horizon_enable_heat_ui | ternary('heat_dashboard', '') }}"
+  - "{{ horizon_enable_ironic_ui | ternary('ironic-ui', '') }}"
+  - "{{ horizon_enable_designate_ui | ternary('designate_dashboard', '') }}"
+  - "{{ horizon_enable_neutron_lbaas | ternary('neutron-lbaas-dashboard', '') }}"
+  - "{{ horizon_enable_neutron_fwaas | ternary('neutron-fwaas-dashboard', '') }}"
+  - "{{ horizon_enable_octavia_ui | ternary('octavia_dashboard', '') }}"
 
 # This variable is used to install additional pip packages
 # that could be needed for additional dashboards
@@ -373,5 +373,3 @@ horizon_keystone_admin_roles:
 # The list of authentication mechanisms which include keystone
 # federation protocols and identity provider/federation protocol
 horizon_websso_initial_choice: "credentials"
-
-horizon_panels: "{{ _horizon_panels }}"
