@@ -328,18 +328,32 @@ horizon_pip_packages:
   - ply
   - python-memcached
   - python-keystoneclient
-  - "{{ horizon_enable_sahara_ui | ternary('sahara_dashboard', '') }}"
-  - "{{ horizon_enable_trove_ui | ternary('trove_dashboard', '') }}"
-  - "{{ horizon_enable_magnum_ui | ternary('magnum-ui', '') }}"
-  - "{{ horizon_enable_heat_ui | ternary('heat_dashboard', '') }}"
-  - "{{ horizon_enable_ironic_ui | ternary('ironic-ui', '') }}"
-  - "{{ horizon_enable_designate_ui | ternary('designate_dashboard', '') }}"
-  - "{{ horizon_enable_neutron_lbaas | ternary('neutron-lbaas-dashboard', '') }}"
-  - "{{ horizon_enable_neutron_fwaas | ternary('neutron-fwaas-dashboard', '') }}"
-  - "{{ horizon_enable_octavia_ui | ternary('octavia_dashboard', '') }}"
+
+# Optional pip packages for additional dashboards
+# TODO(odyssey4me):
+# Simplify this when we are no longer using the py_pkgs plugin
+horizon_designate_optional_pip_packages:
+  - designate_dashboard
+horizon_heat_optional_pip_packages:
+  - heat_dashboard
+horizon_ironic_optional_pip_packages:
+  - ironic-ui
+horizon_magnum_optional_pip_packages:
+  - magnum-ui
+horizon_neutron_fwaas_optional_pip_packages:
+  - neutron-fwaas-dashboard
+horizon_neutron_lbaas_optional_pip_packages:
+  - neutron-lbaas-dashboard
+horizon_octavia_optional_pip_packages:
+  - octavia_dashboard
+horizon_sahara_optional_pip_packages:
+  - sahara_dashboard
+horizon_trove_optional_pip_packages:
+  - trove_dashboard
 
 # This variable is used to install additional pip packages
-# that could be needed for additional dashboards
+# that could be needed for additional dashboards required
+# which are not part of the standard set above.
 horizon_optional_pip_packages: []
 
 # This variable is used to update the horizon translations from
