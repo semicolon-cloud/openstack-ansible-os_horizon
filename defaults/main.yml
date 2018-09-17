@@ -36,6 +36,10 @@ horizon_developer_mode: false
 horizon_git_repo: https://git.openstack.org/openstack/horizon
 horizon_git_install_branch: master
 
+## The git source/branch for the Blazar UI plugin
+blazar_dashboard_git_repo: https://git.openstack.org/openstack/blazar-dashboard
+blazar_dashboard_git_install_branch: master
+
 ## The git source/branch for the Magnum UI plugin
 magnum_dashboard_git_repo: https://git.openstack.org/openstack/magnum-ui
 magnum_dashboard_git_install_branch: master
@@ -59,6 +63,7 @@ heat_dashboard_git_install_branch: master
 ## The packages to build from source (used in developer mode)
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
+  - "git+{{ blazar_dashboard_git_repo }}@{{ blazar_dashboard_git_install_branch }}#egg=blazar-dashboard"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
@@ -227,6 +232,9 @@ horizon_launch_instance_defaults:
   disable_volume_snapshot: False
   create_volume: True
 
+## Blazar UI Panel
+horizon_enable_blazar_ui: False
+
 ## Ironic UI Panel
 horizon_enable_ironic_ui: False
 
@@ -331,6 +339,8 @@ horizon_pip_packages:
 # Optional pip packages for additional dashboards
 # TODO(odyssey4me):
 # Simplify this when we are no longer using the py_pkgs plugin
+horizon_blazar_optional_pip_packages:
+  - blazar_dashboard
 horizon_designate_optional_pip_packages:
   - designate_dashboard
 horizon_heat_optional_pip_packages:
