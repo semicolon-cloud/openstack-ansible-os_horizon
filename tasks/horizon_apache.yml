@@ -110,11 +110,12 @@
     line: "ServerSignature {{ horizon_apache_serversignature }}"
   notify: Restart apache2
 
-# Removing the Listen from apache config to prevent conflicts with ports.conf on CentOS
+# Removing the Listen (or listen.conf inclusion) from apache config to prevent
+# conflicts with ports.conf on CentOS and openSUSE
 - name: Remove Listen from Apache config
   lineinfile:
     dest: "{{ horizon_apache_security_conf }}"
-    regexp: '^(Listen.*)'
+    regexp: "{{ (ansible_pkg_mgr == 'zypper') | ternary('^(Include.*listen\\.conf)', '^(Listen.*)') }}"
     backrefs: yes
     line: '#\1'
   notify: Restart apache2
