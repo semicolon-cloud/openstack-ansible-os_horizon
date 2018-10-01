@@ -52,6 +52,10 @@ octavia_dashboard_git_install_branch: master
 designate_dashboard_git_repo: https://git.openstack.org/openstack/designate-dashboard
 designate_dashboard_git_install_branch: master
 
+## The git source/branch for the Tacker UI plugin
+tacker_dashboard_git_repo: https://git.openstack.org/openstack/tacker-horizon
+tacker_dashboard_git_install_branch: master
+
 ## The git source/branch for the Trove UI plugin
 trove_dashboard_git_repo: https://git.openstack.org/openstack/trove-dashboard
 trove_dashboard_git_install_branch: master
@@ -66,6 +70,7 @@ horizon_developer_constraints:
   - "git+{{ blazar_dashboard_git_repo }}@{{ blazar_dashboard_git_install_branch }}#egg=blazar-dashboard"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
+  - "git+{{ tacker_dashboard_git_repo }}@{{ tacker_dashboard_git_install_branch }}#egg=tacker_horizon"
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
   - "git+{{ heat_dashboard_git_repo }}@{{ heat_dashboard_git_install_branch }}#egg=heat_dashboard"
 
@@ -247,6 +252,9 @@ horizon_enable_octavia_ui: False
 ## Sahara UI Panel
 horizon_enable_sahara_ui: False
 
+## Tacker UI Panel
+horizon_enable_tacker_ui: False
+
 ## Trove UI Panel
 horizon_enable_trove_ui: False
 
@@ -357,6 +365,8 @@ horizon_octavia_optional_pip_packages:
   - octavia_dashboard
 horizon_sahara_optional_pip_packages:
   - sahara_dashboard
+horizon_tacker_optional_pip_packages:
+  - tacker_horizon
 horizon_trove_optional_pip_packages:
   - trove_dashboard
 
