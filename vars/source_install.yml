@@ -12,7 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-horizon_package_list: "{{ horizon_distro_packages + horizon_devel_distro_packages }}"
+
+horizon_package_list: "{{ horizon_distro_packages }}"
 _horizon_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
 _horizon_lib_dir: "{{ _horizon_bin | dirname }}/lib/python2.7/dist-packages"
 horizon_python_lib_dir: "{{ _horizon_lib_dir }}"
