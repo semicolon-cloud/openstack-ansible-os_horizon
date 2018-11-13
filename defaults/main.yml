@@ -72,6 +72,10 @@ heat_dashboard_git_install_branch: master
 zun_dashboard_git_repo: https://git.openstack.org/openstack/zun-ui
 zun_dashboard_git_install_branch: master
 
+# The git source/branch for the Neutron VPNaaS UI plugin
+neutron_vpnaas_dashboard_git_repo: https://git.openstack.org/cgit/openstack/neutron-vpnaas-dashboard
+neutron_vpnaas_dashboard_git_install_branch: master
+
 ## The packages to build from source (used in developer mode)
 horizon_developer_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
@@ -83,6 +87,7 @@ horizon_developer_constraints:
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
   - "git+{{ heat_dashboard_git_repo }}@{{ heat_dashboard_git_install_branch }}#egg=heat_dashboard"
   - "git+{{ zun_dashboard_git_repo }}@{{ zun_dashboard_git_install_branch }}#egg=zun_ui"
+  - "git+{{ neutron_vpnaas_dashboard_git_repo }}@{{ neutron_vpnaas_dashboard_git_install_branch }}#egg=neutron_vpnaas_dashboard"
 
 # TODO(odyssey4me):
 # This can be simplified once all the roles are using
@@ -290,6 +295,7 @@ horizon_enable_heat_ui: False
 ## Neutron features to enable
 horizon_enable_neutron_lbaas: False
 horizon_enable_neutron_fwaas: False
+horizon_enable_neutron_vpnaas: False
 
 ## Zun UI Panel
 horizon_enable_zun_ui: False
@@ -389,6 +395,8 @@ horizon_neutron_fwaas_optional_pip_packages:
   - neutron-fwaas-dashboard
 horizon_neutron_lbaas_optional_pip_packages:
   - neutron-lbaas-dashboard
+horizon_neutron_vpnaas_optional_pip_packages:
+  - neutron-vpnaas-dashboard
 horizon_octavia_optional_pip_packages:
   - octavia_dashboard
 horizon_sahara_optional_pip_packages:
