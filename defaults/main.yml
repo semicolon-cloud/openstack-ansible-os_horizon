@@ -48,6 +48,10 @@ cloudkitty_dashboard_git_install_branch: master
 magnum_dashboard_git_repo: https://git.openstack.org/openstack/magnum-ui
 magnum_dashboard_git_install_branch: master
 
+## The git source/branch for the Masakari UI plugin
+masakari_dashboard_git_repo: https://git.openstack.org/openstack/masakari-dashboard
+masakari_dashboard_git_install_branch: master
+
 ## The git source/branch for the Octavia UI plugin
 octavia_dashboard_git_repo: https://git.openstack.org/openstack/octavia-dashboard
 octavia_dashboard_git_install_branch: master
@@ -82,6 +86,7 @@ horizon_developer_constraints:
   - "git+{{ blazar_dashboard_git_repo }}@{{ blazar_dashboard_git_install_branch }}#egg=blazar-dashboard"
   - "git+{{ cloudkitty_dashboard_git_repo }}@{{ cloudkitty_dashboard_git_install_branch }}#egg=cloudkitty_dashboard"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
+  - "git+{{ masakari_dashboard_git_repo }}@{{ masakari_dashboard_git_install_branch }}#egg=masakari_dashboard"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
   - "git+{{ tacker_dashboard_git_repo }}@{{ tacker_dashboard_git_install_branch }}#egg=tacker_horizon"
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
@@ -274,6 +279,9 @@ horizon_enable_ironic_ui: False
 ## Magnum UI Panel
 horizon_enable_magnum_ui: False
 
+## Masakari UI Panel
+horizon_enable_masakari_ui: False
+
 ## Octavia UI Panel
 horizon_enable_octavia_ui: False
 
@@ -391,6 +399,8 @@ horizon_ironic_optional_pip_packages:
   - ironic-ui
 horizon_magnum_optional_pip_packages:
   - magnum-ui
+horizon_masakari_optional_pip_packages:
+  - masakari-dashboard
 horizon_neutron_fwaas_optional_pip_packages:
   - neutron-fwaas-dashboard
 horizon_neutron_lbaas_optional_pip_packages:

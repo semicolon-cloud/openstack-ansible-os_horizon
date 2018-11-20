@@ -23,3 +23,5 @@ _dashboard_panels_location:
   - "/enabled"
   - "/conf"
   - "/local_settings.d"
+  - "/local/enabled"
+  - "/local/local_settings.d"
