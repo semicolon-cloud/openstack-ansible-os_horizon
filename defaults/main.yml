@@ -73,7 +73,7 @@ zun_dashboard_git_repo: https://git.openstack.org/openstack/zun-ui
 zun_dashboard_git_install_branch: master
 
 # The git source/branch for the Neutron VPNaaS UI plugin
-neutron_vpnaas_dashboard_git_repo: https://git.openstack.org/cgit/openstack/neutron-vpnaas-dashboard
+neutron_vpnaas_dashboard_git_repo: https://git.openstack.org/openstack/neutron-vpnaas-dashboard
 neutron_vpnaas_dashboard_git_install_branch: master
 
 ## The packages to build from source (used in developer mode)
