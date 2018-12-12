@@ -250,6 +250,10 @@ horizon_keystone_endpoint: "{{ keystone_service_internalurl }}"
 ## Horizon Multi-Domain Support
 # these variables should only be changed if horizon_keystone_endpoint is a Keystone v3 API endpoint
 horizon_keystone_multidomain_support: False
+# It is strongly advised NOT to enable dropdown for public clouds, as advertising enabled domains
+# to unauthenticated customers irresponsibly exposes private information.
+horizon_keystone_multidomain_dropdown: False
+
 horizon_keystone_default_domain: Default
 
 ### Set the cacert pem for Keystone if you'd like Horizon to verify it.
