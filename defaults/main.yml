@@ -397,6 +397,9 @@ horizon_pip_packages:
   - python-memcached
   - python-keystoneclient
 
+# Specific pip packages provided by the user
+horizon_user_pip_packages: []
+
 # Optional pip packages for additional dashboards
 # TODO(odyssey4me):
 # Simplify this when we are no longer using the py_pkgs plugin
