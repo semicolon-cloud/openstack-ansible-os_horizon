@@ -59,6 +59,9 @@
   until: install_packages is success
   retries: 5
   delay: 2
+  notify:
+    - Compile messages
+    - Restart apache2
 
 - name: Install horizon packages from PIP
   include_tasks: horizon_install_source.yml

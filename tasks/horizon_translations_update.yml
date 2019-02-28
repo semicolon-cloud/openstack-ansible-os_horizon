@@ -14,20 +14,14 @@
 # limitations under the License.
 
 - name: Perform a Zanata Pull Catalog
-  command: "{{ horizon_bin }}/horizon-manage.py pull_catalog -p {{ translation.project }} -m {{ translation.module }} -b {{ (translation.branch | default(horizon_translations_project_version)) | replace('/', '-') }}"
+  command: "{{ horizon_manage }} pull_catalog -p {{ translation.project }} -m {{ translation.module }} -b {{ (translation.branch | default(horizon_translations_project_version)) | replace('/', '-') }}"
   args:
     chdir: "{{ horizon_lib_dir }}/"
-  changed_when: false
   with_items: "{{ horizon_translations_pull }}"
   loop_control:
     loop_var: translation
   when:
     - translation.enabled | bool
-
-- name: Perform Zanata Compile Messages
-  command: "{{ horizon_bin }}/horizon-manage.py compilemessages"
-  args:
-    chdir: "{{ horizon_lib_dir }}/"
-  tags:
-    - skip_ansible_lint
-  notify: Restart apache2
+  notify:
+    - Compile messages
+    - Restart apache2

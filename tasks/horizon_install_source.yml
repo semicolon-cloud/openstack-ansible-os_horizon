@@ -139,4 +139,6 @@
     path: "{{ horizon_dashboard_panel_dir }}/{{ item.path|basename }}"
     state: link
   with_items: "{{ found_panels.files }}"
-  notify: Restart apache2
+  notify:
+    - Compile messages
+    - Restart apache2

@@ -13,6 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Compile messages
+  command: "{{ horizon_manage }} compilemessages"
+  become: yes
+  become_user: "{{ horizon_system_user_name }}"
+  args:
+    chdir: "{{ horizon_lib_dir }}/"
+  listen:
+    - "venv changed"
+
 - name: Restart apache2
   service:
     name: "{{ horizon_system_service_name }}"
