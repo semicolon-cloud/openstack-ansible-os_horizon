@@ -14,14 +14,14 @@
 # limitations under the License.
 
 - name: Perform a Zanata Pull Catalog
-  command: "{{ horizon_manage }} pull_catalog -p {{ translation.project }} -m {{ translation.module }} -b {{ (translation.branch | default(horizon_translations_project_version)) | replace('/', '-') }}"
+  command: "{{ horizon_manage }} pull_catalog -p {{ translation.project }} -m {{ translation.module }} -b {{ (translation.branch | default('master')) | replace('/', '-') }}"
   args:
     chdir: "{{ horizon_lib_dir }}/"
   with_items: "{{ horizon_translations_pull }}"
   loop_control:
     loop_var: translation
   when:
-    - translation.enabled | bool
+    - (translation.enabled | default("True")) | bool
   notify:
     - Compile messages
     - Restart apache2
