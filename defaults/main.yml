@@ -49,6 +49,10 @@ cloudkitty_dashboard_git_install_branch: master
 magnum_dashboard_git_repo: https://git.openstack.org/openstack/magnum-ui
 magnum_dashboard_git_install_branch: master
 
+## The git source/branch for the Manila UI plugin
+manila_dashboard_git_repo: https://git.openstack.org/openstack/manila-ui.git
+manila_dashboard_git_install_branch: master
+
 ## The git source/branch for the Masakari UI plugin
 masakari_dashboard_git_repo: https://git.openstack.org/openstack/masakari-dashboard
 masakari_dashboard_git_install_branch: master
@@ -95,6 +99,7 @@ horizon_developer_constraints:
   - "git+{{ blazar_dashboard_git_repo }}@{{ blazar_dashboard_git_install_branch }}#egg=blazar-dashboard"
   - "git+{{ cloudkitty_dashboard_git_repo }}@{{ cloudkitty_dashboard_git_install_branch }}#egg=cloudkitty_dashboard"
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
+  - "git+{{ manila_dashboard_git_repo }}@{{ manila_dashboard_git_install_branch }}#egg=manila-ui"
   - "git+{{ masakari_dashboard_git_repo }}@{{ masakari_dashboard_git_install_branch }}#egg=masakari_dashboard"
   - "git+{{ mistral_dashboard_git_repo }}@{{ mistral_dashboard_git_install_branch }}#egg=mistral-dashboard"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
@@ -297,6 +302,9 @@ horizon_enable_magnum_ui: False
 ## Mistral Ui Panel
 horizon_enable_mistral_ui: False
 
+## Manila UI Panel
+horizon_enable_manila_ui: False
+
 ## Masakari UI Panel
 horizon_enable_masakari_ui: False
 
@@ -423,6 +431,8 @@ horizon_ironic_optional_pip_packages:
   - ironic-ui
 horizon_magnum_optional_pip_packages:
   - magnum-ui
+horizon_manila_optional_pip_packages:
+  - manila-ui
 horizon_masakari_optional_pip_packages:
   - masakari-dashboard
 horizon_mistral_optional_pip_packages:
