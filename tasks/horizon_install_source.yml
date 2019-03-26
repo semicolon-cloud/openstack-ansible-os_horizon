@@ -37,31 +37,11 @@
     - { src: "/var/log/httpd", dest: "/var/log/apache2" }
   when: ansible_pkg_mgr in ['yum', 'dnf']
 
-# TODO(odyssey4me):
-# This can be simplified once all the roles are using
-# python_venv_build. We can then switch to using a
-# set of constraints in pip.conf inside the venv,
-# perhaps prepared by giving a giving a list of
-# constraints to the role.
-- name: Create developer mode constraint file
-  copy:
-    dest: "/opt/developer-pip-constraints.txt"
-    content: |
-      {% for item in horizon_developer_constraints %}
-      {{ item }}
-      {% endfor %}
-  when: horizon_developer_mode | bool
-
-- name: Ensure remote wheel building is disabled in developer mode
-  set_fact:
-    venv_build_host: "{{ inventory_hostname }}"
-  when:
-    - horizon_developer_mode | bool
-
 - name: Install the python venv
   include_role:
     name: "python_venv_build"
   vars:
+    venv_build_constraints: "{{ horizon_git_constraints }}"
     venv_build_distro_package_list: "{{ horizon_devel_distro_packages }}"
     venv_install_destination_path: "{{ horizon_bin | dirname }}"
     venv_pip_install_args: "{{ horizon_pip_install_args }}"

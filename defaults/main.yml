@@ -30,8 +30,7 @@ horizon_pip_package_state: "latest"
 # Set installation method.
 horizon_install_method: "source"
 
-## Toggle developer mode
-horizon_developer_mode: false
+horizon_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
 
 ## The git source/branch for Horizon
 horizon_git_repo: https://git.openstack.org/openstack/horizon
@@ -93,8 +92,8 @@ zun_dashboard_git_install_branch: master
 neutron_vpnaas_dashboard_git_repo: https://git.openstack.org/openstack/neutron-vpnaas-dashboard
 neutron_vpnaas_dashboard_git_install_branch: master
 
-## The packages to build from source (used in developer mode)
-horizon_developer_constraints:
+## The packages to build from source
+horizon_git_constraints:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
   - "git+{{ blazar_dashboard_git_repo }}@{{ blazar_dashboard_git_install_branch }}#egg=blazar-dashboard"
   - "git+{{ cloudkitty_dashboard_git_repo }}@{{ cloudkitty_dashboard_git_install_branch }}#egg=cloudkitty_dashboard"
@@ -109,26 +108,13 @@ horizon_developer_constraints:
   - "git+{{ watcher_dashboard_git_repo }}@{{ watcher_dashboard_git_install_branch }}#egg=watcher_dashboard"
   - "git+{{ zun_dashboard_git_repo }}@{{ zun_dashboard_git_install_branch }}#egg=zun_ui"
   - "git+{{ neutron_vpnaas_dashboard_git_repo }}@{{ neutron_vpnaas_dashboard_git_install_branch }}#egg=neutron_vpnaas_dashboard"
+  - --constraint {{ horizon_upper_constraints_url }}
 
-# TODO(odyssey4me):
-# This can be simplified once all the roles are using
-# python_venv_build. We can then switch to using a
-# set of constraints in pip.conf inside the venv,
-# perhaps prepared by giving a giving a list of
-# constraints to the role.
-horizon_pip_install_args: >-
-  {{ horizon_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
-  {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''), '') }}
-  {{ pip_install_options | default('') }}
+horizon_pip_install_args: "{{ pip_install_options | default('') }}"
 
 # Name of the virtual env to deploy into
 horizon_venv_tag: "{{ venv_tag | default('untagged') }}"
 horizon_bin: "{{ _horizon_bin }}"
-
-# venv_download, even when true, will use the fallback method of building the
-# venv from scratch if the venv download fails.
-horizon_venv_download: "{{ not horizon_developer_mode | bool }}"
-horizon_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/horizon.tgz
 
 ## System info
 horizon_system_user_name: horizon
