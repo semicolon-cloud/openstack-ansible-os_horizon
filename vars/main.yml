@@ -15,29 +15,29 @@
 
 _horizon_translations_pull:
   - project: "horizon"
-    branch: master
+    branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module:
       - horizon
       - openstack_auth
       - openstack_dashboard
   - project: "designate-dashboard"
-    branch: master
+    branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module: designatedashboard
   - project: "sahara-dashboard"
-    branch: master
+    branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module: sahara_dashboard
   - project: "heat-dashboard"
-    branch: master
+    branch: "{{ horizon_translations_project_version }}"
     enabled: "{{ horizon_enable_heat_ui }}"
     module: heat_dashboard
   - project: "magnum-ui"
-    branch: master
+    branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module: magnum_ui
   - project: "trove-dashboard"
-    branch: master
+    branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module: trove_dashboard
