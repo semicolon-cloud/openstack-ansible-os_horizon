@@ -15,7 +15,8 @@
 - project:
     templates:
       - check-requirements
-      - openstack-ansible-role-distro_install-jobs
-      - openstack-ansible-role-jobs
+      - openstack-ansible-deploy-aio_distro_lxc-jobs
+      - openstack-ansible-deploy-aio_lxc-jobs
+      - openstack-ansible-linters
       - publish-openstack-docs-pti
       - release-notes-jobs-python3
