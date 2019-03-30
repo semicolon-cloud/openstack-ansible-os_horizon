@@ -125,7 +125,7 @@
       {%   endfor %}
       {% endfor %}
       {{ policy_path }}
-    patterns: ["^.*_policy.json$"]
+    patterns: ["^.*_policy.(json|yaml)$"]
     file_type: file
     use_regex: yes
   register: found_policy
