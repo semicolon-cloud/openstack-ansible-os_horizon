@@ -387,17 +387,9 @@ horizon_listen_ports:
   - "443"
 
 horizon_pip_packages:
-  - cryptography
-  - django-appconf
-  - django-openstack-auth
-  - greenlet
   - horizon
-  - keystonemiddleware
   - PyMySQL
-  - oslo.config
-  - ply
   - python-memcached
-  - python-keystoneclient
 
 # Specific pip packages provided by the user
 horizon_user_pip_packages: []
