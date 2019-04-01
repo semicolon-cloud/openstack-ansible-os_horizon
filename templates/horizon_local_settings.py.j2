@@ -178,9 +178,6 @@ AVAILABLE_REGIONS = [
   ('{{ item.url }}', '{{ item.name }}'),
 {% endfor %}
 ]
-{% else %}
-# Set Horizon to use a specific Keystone endpoint
-OPENSTACK_HOST = "{{ horizon_keystone_host }}"
 {% endif %}
 
 OPENSTACK_KEYSTONE_URL = "{{ horizon_keystone_endpoint }}"
