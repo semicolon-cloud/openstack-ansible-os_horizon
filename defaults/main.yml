@@ -142,7 +142,7 @@ horizon_galera_ssl_ca_cert: "{{ galera_ssl_ca_cert | default('/etc/ssl/certs/gal
 horizon_session_timeout: 1800
 
 ## Horizon Help URL Path
-horizon_help_url: https://docs.openstack.org
+horizon_help_url: https://docs.openstack.org/horizon/latest/user/
 
 ## Installation directories
 horizon_lib_dir: "{{ _horizon_lib_dir }}"
