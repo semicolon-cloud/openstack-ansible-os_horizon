@@ -240,7 +240,6 @@ horizon_secure_proxy_ssl_header_django: "HTTP_{{ horizon_secure_proxy_ssl_header
 #   - { url: "http://cluster1.example.com:5000/v2.0", name: "RegionTwo" }
 
 ## Horizon's keystone endpoint settings
-horizon_keystone_host: "{{ internal_lb_vip_address }}"
 horizon_keystone_endpoint: "{{ keystone_service_internalurl }}"
 
 ## Horizon Multi-Domain Support
