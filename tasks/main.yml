@@ -39,6 +39,19 @@
   tags:
     - always
 
+- import_tasks: db_setup.yml
+  when: inventory_hostname == ansible_play_hosts[0]
+  vars:
+    _oslodb_setup_host: "{{ horizon_db_setup_host }}"
+    _oslodb_databases:
+      - name: "{{ horizon_galera_database }}"
+        users:
+          - username: "{{ horizon_galera_user }}"
+            password: "{{ horizon_container_mysql_password }}"
+  tags:
+    - common-db
+    - horizon-config
+
 - import_tasks: horizon_pre_install.yml
   tags:
     - horizon-install
@@ -51,7 +64,7 @@
   tags:
     - horizon-config
 
-- import_tasks: horizon_db_setup.yml
+- import_tasks: horizon_db_sync.yml
   when: inventory_hostname == ansible_play_hosts[0]
   tags:
     - horizon-config
