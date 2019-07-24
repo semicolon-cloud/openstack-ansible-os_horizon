@@ -154,7 +154,8 @@ horizon_server_name: "{{ ansible_fqdn | default('horizon') }}"
 horizon_apache_servertokens: "Prod"
 horizon_apache_serversignature: "Off"
 horizon_log_level: info
-horizon_apache_custom_log_format: combined
+# It's combined log format without datetime, since it's already present in journald
+horizon_apache_custom_log_format: '"%h %l %u \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""'
 horizon_dropdown_max_items: 30
 horizon_instance_log_length: 35
 horizon_overview_days_range: 1

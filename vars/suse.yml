@@ -51,9 +51,6 @@ horizon_enable_heat_ui: False
 horizon_enable_octavia_ui: False
 
 horizon_apache_conf: "/etc/apache2/httpd.conf"
-horizon_apache_default_log_folder: "/var/log/apache2"
-horizon_apache_default_log_owner: "root"
-horizon_apache_default_log_grp: "root"
 horizon_apache_security_conf: "{{ horizon_apache_conf }}"
 
 horizon_apache_configs:

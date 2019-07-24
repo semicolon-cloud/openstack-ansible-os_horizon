@@ -17,8 +17,8 @@
 <VirtualHost *:{{ ((horizon_enable_ssl | bool) and not (horizon_external_ssl | bool)) | ternary('443', '80') }}>
     ServerName {{ horizon_server_name }}
     LogLevel  {{ horizon_log_level }}
-    ErrorLog  /var/log/horizon/horizon-error.log
-    CustomLog /var/log/horizon/ssl_access.log {{ horizon_apache_custom_log_format }}
+    ErrorLog  syslog:daemon
+    CustomLog "|/usr/bin/env logger -p daemon.info -t {{ horizon_system_service_name }}" {{ horizon_apache_custom_log_format }}
     Options +FollowSymLinks
 {% if (horizon_enable_ssl | bool) and not (horizon_external_ssl | bool) %}
     SSLEngine on

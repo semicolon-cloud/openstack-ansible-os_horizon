@@ -23,7 +23,6 @@
   with_items:
     - { path: "/etc/pki/tls/certs", owner: "root", group: "root" }
     - { path: "/etc/pki/tls/private", owner: "root", group: "root" }
-    - { path: "/var/log/httpd", mode: "2755" }
   when: ansible_pkg_mgr in ['yum', 'dnf']
 
 - name: Create system links
@@ -34,7 +33,6 @@
   with_items:
     - { src: "/etc/pki/tls/certs", dest: "/etc/ssl/certs" }
     - { src: "/etc/pki/tls/private", dest: "/etc/ssl/private" }
-    - { src: "/var/log/httpd", dest: "/var/log/apache2" }
   when: ansible_pkg_mgr in ['yum', 'dnf']
 
 - name: Install the python venv

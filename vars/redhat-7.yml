@@ -46,9 +46,6 @@ horizon_service_distro_packages:
   - python-PyMySQL
 
 horizon_apache_conf: "/etc/httpd/conf/httpd.conf"
-horizon_apache_default_log_folder: "/var/log/httpd"
-horizon_apache_default_log_owner: "root"
-horizon_apache_default_log_grp: "root"
 horizon_apache_security_conf: "{{ horizon_apache_conf }}"
 
 horizon_apache_configs:
