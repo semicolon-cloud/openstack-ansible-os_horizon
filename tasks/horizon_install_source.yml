@@ -68,6 +68,18 @@
         option: "venv_tag"
         value: "{{ horizon_venv_tag }}"
 
+- name: Find the venv's python version
+  find:
+    paths: "{{ horizon_bin | dirname }}/lib/"
+    patterns: "python*"
+    file_type: directory
+    recurse: no
+  register: _horizon_python_venv_details
+
+- name: Set python lib dir fact
+  set_fact:
+    horizon_lib_dir: "{{ _horizon_python_venv_details.files[0].path }}/dist-packages"
+
 - name: Create horizon link for venv
   file:
     src: "{{ horizon_lib_dir | dirname }}/site-packages"

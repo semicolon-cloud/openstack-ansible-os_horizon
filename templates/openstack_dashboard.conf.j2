@@ -40,7 +40,7 @@
 {% endif %}
 
     WSGIScriptAlias / {{ horizon_lib_wsgi_file }}
-    WSGIDaemonProcess horizon user={{ horizon_system_user_name }} group={{ horizon_system_group_name }} processes={{ horizon_wsgi_processes | default(horizon_wsgi_threads) }} threads={{ horizon_wsgi_threads }} python-path={{ horizon_bin | dirname }}/lib/python2.7/site-packages
+    WSGIDaemonProcess horizon user={{ horizon_system_user_name }} group={{ horizon_system_group_name }} processes={{ horizon_wsgi_processes | default(horizon_wsgi_threads) }} threads={{ horizon_wsgi_threads }} python-path={{ horizon_lib_dir | dirname }}/site-packages
 
     WSGIProcessGroup horizon
     WSGIApplicationGroup %{GLOBAL}

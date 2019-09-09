@@ -77,5 +77,4 @@ horizon_apache_modules:
     state: "present"
 
 _horizon_lib_dir: "/srv/www/openstack-dashboard"
-horizon_python_lib_dir: "/usr/lib/python2.7/site-packages"
 horizon_dashboard_panel_dir: "{{ _horizon_lib_dir }}/openstack_dashboard/enabled"
