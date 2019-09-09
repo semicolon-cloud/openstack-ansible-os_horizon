@@ -29,6 +29,7 @@ horizon_pip_package_state: "latest"
 
 # Set installation method.
 horizon_install_method: "source"
+horizon_venv_python_executable: "{{ openstack_venv_python_executable | default('python2') }}"
 
 horizon_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
 
