@@ -37,7 +37,6 @@ horizon_service_distro_packages:
   - openstack-ironic-ui
   - openstack-magnum-ui
   - openstack-manila-ui
-  - openstack-neutron-lbaas-ui
   - openstack-sahara-ui
   - openstack-trove-ui
   - openstack-octavia-ui
