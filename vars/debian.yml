@@ -49,7 +49,6 @@ horizon_apache_configs:
 
 horizon_apache_default_sites:
   - "/etc/apache2/sites-enabled/000-default.conf"
-  - "/etc/apache2/conf-enabled/openstack-dashboard.conf"
   - "/etc/apache2/conf-enabled/other-vhosts-access-log.conf"
 
 horizon_apache_modules:

@@ -382,9 +382,11 @@ horizon_default_theme: "default"
 
 horizon_webroot: /
 
+horizon_bind_address: "{{ openstack_service_bind_address | default('0.0.0.0') }}"
+
 horizon_listen_ports:
-  - "80"
-  - "443"
+  http: "80"
+  https: "443"
 
 horizon_pip_packages:
   - horizon
