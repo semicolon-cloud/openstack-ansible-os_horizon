@@ -40,7 +40,7 @@
   scm: git
   version: master
 - name: rabbitmq_server
-  src: https://git.openstack.org/openstack/openstack-ansible-rabbitmq_server
+  src: https://opendev.org/openstack/openstack-ansible-rabbitmq_server
   scm: git
   version: master
 - name: os_tempest
