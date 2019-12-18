@@ -35,7 +35,6 @@ horizon_service_distro_packages:
   - python3-django-openstack-auth
   - python3-django-horizon
   - python3-memcache
-  - python3-pymysql
 
 horizon_apache_conf: "/etc/apache2/apache2.conf"
 horizon_apache_security_conf: "/etc/apache2/conf-available/security.conf"

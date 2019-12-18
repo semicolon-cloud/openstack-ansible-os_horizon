@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import pymysql
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -8,8 +7,6 @@ from horizon.utils import secret_key
 
 from openstack_dashboard import exceptions
 from openstack_dashboard.settings import HORIZON_CONFIG
-
-pymysql.install_as_MySQLdb()
 
 DEBUG = {{ debug }}
 TEMPLATE_DEBUG = DEBUG
@@ -142,28 +139,10 @@ SECRET_KEY = secret_key.generate_or_read_from_file(
 # We recommend you use memcached for development; otherwise after every reload
 # of the django development server, you will have to login again. To use
 # memcached set CACHES to something like
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': {{ memcached_servers.split(',') }}
-    }
-}
+CACHES = {{ horizon_session_caches }}
 
 # Set the session engine configuration:
-SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '{{ horizon_galera_address }}',
-        'NAME': '{{ horizon_galera_database }}',
-        'USER': '{{ horizon_galera_user }}',
-        'PASSWORD': '{{ horizon_container_mysql_password }}',
-        'default-character-set': 'utf8'
-        {% if horizon_galera_use_ssl | bool -%}
-        ,'ssl-ca': '{{ horizon_galera_ssl_ca_cert }}'
-        {% endif -%}
-    },
-}
+SESSION_ENGINE = '{{ horizon_session_engine }}'
 
 # Send email to the console by default
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

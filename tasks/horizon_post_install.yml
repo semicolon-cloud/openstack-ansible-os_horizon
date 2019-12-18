@@ -119,3 +119,13 @@
   register: async_compress_static_files
   async: 600
   poll: 0
+
+- name: Register DB session cleanup cron
+  cron:
+    name: "Clear out expired sessions"
+    minute: "{{ 58 | random(seed=inventory_hostname, start=2) }}"
+    hour: "21"
+    job: "{{ horizon_manage }} clearsessions"
+    user: "{{ horizon_system_user_name }}"
+    state: present
+  when: inventory_hostname == ansible_play_hosts[0]

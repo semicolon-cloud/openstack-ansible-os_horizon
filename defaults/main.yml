@@ -128,18 +128,14 @@ horizon_system_user_home: "/var/lib/{{ horizon_system_user_name }}"
 ## Service Type and Data
 horizon_service_region: RegionOne
 horizon_service_name: horizon
-
-## Database info
-horizon_db_setup_host: "{{ ('galera_all' in groups) | ternary(groups['galera_all'][0], 'localhost') }}"
-horizon_galera_address: "{{ galera_address | default('127.0.0.1') }}"
-horizon_galera_database: dash
-horizon_galera_user: dash
-horizon_galera_use_ssl: "{{ galera_use_ssl | default(False) }}"
-horizon_galera_ssl_ca_cert: "{{ galera_ssl_ca_cert | default('/etc/ssl/certs/galera-ca.pem') }}"
-
 ## Session configuration
 # Specifies the timespan in seconds inactivity, until a user is considered as
 # logged out
+horizon_session_engine: 'django.contrib.sessions.backends.cache'
+horizon_session_caches:
+  default:
+    BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
+    LOCATION: "{{ memcached_servers.split(',') }}"
 horizon_session_timeout: 1800
 
 ## Horizon Help URL Path
@@ -393,7 +389,6 @@ horizon_listen_ports:
 
 horizon_pip_packages:
   - horizon
-  - PyMySQL
   - python-memcached
 
 # Specific pip packages provided by the user
