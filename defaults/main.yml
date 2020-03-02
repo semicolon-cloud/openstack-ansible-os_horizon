@@ -62,6 +62,10 @@ masakari_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
 mistral_dashboard_git_repo: https://opendev.org/openstack/mistral-dashboard.git
 mistral_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
 
+## The git source/branch for the Murano UI plugin
+murano_dashboard_git_repo: https://opendev.org/openstack/murano-dashboard
+murano_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
+
 ## The git source/branch for the Octavia UI plugin
 octavia_dashboard_git_repo: https://opendev.org/openstack/octavia-dashboard
 octavia_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
@@ -103,6 +107,7 @@ horizon_git_constraints:
   - "git+{{ manila_dashboard_git_repo }}@{{ manila_dashboard_git_install_branch }}#egg=manila-ui"
   - "git+{{ masakari_dashboard_git_repo }}@{{ masakari_dashboard_git_install_branch }}#egg=masakari_dashboard"
   - "git+{{ mistral_dashboard_git_repo }}@{{ mistral_dashboard_git_install_branch }}#egg=mistral-dashboard"
+  - "git+{{ murano_dashboard_git_repo }}@{{ murano_dashboard_git_install_branch }}#egg=murano-dashboard"
   - "git+{{ designate_dashboard_git_repo }}@{{ designate_dashboard_git_install_branch }}#egg=designate_dashboard"
   - "git+{{ tacker_dashboard_git_repo }}@{{ tacker_dashboard_git_install_branch }}#egg=tacker_horizon"
   - "git+{{ trove_dashboard_git_repo }}@{{ trove_dashboard_git_install_branch }}#egg=trove_dashboard"
@@ -295,6 +300,9 @@ horizon_enable_manila_ui: False
 ## Masakari UI Panel
 horizon_enable_masakari_ui: False
 
+## Murano UI Panel
+horizon_enable_murano_ui: False
+
 ## Octavia UI Panel
 horizon_enable_octavia_ui: False
 
@@ -416,6 +424,8 @@ horizon_masakari_optional_pip_packages:
   - masakari-dashboard
 horizon_mistral_optional_pip_packages:
   - mistral-dashboard
+horizon_murano_optional_pip_packages:
+  - murano-dashboard
 horizon_neutron_fwaas_optional_pip_packages:
   - neutron-fwaas-dashboard
 horizon_neutron_vpnaas_optional_pip_packages:

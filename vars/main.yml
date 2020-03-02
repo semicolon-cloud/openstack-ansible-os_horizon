@@ -37,6 +37,10 @@ _horizon_translations_pull:
     branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module: magnum_ui
+  - project: "murano-dashboard"
+    branch: "{{ horizon_translations_project_version }}"
+    enabled: True
+    module: murano_dashboard
   - project: "trove-dashboard"
     branch: "{{ horizon_translations_project_version }}"
     enabled: True
