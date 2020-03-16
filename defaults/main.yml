@@ -136,7 +136,7 @@ horizon_session_engine: 'django.contrib.sessions.backends.cache'
 horizon_session_caches:
   default:
     BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
-    LOCATION: "{{ memcached_servers.split(',') }}"
+    LOCATION: "{{ horizon_memcached_servers.split(',') }}"
 horizon_session_timeout: 1800
 
 ## Horizon Help URL Path
@@ -390,7 +390,11 @@ horizon_listen_ports:
 
 horizon_pip_packages:
   - horizon
+  - pymemcache
   - python-memcached
+
+# Memcached override
+horizon_memcached_servers: "{{ memcached_servers }}"
 
 # Specific pip packages provided by the user
 horizon_user_pip_packages: []
