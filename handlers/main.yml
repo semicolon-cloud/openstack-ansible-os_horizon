@@ -15,7 +15,7 @@
 
 - name: Compile messages
   command: "{{ horizon_manage }} compilemessages"
-  become: yes
+  become: "{{ (horizon_install_method == 'source') }}"
   become_user: "{{ horizon_system_user_name }}"
   args:
     chdir: "{{ horizon_lib_dir }}/"
