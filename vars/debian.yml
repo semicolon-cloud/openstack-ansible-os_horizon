@@ -23,6 +23,7 @@ horizon_devel_distro_packages:
   - libssl-dev
   - libxslt1.1
   - openssl
+  - libpcre3-dev
 
 horizon_distro_packages:
   - apache2
