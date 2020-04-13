@@ -62,5 +62,5 @@
     - Restart apache2
 
 - name: Install horizon packages from PIP
-  include_tasks: horizon_install_source.yml
+  import_tasks: horizon_install_source.yml
   when: horizon_install_method == 'source'
