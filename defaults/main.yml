@@ -162,7 +162,14 @@ horizon_apache_custom_log_format: '"%h %l %u \"%r\" %>s %b \"%{Referer}i\" \"%{U
 horizon_dropdown_max_items: 30
 horizon_instance_log_length: 35
 horizon_overview_days_range: 1
+
+# Valid options are "direct", "legacy" and "off".
+# Direct mode uploads images directly to glance, but requires CORS
+# to be configured for glance. Legacy will use horizon container as
+# a proxy for the image before uploading it to the glance, but do not
+# require any extra configuration
 horizon_images_upload_mode: direct
+
 horizon_images_allow_location: False
 horizon_time_zone: UTC
 horizon_enforce_password_check: False
