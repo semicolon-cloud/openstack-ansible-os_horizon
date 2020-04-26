@@ -80,6 +80,8 @@
 - name: Set python lib dir fact
   set_fact:
     horizon_lib_dir: "{{ _horizon_python_venv_details.files[0].path }}/dist-packages"
+  tags:
+    - horizon-config
 
 - name: Create horizon link for venv
   file:
