@@ -59,16 +59,6 @@
   with_items:
     - { src: "/etc/horizon/local_settings.py", dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/local_settings.py" }
 
-- name: Setup Horizon config(s)
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ horizon_system_user_name }}"
-    group: "{{ horizon_system_group_name }}"
-  with_items:
-    - { src: "horizon_django.wsgi.j2", dest: "{{ horizon_lib_wsgi_file }}" }
-  notify: Restart apache2
-
 - name: Create customization module directory
   file:
     path: "{{ horizon_lib_dir }}/horizon_customization"

@@ -149,7 +149,7 @@ horizon_help_url: https://docs.openstack.org/horizon/latest/user/
 
 ## Installation directories
 horizon_lib_dir: "{{ _horizon_lib_dir }}"
-horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi/django.wsgi"
+horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi.py"
 
 horizon_endpoint_type: internalURL
 
