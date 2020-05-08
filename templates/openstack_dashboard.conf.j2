@@ -46,10 +46,14 @@
     WSGIApplicationGroup %{GLOBAL}
 
     <Directory {{ horizon_lib_wsgi_file | dirname }}>
-      <Files django.wsgi>
+      <Files {{ horizon_lib_wsgi_file | basename }} >
+        <IfVersion < 2.4>
         Order allow,deny
-        allow from all
+        Allow from all
+        </IfVersion>
+        <IfVersion >= 2.4>
         Require all granted
+        </IfVersion>
       </Files>
     </Directory>
 
@@ -57,9 +61,13 @@
 
     <Directory {{ horizon_lib_dir }}/static/>
       Options -FollowSymlinks
+      <IfVersion < 2.4>
       AllowOverride None
       Order allow,deny
-      allow from all
+      Allow from all
+      </IfVersion>
+      <IfVersion >= 2.4>
       Require all granted
+      </IfVersion>
     </Directory>
 </VirtualHost>
