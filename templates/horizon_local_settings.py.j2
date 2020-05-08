@@ -89,8 +89,8 @@ OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = {{ horizon_keystone_multidomain_support
 # with Keystone V3. All entities will be created in the default domain.
 OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "{{ horizon_keystone_default_domain }}"
 {%   else %}
-OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN = "{{ horizon_keystone_multidomain_dropdown | bool }}"
-OPENSTACK_KEYSTONE_DOMAIN_CHOICES = "{{ horizon_keystone_multidomain_choices }}"
+OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN = {{ horizon_keystone_multidomain_dropdown | bool }}
+OPENSTACK_KEYSTONE_DOMAIN_CHOICES = {{ horizon_keystone_multidomain_choices }}
 {%   endif %}
 {% endif %}
 
