@@ -479,12 +479,6 @@ horizon_translations_project_version: "master"
 # behaviour of the pull of the translations per component.
 horizon_translations_pull: "{{ _horizon_translations_pull }}"
 
-# This variable is used by the repo_build process to determine
-# which host group to check for members of before building the
-# pip packages required by this role. The value is picked up
-# by the py_pkgs lookup.
-horizon_role_project_group: horizon_all
-
 # Set arbitrary horizon configuration options
 horizon_config_overrides: {}
 
