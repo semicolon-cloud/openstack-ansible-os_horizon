@@ -63,14 +63,9 @@ target_name = 'openstack-ansible-' + role_name
 title = 'OpenStack-Ansible Release Notes: ' + role_name + 'role'
 
 # openstackdocstheme options
-repository_name = 'openstack/openstack-ansible-os_horizon'
-bug_project = 'openstack-ansible-os_horizon'
-bug_tag = ''
-
-# openstackdocstheme options
-repository_name = 'openstack/' + target_name
-bug_project = project.lower()
-bug_tag = ''
+openstackdocs_repo_name = 'openstack/' + target_name
+openstackdocs_bug_project = project.lower()
+openstackdocs_bug_tag = ''
 
 # Release notes do not need a version number in the title, they
 # cover multiple releases.
@@ -157,10 +152,6 @@ html_static_path = ['_static']
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
 # html_extra_path = []
-
-# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
-# using the given strftime format.
-html_last_updated_fmt = '%Y-%m-%d %H:%M'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
