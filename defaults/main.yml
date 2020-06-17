@@ -335,7 +335,6 @@ horizon_enable_designate_ui: False
 horizon_enable_heat_ui: False
 
 ## Neutron features to enable
-horizon_enable_neutron_fwaas: False
 horizon_enable_neutron_vpnaas: False
 
 ## Watcher UI Panel
@@ -443,8 +442,6 @@ horizon_mistral_optional_pip_packages:
   - mistral-dashboard
 horizon_murano_optional_pip_packages:
   - murano-dashboard
-horizon_neutron_fwaas_optional_pip_packages:
-  - neutron-fwaas-dashboard
 horizon_neutron_vpnaas_optional_pip_packages:
   - neutron-vpnaas-dashboard
 horizon_octavia_optional_pip_packages:
