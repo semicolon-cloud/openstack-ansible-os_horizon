@@ -486,6 +486,12 @@ horizon_translations_pull: "{{ _horizon_translations_pull }}"
 # Set arbitrary horizon configuration options
 horizon_config_overrides: {}
 
+# Set overrides for horizon embedded policies
+#horizon_policy_overrides:
+#  cinder:
+#    "volume:create": "rule:admin_or_owner"
+horizon_policy_overrides: {}
+
 horizon_keystone_admin_roles:
   - admin
 

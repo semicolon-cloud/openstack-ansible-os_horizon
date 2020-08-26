@@ -42,6 +42,21 @@
   when: item.always_install
   notify: Restart apache2
 
+- name: Retrieve horizon policy files
+  slurp:
+    src: "{{ horizon_lib_dir }}/openstack_dashboard/conf/{{ item }}_policy.yaml"
+  with_items: "{{ horizon_policy_overrides.keys() | list }}"
+  register: _horizon_policy
+
+- name: Place policy overrides
+  config_template:
+    content: "{{ item.content | b64decode }}"
+    dest: "{{ item.source }}"
+    mode: "0644"
+    config_type: json
+    config_overrides: "{{ horizon_policy_overrides[item.item] }}"
+  with_items: "{{ _horizon_policy.results }}"
+
 - name: Uploading horizon custom files
   copy:
     src: "{{ item.value.src }}"
