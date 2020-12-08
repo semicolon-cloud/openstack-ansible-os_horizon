@@ -148,6 +148,10 @@ horizon_session_timeout: 1800
 ## Horizon Help URL Path
 horizon_help_url: https://docs.openstack.org/horizon/latest/user/
 
+## Horizon ALLOWED_HOSTS
+horizon_allowed_hosts:
+  - '*'
+
 ## Installation directories
 horizon_lib_dir: "{{ _horizon_lib_dir }}"
 horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi.py"
