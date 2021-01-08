@@ -22,13 +22,12 @@ debug: False
 horizon_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
 horizon_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((horizon_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_python['executable'])) }}"
 
-# Set the package install state for distribution and pip packages
+# Set the package install state for distribution packages
 # Options are 'present' and 'latest'
-horizon_package_state: "latest"
-horizon_pip_package_state: "latest"
+horizon_package_state: "{{ package_state | default('latest') }}"
 
 # Set installation method.
-horizon_install_method: "source"
+horizon_install_method: "{{ service_install_method | default('source') }}"
 horizon_venv_python_executable: "{{ openstack_venv_python_executable | default('python2') }}"
 
 horizon_upper_constraints_url: "{{ requirements_git_url | default('https://releases.openstack.org/constraints/upper/' ~ requirements_git_install_branch | default('master')) }}"
@@ -133,7 +132,7 @@ horizon_system_comment: horizon system user
 horizon_system_user_home: "/var/lib/{{ horizon_system_user_name }}"
 
 ## Service Type and Data
-horizon_service_region: RegionOne
+horizon_service_region: "{{ service_region | default('RegionOne') }}"
 horizon_service_name: horizon
 ## Session configuration
 # Specifies the timespan in seconds inactivity, until a user is considered as
@@ -297,55 +296,55 @@ horizon_launch_instance_defaults:
   create_volume: True
 
 ## Blazar UI Panel
-horizon_enable_blazar_ui: False
+horizon_enable_blazar_ui: "{{ (groups['blazar_all'] is defined) and (groups['blazar_all'] | length > 0) }}"
 
 ## Cloudkitty UI Panel
-horizon_enable_cloudkitty_ui: False
-
-## Ironic UI Panel
-horizon_enable_ironic_ui: False
-
-## Magnum UI Panel
-horizon_enable_magnum_ui: False
-
-## Mistral Ui Panel
-horizon_enable_mistral_ui: False
-
-## Manila UI Panel
-horizon_enable_manila_ui: False
-
-## Masakari UI Panel
-horizon_enable_masakari_ui: False
-
-## Murano UI Panel
-horizon_enable_murano_ui: False
-
-## Octavia UI Panel
-horizon_enable_octavia_ui: False
-
-## Sahara UI Panel
-horizon_enable_sahara_ui: False
-
-## Tacker UI Panel
-horizon_enable_tacker_ui: False
-
-## Trove UI Panel
-horizon_enable_trove_ui: False
+horizon_enable_cloudkitty_ui: "{{ (groups['cloudkitty_all'] is defined) and (groups['cloudkitty_all'] | length > 0) }}"
 
 ## Designate UI Panel
-horizon_enable_designate_ui: False
+horizon_enable_designate_ui: "{{ (groups['designate_all'] is defined) and (groups['designate_all'] | length > 0) }}"
 
 ## Heat UI Panel
-horizon_enable_heat_ui: False
+horizon_enable_heat_ui: "{{ (groups['heat_all'] is defined) and (groups['heat_all'] | length > 0) }}"
+
+## Ironic UI Panel
+horizon_enable_ironic_ui: "{{ (groups['ironic_all'] is defined) and (groups['ironic_all'] | length > 0) }}"
+
+## Magnum UI Panel
+horizon_enable_magnum_ui: "{{ (groups['magnum_all'] is defined) and (groups['magnum_all'] | length > 0) }}"
+
+## Masakari UI Panel
+horizon_enable_masakari_ui: "{{ (groups['masakari_all'] is defined) and (groups['masakari_all'] | length > 0) }}"
+
+## Manila UI Panel
+horizon_enable_manila_ui: "{{ (groups['manila_all'] is defined) and (groups['manila_all'] | length > 0) }}"
+
+## Mistral Ui Panel
+horizon_enable_mistral_ui: "{{ (groups['mistral_all'] is defined) and (groups['mistral_all'] | length > 0) }}"
+
+## Murano UI Panel
+horizon_enable_murano_ui: "{{ (groups['murano_all'] is defined) and (groups['murano_all'] | length > 0) }}"
 
 ## Neutron features to enable
-horizon_enable_neutron_vpnaas: False
+horizon_enable_neutron_vpnaas: "{{ neutron_plugin_base is defined and 'vpnaas' in neutron_plugin_base }}"
+
+## Octavia UI Panel
+horizon_enable_octavia_ui: "{{ (groups['octavia_all'] is defined) and (groups['octavia_all'] | length > 0) }}"
+
+## Sahara UI Panel
+horizon_enable_sahara_ui: "{{ (groups['sahara_all'] is defined) and (groups['sahara_all'] | length > 0) }}"
+
+## Tacker UI Panel
+horizon_enable_tacker_ui: "{{ (groups['tacker_all'] is defined) and (groups['tacker_all'] | length > 0) }}"
+
+## Trove UI Panel
+horizon_enable_trove_ui: "{{ (groups['trove_all'] is defined) and (groups['trove_all'] | length > 0) }}"
 
 ## Watcher UI Panel
 horizon_enable_watcher_ui: False
 
 ## Zun UI Panel
-horizon_enable_zun_ui: False
+horizon_enable_zun_ui: "{{ (groups['zun_all'] is defined) and (groups['zun_all'] | length > 0) }}"
 
 ## Swift
 horizon_swift_file_transfer_chunk_size: 524288
