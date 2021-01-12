@@ -35,12 +35,23 @@
     - { src: "/etc/pki/tls/private", dest: "/etc/ssl/private" }
   when: ansible_pkg_mgr in ['yum', 'dnf']
 
+# NOTE(jrosser)
+# horizon appears in u-c as is it used as a library for the horizon plugins
+# the new pip resolver will fail to install horizon if two contradictory
+# constraints are given which will always happen with a source install
+# and wheels built on the repo server. We must filter horizon out of u-c.
+- name: Retrieve the constraints URL
+  uri:
+    url: "{{ horizon_upper_constraints_url }}"
+    return_content: yes
+  register: _u_c_contents
+
 - name: Install the python venv
   include_role:
     name: "python_venv_build"
   vars:
     venv_python_executable: "{{ horizon_venv_python_executable }}"
-    venv_build_constraints: "{{ horizon_git_constraints }}"
+    venv_build_constraints: "{{ _u_c_contents.content.split('\n') | reject('match', '[horizon=*]') | list }}"
     venv_build_distro_package_list: "{{ horizon_devel_distro_packages }}"
     venv_install_destination_path: "{{ horizon_bin | dirname }}"
     venv_pip_install_args: "{{ horizon_pip_install_args }}"
