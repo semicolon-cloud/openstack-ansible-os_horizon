@@ -23,13 +23,8 @@ tempest_run: yes
 tempest_dashboard_login_url: "https://{{ hostvars[groups['horizon_all'][0]]['ansible_host'] }}/auth/login/"
 tempest_dashboard_url: "https://{{ hostvars[groups['horizon_all'][0]]['ansible_host'] }}/"
 
-tempest_plugins:
-  - name: tempest-horizon
-    repo: https://github.com/openstack/tempest-horizon
-    branch: master
-
 tempest_test_whitelist:
-  - tempest_horizon.tests.scenario.test_dashboard_basic_ops.TestDashboardBasicOps
+  - tempest.scenario.test_dashboard_basic_ops.TestDashboardBasicOps
 
 tempest_tempest_conf_overrides:
   dashboard:
