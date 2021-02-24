@@ -282,6 +282,7 @@ horizon_launch_instance_defaults:
   disable_volume: False
   disable_volume_snapshot: False
   create_volume: True
+  hide_create_volume: False
 
 ## Barbican UI Panel
 horizon_enable_barbican_ui: "{{ (groups['barbican_all'] is defined) and (groups['barbican_all'] | length > 0) }}"
