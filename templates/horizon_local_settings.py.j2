@@ -453,7 +453,7 @@ ENFORCE_PASSWORD_CHECK = {{ horizon_enforce_password_check }}
 # target installation.
 
 # Path to directory containing policy.json files
-{% if horizon_install_method == 'distro' and (ansible_os_family | lower) == 'redhat' %}
+{% if horizon_install_method == 'distro' and (ansible_facts['os_family'] | lower) == 'redhat' %}
 # CentOS has policy files in /etc/openstack-dashboard
 POLICY_FILES_PATH = '/etc/openstack-dashboard'
 {% else %}

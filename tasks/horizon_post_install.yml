@@ -23,7 +23,7 @@
     recurse: yes
   with_items:
     - { path: "{{ horizon_lib_dir }}", fixup: True }
-    - { path: "/etc/openstack-dashboard", fixup: "{{ (ansible_os_family | lower) == 'redhat' }}" }
+    - { path: "/etc/openstack-dashboard", fixup: "{{ (ansible_facts['os_family'] | lower) == 'redhat' }}" }
   when: item.fixup
 
 # TODO(hwoarang): See if we can use local_settings.py from the distribution packages

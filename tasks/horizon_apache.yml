@@ -23,7 +23,7 @@
   with_items:
     - "{{ horizon_apache_modules }}"
   when:
-    - ansible_pkg_mgr in ['apt', 'zypper']
+    - ansible_facts['pkg_mgr'] in ['apt', 'zypper']
   notify: Restart apache2
 
 - name: Drop apache2 configs
@@ -71,7 +71,7 @@
       content: ""
     notify: Restart apache2
 
-  when: ansible_pkg_mgr == 'zypper'
+  when: ansible_facts['pkg_mgr'] == 'zypper'
 
 - name: Enable Horizon Site
   file:
@@ -108,7 +108,7 @@
 - name: Remove Listen from Apache config
   lineinfile:
     dest: "{{ horizon_apache_security_conf }}"
-    regexp: "{{ (ansible_pkg_mgr == 'zypper') | ternary('^(Include.*listen\\.conf)', '^(Listen.*)') }}"
+    regexp: "{{ (ansible_facts['pkg_mgr'] == 'zypper') | ternary('^(Include.*listen\\.conf)', '^(Listen.*)') }}"
     backrefs: yes
     line: '#\1'
   notify: Restart apache2

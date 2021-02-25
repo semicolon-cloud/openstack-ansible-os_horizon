@@ -20,7 +20,7 @@ debug: False
 # for the service setup. The host must already have
 # clouds.yaml properly configured.
 horizon_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
-horizon_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((horizon_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_python['executable'])) }}"
+horizon_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((horizon_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_facts['python']['executable'])) }}"
 
 # Set the package install state for distribution packages
 # Options are 'present' and 'latest'
@@ -145,7 +145,7 @@ horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi.py"
 
 horizon_endpoint_type: internalURL
 
-horizon_server_name: "{{ ansible_fqdn | default('horizon') }}"
+horizon_server_name: "{{ ansible_facts['fqdn'] | default('horizon') }}"
 horizon_apache_servertokens: "Prod"
 horizon_apache_serversignature: "Off"
 horizon_log_level: info
@@ -201,7 +201,7 @@ horizon_disallow_iframe_embed: True
 
 ## Cap the maximun number of threads / workers when a user value is unspecified.
 horizon_wsgi_threads_max: 16
-horizon_wsgi_threads: "{{ [[ansible_processor_vcpus|default(2) // 2, 1] | max, horizon_wsgi_threads_max] | min }}"
+horizon_wsgi_threads: "{{ [[ansible_facts['processor_vcpus']|default(2) // 2, 1] | max, horizon_wsgi_threads_max] | min }}"
 
 ## Horizon SSL
 horizon_ssl_cert: /etc/ssl/certs/horizon.pem

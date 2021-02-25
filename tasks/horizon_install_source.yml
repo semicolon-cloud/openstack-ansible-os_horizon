@@ -23,7 +23,7 @@
   with_items:
     - { path: "/etc/pki/tls/certs", owner: "root", group: "root" }
     - { path: "/etc/pki/tls/private", owner: "root", group: "root" }
-  when: ansible_pkg_mgr in ['yum', 'dnf']
+  when: ansible_facts['pkg_mgr'] in ['yum', 'dnf']
 
 - name: Create system links
   file:
@@ -33,7 +33,7 @@
   with_items:
     - { src: "/etc/pki/tls/certs", dest: "/etc/ssl/certs" }
     - { src: "/etc/pki/tls/private", dest: "/etc/ssl/private" }
-  when: ansible_pkg_mgr in ['yum', 'dnf']
+  when: ansible_facts['pkg_mgr'] in ['yum', 'dnf']
 
 # NOTE(jrosser)
 # horizon appears in u-c as is it used as a library for the horizon plugins
@@ -179,6 +179,6 @@
 
 - name: Register wsgi module
   shell: "{{ horizon_bin }}/mod_wsgi-express install-module > /etc/httpd/conf.modules.d/02-wsgi.conf"
-  when: ansible_os_family | lower == 'redhat' and ansible_distribution_major_version is version('7', '=')
+  when: ansible_facts['os_family'] | lower == 'redhat' and ansible_facts['distribution_major_version'] is version('7', '=')
   notify:
     - Restart apache2

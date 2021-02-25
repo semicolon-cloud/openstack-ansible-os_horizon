@@ -27,6 +27,6 @@
     name: "{{ horizon_system_service_name }}"
     enabled: yes
     state: "restarted"
-    daemon_reload: "{{ (ansible_service_mgr == 'systemd') | ternary('yes', omit) }}"
+    daemon_reload: "{{ (ansible_facts['service_mgr'] == 'systemd') | ternary('yes', omit) }}"
   listen:
     - "venv changed"
