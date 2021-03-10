@@ -14,7 +14,6 @@
 # limitations under the License.
 
 # NOTE(hwoarang): Module enable/disable process is only functional on Debian
-# and SUSE based systems.
 - name: Enable apache2 modules
   apache2_module:
     name: "{{ item.name }}"
@@ -23,7 +22,7 @@
   with_items:
     - "{{ horizon_apache_modules }}"
   when:
-    - ansible_facts['pkg_mgr'] in ['apt', 'zypper']
+    - ansible_facts['pkg_mgr'] == 'apt'
   notify: Restart apache2
 
 - name: Drop apache2 configs
@@ -41,37 +40,6 @@
     state: "absent"
   with_items: "{{ horizon_apache_default_sites }}"
   notify: Restart apache2
-
-# NOTE(hwoarang) Default openSUSE apache configuration ships
-# with a <Directory /> configuration in /etc/apache2/httpd.conf
-# so we need to get rid of it to allow all the symlinks in the
-# root filesystem that horizon requires
-# TODO: Can this be improved somehow?
-- block:
-  - name: Tag beginning of main apache2 directory configuration (SUSE)
-    lineinfile:
-      dest: "{{ horizon_apache_conf }}"
-      insertbefore: '^<Directory />'
-      line: "# BEGIN ANSIBLE MANAGED BLOCK"
-      state: present
-    notify: Restart apache2
-
-  - name: Tag end of main apache2 directory configuration (SUSE)
-    lineinfile:
-      dest: "{{ horizon_apache_conf }}"
-      insertafter: '^</Directory>'
-      line: "# END ANSIBLE MANAGED BLOCK"
-      state: present
-    notify: Restart apache2
-
-  - name: Remove default apache2 configuration for root directory (SUSE)
-    blockinfile:
-      dest: "{{ horizon_apache_conf }}"
-      marker: "# {mark} ANSIBLE MANAGED BLOCK"
-      content: ""
-    notify: Restart apache2
-
-  when: ansible_facts['pkg_mgr'] == 'zypper'
 
 - name: Enable Horizon Site
   file:
@@ -108,7 +76,7 @@
 - name: Remove Listen from Apache config
   lineinfile:
     dest: "{{ horizon_apache_security_conf }}"
-    regexp: "{{ (ansible_facts['pkg_mgr'] == 'zypper') | ternary('^(Include.*listen\\.conf)', '^(Listen.*)') }}"
+    regexp: '^(Listen.*)'
     backrefs: yes
     line: '#\1'
   notify: Restart apache2
