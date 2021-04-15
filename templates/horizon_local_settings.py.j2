@@ -190,6 +190,15 @@ WEBSSO_INITIAL_CHOICE = "{{ horizon_websso_initial_choice }}"
 WEBSSO_KEYSTONE_URL = "{{ horizon_websso_keystone_url }}"
 {% endif %}
 
+{% if horizon_websso_default_redirect | bool %}
+WEBSSO_DEFAULT_REDIRECT = "{{ horizon_websso_default_redirect }}"
+WEBSSO_DEFAULT_REDIRECT_PROTOCOL = "{{ horizon_websso_initial_choice }}"
+WEBSSO_DEFAULT_REDIRECT_REGION = "{{ horizon_websso_default_redirect_region }}"
+{% if horizon_websso_default_redirect_logout | length > 0 %}
+WEBSSO_DEFAULT_REDIRECT_LOGOUT = "{{ horizon_websso_default_redirect_logout }}"
+{% endif %}
+{% endif %}
+
 # The list of authentication mechanisms which include keystone
 # federation protocols and identity provider/federation protocol
 # mapping keys (WEBSSO_IDP_MAPPING). Current supported protocol

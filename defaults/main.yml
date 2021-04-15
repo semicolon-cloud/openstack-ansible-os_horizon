@@ -483,4 +483,8 @@ horizon_keystone_admin_roles:
 # Set the "credentials" authentication choice to show as default.
 # The list of authentication mechanisms which include keystone
 # federation protocols and identity provider/federation protocol
+#horizon_websso_keystone_url: "{{ horizon_keystone_endpoint }}"
 horizon_websso_initial_choice: "credentials"
+horizon_websso_default_redirect: False
+horizon_websso_default_redirect_region: "{{ horizon_websso_keystone_url | default(horizon_keystone_endpoint) }}"
+horizon_websso_default_redirect_logout: ""
