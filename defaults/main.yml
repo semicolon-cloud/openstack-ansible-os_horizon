@@ -37,6 +37,10 @@ horizon_git_repo: https://opendev.org/openstack/horizon
 horizon_git_track_branch: master
 horizon_git_install_branch: "{{ horizon_git_track_branch }}"
 
+## The git source/branch for the Adjutant UI plugin
+adjutant_dashboard_git_repo: https://opendev.org/openstack/adjutant-ui
+adjutant_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
+
 ## The git source/branch for the Barbican UI plugin
 barbican_dashboard_git_repo: https://opendev.org/openstack/barbican-ui
 barbican_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
@@ -284,6 +288,9 @@ horizon_launch_instance_defaults:
   create_volume: True
   hide_create_volume: False
 
+## Adjutant UI Panel
+horizon_enable_adjutant_ui: "{{ (groups['adjutant_all'] is defined) and (groups['adjutant_all'] | length > 0) }}"
+
 ## Barbican UI Panel
 horizon_enable_barbican_ui: "{{ (groups['barbican_all'] is defined) and (groups['barbican_all'] | length > 0) }}"
 
@@ -417,6 +424,8 @@ horizon_user_pip_packages: []
 # Optional pip packages for additional dashboards
 # TODO(odyssey4me):
 # Simplify this when we are no longer using the py_pkgs plugin
+horizon_adjutant_optional_pip_packages:
+  - "git+{{ adjutant_dashboard_git_repo }}@{{ adjutant_dashboard_git_install_branch }}#egg=adjutant-ui"
 horizon_barbican_optional_pip_packages:
   - "git+{{ barbican_dashboard_git_repo }}@{{ barbican_dashboard_git_install_branch }}#egg=barbican-ui"
 horizon_blazar_optional_pip_packages:
