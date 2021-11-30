@@ -49,7 +49,7 @@
   register: _horizon_policy
 
 - name: Place policy overrides
-  config_template:
+  openstack.config_template.config_template:
     content: "{{ item.content | b64decode }}"
     dest: "{{ item.source }}"
     mode: "0644"
