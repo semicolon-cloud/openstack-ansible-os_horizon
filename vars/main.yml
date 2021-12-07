@@ -45,3 +45,6 @@ _horizon_translations_pull:
     branch: "{{ horizon_translations_project_version }}"
     enabled: True
     module: trove_dashboard
+
+horizon_dashboard_panel_dir: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled"
+horizon_manage: "{{ horizon_bin }}/horizon-manage.py"

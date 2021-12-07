@@ -64,6 +64,3 @@ horizon_apache_modules:
     state: "present"
   - name: "headers"
     state: "present"
-
-_horizon_lib_dir: "/usr/share/openstack-dashboard"
-horizon_dashboard_panel_dir: "{{ _horizon_lib_dir }}/openstack_dashboard/local/enabled"
