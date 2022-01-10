@@ -30,7 +30,12 @@
     SSLCompression Off
     SSLProtocol {{ horizon_ssl_protocol }}
     SSLHonorCipherOrder On
-    SSLCipherSuite {{ horizon_ssl_cipher_suite }}
+    {% if horizon_ssl_cipher_suite_tls12 != "" -%}
+    SSLCipherSuite {{ horizon_ssl_cipher_suite_tls12 }}
+    {% endif -%}
+    {% if horizon_ssl_cipher_suite_tls13 != "" -%}
+    SSLCipherSuite TLSv1.3 {{ horizon_ssl_cipher_suite_tls13 }}
+    {% endif -%}
     SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
 {% endif %}
 {% if (horizon_enable_ssl | bool) and (horizon_external_ssl | bool) %}
