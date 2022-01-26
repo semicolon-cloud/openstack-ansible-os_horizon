@@ -90,7 +90,9 @@ OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = {{ horizon_keystone_multidomain_support
 OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "{{ horizon_keystone_default_domain }}"
 {%   else %}
 OPENSTACK_KEYSTONE_DOMAIN_DROPDOWN = {{ horizon_keystone_multidomain_dropdown | bool }}
+{%     if horizon_keystone_multidomain_dropdown %}
 OPENSTACK_KEYSTONE_DOMAIN_CHOICES = {{ horizon_keystone_multidomain_choices }}
+{%     endif %}
 {%   endif %}
 {% endif %}
 
