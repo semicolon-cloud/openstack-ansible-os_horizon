@@ -30,7 +30,7 @@ horizon_distro_packages:
   - apache2-utils
   - cron # required by the Ansible cron module
   - gettext
-  - "{{ (horizon_venv_python_executable == 'python3') | ternary('libapache2-mod-wsgi-py3', 'libapache2-mod-wsgi') }}"
+  - libapache2-mod-wsgi-py3
 
 horizon_service_distro_packages:
   - python3-django-openstack-auth
