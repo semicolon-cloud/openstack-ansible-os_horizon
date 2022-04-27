@@ -16,6 +16,3 @@
 horizon_package_list: "{{ horizon_distro_packages + horizon_service_distro_packages }}"
 
 _horizon_bin: "/usr/bin"
-horizon_manage: >-
- {{ ((ansible_facts['os_family'] | lower) == 'debian') | ternary('/usr/bin/python3', ansible_facts['python']['executable']) }}
- {{ horizon_lib_dir }}/manage.py

@@ -55,6 +55,3 @@ horizon_apache_default_sites:
   - "/etc/httpd/conf.d/userdir.conf"
   - "/etc/httpd/conf.d/welcome.conf"
   - "/etc/httpd/conf.d/ssl.conf"
-
-_horizon_lib_dir: "/usr/share/openstack-dashboard"
-horizon_dashboard_panel_dir: "{{ _horizon_lib_dir }}/openstack_dashboard/local/enabled"

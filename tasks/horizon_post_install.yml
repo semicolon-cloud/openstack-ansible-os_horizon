@@ -13,6 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Define horizon_lib_dir when it's not set
+  when: horizon_lib_dir is not defined
+  block:
+    - name: Find the venv's python version
+      command: "{{ horizon_bin }}/{{ horizon_venv_python_executable }} -c 'import horizon; print(horizon.__file__)'"
+      changed_when: false
+      register: _horizon_python_venv_details
+
+    - name: Set python lib dir fact
+      set_fact:
+        horizon_lib_dir: "{{ _horizon_python_venv_details.stdout | dirname | dirname }}"
+
+- name: Configure source-installed dashboards
+  include_tasks: horizon_post_install_source.yml
+  when: horizon_install_method == 'source'
+
+# NOTE(noonedeadpunk): change of permission is required for collectstatic and compilemessages
 - name: Ensure horizon dirs are accessible by user
   file:
     path: "{{ item.path }}"
@@ -36,10 +53,16 @@
     group: "{{ horizon_system_group_name }}"
     mode: "{{ item.mode }}"
   with_items:
-    - { src: "horizon_local_settings.py.j2", dest: "/etc/horizon/local_settings.py", owner: "root", mode: "0640", always_install: True }
-    - { src: "horizon-manage.py.j2", dest: "{{ horizon_bin }}/horizon-manage.py", mode: "0755", always_install: "{{ (horizon_install_method == 'source') }}" }
-    - { src: "80_admin_default_panel.py.j2", dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_80_admin_default_panel.py", mode: "0755", always_install: True }
-  when: item.always_install
+    - src: "horizon_local_settings.py.j2"
+      dest: "/etc/horizon/local_settings.py"
+      owner: "root"
+      mode: "0640"
+    - src: "horizon-manage.py.j2"
+      dest: "{{ horizon_bin }}/horizon-manage.py"
+      mode: "0755"
+    - src: "80_admin_default_panel.py.j2"
+      dest: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled/_80_admin_default_panel.py"
+      mode: "0755"
   notify: Restart apache2
 
 - name: Retrieve horizon policy files

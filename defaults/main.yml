@@ -144,7 +144,8 @@ horizon_allowed_hosts:
   - '*'
 
 ## Installation directories
-horizon_lib_dir: "{{ _horizon_lib_dir }}"
+# When horizon_lib_dir is not defined, it will be detected automatically
+#horizon_lib_dir: ""
 horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi.py"
 
 horizon_endpoint_type: internalURL

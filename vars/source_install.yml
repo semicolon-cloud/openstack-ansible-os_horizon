@@ -16,12 +16,6 @@
 horizon_package_list: "{{ horizon_distro_packages }}"
 _horizon_bin: "/openstack/venvs/horizon-{{ horizon_venv_tag }}/bin"
 
-#NOTE(jrosser) for compatibility with py2 and py3 we detect the location of
-#this dir during the source install and set a fact(horizon_lib_dir)
-#_horizon_lib_dir: "{{ _horizon_bin | dirname }}/lib/python2.7/dist-packages"
-horizon_dashboard_panel_dir: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled"
-
-horizon_manage: "{{ _horizon_bin }}/horizon-manage.py"
 _dashboard_panels_location:
   - "/enabled"
   - "/conf"
