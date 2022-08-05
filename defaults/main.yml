@@ -216,7 +216,7 @@ horizon_ssl_key: /etc/ssl/private/horizon.key
 horizon_ssl_ca_cert: /etc/ssl/certs/horizon-ca.pem
 horizon_ssl_protocol: "{{ ssl_protocol | default('ALL -SSLv2 -SSLv3 -TLSv1 -TLSv1.1') }}"
 # TLS v1.2 and below
-horizon_ssl_cipher_suite_tls12: "{{ horizon_ssl_cipher_suite | default(ssl_cipher_suite | default('ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!MD5:!DSS')) }}"
+horizon_ssl_cipher_suite_tls12: "{{ horizon_ssl_cipher_suite | default(ssl_cipher_suite | default('ECDH+AESGCM:ECDH+CHACHA20:ECDH+AES256:ECDH+AES128:!aNULL:!SHA1:!AESCCM')) }}"
 # TLS v1.3
 horizon_ssl_cipher_suite_tls13: "{{ ssl_cipher_suite_tls13 | default('TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256') }}"
 # if using a self-signed certificate, set this to true to regenerate it
