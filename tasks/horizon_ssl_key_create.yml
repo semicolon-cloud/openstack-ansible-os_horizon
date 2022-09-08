@@ -28,4 +28,4 @@
     -out {{ horizon_ssl_cert }}
     -extensions v3_ca
     creates={{ horizon_ssl_cert }}
-  notify: Restart apache2
+  notify: Restart wsgi process

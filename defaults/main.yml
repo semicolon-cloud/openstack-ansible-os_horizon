@@ -39,6 +39,9 @@ horizon_git_repo: https://opendev.org/openstack/horizon
 horizon_git_track_branch: master
 horizon_git_install_branch: "{{ horizon_git_track_branch }}"
 
+# Enable or disable apache. If disabled a basic uwsgi deployment will be setup for this service.
+horizon_use_uwsgi: false
+
 ## The git source/branch for the Adjutant UI plugin
 adjutant_dashboard_git_repo: https://opendev.org/openstack/adjutant-ui
 adjutant_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
@@ -153,6 +156,7 @@ horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi.py"
 horizon_endpoint_type: internalURL
 
 horizon_server_name: "{{ ansible_facts['fqdn'] | default('horizon') }}"
+
 horizon_apache_servertokens: "Prod"
 horizon_apache_serversignature: "Off"
 horizon_log_level: info
@@ -504,6 +508,9 @@ horizon_config_overrides: {}
 #  cinder:
 #    "volume:create": "rule:admin_or_owner"
 horizon_policy_overrides: {}
+
+horizon_init_overrides: {}
+horizon_uwsgi_ini_overrides: {}
 
 horizon_keystone_admin_roles:
   - admin

@@ -103,7 +103,7 @@
   tags:
     - horizon-config
 
-- import_tasks: horizon_apache.yml
+- import_tasks: "{{ (horizon_use_uwsgi | bool) | ternary('horizon_uwsgi.yml', 'horizon_apache.yml') }}"
   tags:
     - horizon-config
 

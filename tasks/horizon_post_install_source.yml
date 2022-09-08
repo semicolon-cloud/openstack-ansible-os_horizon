@@ -82,4 +82,4 @@
   with_items: "{{ found_panels.files }}"
   notify:
     - Compile messages
-    - Restart apache2
+    - Restart wsgi process
