@@ -57,6 +57,9 @@ SECURE_PROXY_ADDR_HEADER = 'HTTP_X_FORWARDED_FOR'
 # If Horizon is being served through SSL, then uncomment the following two
 # settings to better secure the cookies from security exploits
 CSRF_COOKIE_SECURE = True
+{%   if (horizon_ssl_csrf_trusted_origins | length) > 0 %}
+CSRF_TRUSTED_ORIGINS = {{ horizon_ssl_csrf_trusted_origins | to_json }}
+{%   endif %}
 SESSION_COOKIE_SECURE = True
 {% else %}
 # If Horizon is being served through SSL, then uncomment the following two

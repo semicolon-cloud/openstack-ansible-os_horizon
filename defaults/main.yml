@@ -278,6 +278,12 @@ horizon_show_keystone_v2_rc: True
 ## alternatively, you can set horizon to turn off ssl verification for Keystone
 horizon_ssl_no_verify: "{{ (keystone_service_adminuri_insecure | bool or keystone_service_internaluri_insecure | bool) | default(false) }}"
 
+## Horizon Cross-Site Request Forgery Trusted Hosts
+# add a list of domains that are trusted when evaluated requests for Cross-Site Request Forgery
+# This is useful when terminating SSL outside of the cloud on a domain that isn't directly tied
+# to the hosts that are operating the cloud.
+horizon_ssl_csrf_trusted_origins: []
+
 ## The role which Horizon should use as a default for users
 horizon_default_role_name: _member_
 
