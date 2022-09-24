@@ -8,6 +8,12 @@ from horizon.utils import secret_key
 from openstack_dashboard import exceptions
 from openstack_dashboard.settings import HORIZON_CONFIG
 
+{% if not (debug | bool) %}
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+{% endif %}
+
 DEBUG = {{ debug }}
 TEMPLATE_DEBUG = DEBUG
 
