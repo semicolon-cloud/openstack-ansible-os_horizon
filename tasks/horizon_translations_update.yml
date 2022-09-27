@@ -24,4 +24,4 @@
     - (translation.enabled | default("True")) | bool
   notify:
     - Compile messages
-    - Restart apache2
+    - Restart wsgi process

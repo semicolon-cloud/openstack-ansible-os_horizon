@@ -1,5 +1,5 @@
 ---
-# Copyright 2014, Rackspace US, Inc.
+# Copyright 2022, Cloudnull
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,20 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Compile messages
-  command: "{{ horizon_manage }} compilemessages"
-  become: "{{ (horizon_install_method == 'source') }}"
-  become_user: "{{ horizon_system_user_name }}"
-  args:
-    chdir: "{{ horizon_lib_dir }}/"
-  listen:
-    - "venv changed"
+- name: Ensure uwsgi can bind to privledged ports
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_unprivileged_port_start
+    value: "0"
+    sysctl_set: yes
+    state: present
+    reload: yes
 
-- name: Restart wsgi process
-  service:
-    name: "{{ horizon_system_service_name }}"
-    enabled: yes
-    state: "restarted"
-    daemon_reload: "{{ (ansible_facts['service_mgr'] == 'systemd') | ternary('yes', omit) }}"
-  listen:
-    - "venv changed"
+- name: Import uwsgi role
+  include_role:
+    name: uwsgi
+  vars:
+    uwsgi_services: "{{ uwsgi_horizon_services }}"
+    uwsgi_install_method: "{{ horizon_install_method }}"
+  tags:
+    - horizon-config
+    - uwsgi

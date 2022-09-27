@@ -37,7 +37,7 @@
   delay: 2
   notify:
     - Compile messages
-    - Restart apache2
+    - Restart wsgi process
 
 - name: Install horizon packages from PIP
   include_tasks: horizon_install_source.yml

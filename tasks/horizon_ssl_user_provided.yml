@@ -21,7 +21,7 @@
     group: "root"
     mode: "0644"
   when: horizon_user_ssl_cert is defined
-  notify: Restart apache2
+  notify: Restart wsgi process
 
 - name: Drop user provided ssl key
   copy:
@@ -31,7 +31,7 @@
     group: "root"
     mode: "0640"
   when: horizon_user_ssl_key is defined
-  notify: Restart apache2
+  notify: Restart wsgi process
 
 - name: Drop user provided ssl CA cert
   copy:
@@ -41,4 +41,4 @@
     group: "root"
     mode: "0644"
   when: horizon_user_ssl_ca_cert is defined
-  notify: Restart apache2
+  notify: Restart wsgi process

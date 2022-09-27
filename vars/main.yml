@@ -48,3 +48,21 @@ _horizon_translations_pull:
 
 horizon_dashboard_panel_dir: "{{ horizon_lib_dir }}/openstack_dashboard/local/enabled"
 horizon_manage: "{{ horizon_bin }}/horizon-manage.py"
+
+_horizon_uwsgi_ini_requirements:
+  uwsgi:
+    static-map: "/static={{ horizon_lib_dir }}/static/"
+
+_horizon_uwsgi_ini_overrides: "{{ _horizon_uwsgi_ini_requirements | combine(horizon_uwsgi_ini_overrides, recursive=True) }}"
+
+uwsgi_horizon_services:
+  horizon-dashboard:
+    wsgi_path: "{{ horizon_lib_wsgi_file }}"
+    wsgi_venv: "{{ horizon_bin | dirname }}"
+    uwsgi_uid: "{{ horizon_system_user_name }}"
+    uwsgi_guid: "{{ horizon_system_group_name }}"
+    uwsgi_processes: 1
+    uwsgi_threads: "{{ horizon_wsgi_threads }}"
+    uwsgi_bind_address: "{{ horizon_bind_address }}"
+    uwsgi_port: 80
+    uwsgi_overrides: "{{ _horizon_uwsgi_ini_overrides }}"
