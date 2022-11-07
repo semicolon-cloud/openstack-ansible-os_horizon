@@ -98,6 +98,10 @@ trove_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
 heat_dashboard_git_repo: https://opendev.org/openstack/heat-dashboard
 heat_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
 
+## The git source/branch for the Ironic UI plugin
+ironic_dashboard_git_repo: https://opendev.org/openstack/ironic-ui
+ironic_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
+
 ## The git source/branch for the Watcher UI plugin
 watcher_dashboard_git_repo: https://opendev.org/openstack/watcher-dashboard
 watcher_dashboard_git_install_branch: "{{ horizon_git_track_branch }}"
@@ -454,7 +458,7 @@ horizon_designate_optional_pip_packages:
 horizon_heat_optional_pip_packages:
   - "git+{{ heat_dashboard_git_repo }}@{{ heat_dashboard_git_install_branch }}#egg=heat_dashboard"
 horizon_ironic_optional_pip_packages:
-  - ironic-ui
+  - "git+{{ ironic_dashboard_git_repo }}@{{ ironic_dashboard_git_install_branch }}#egg=ironic-ui"
 horizon_magnum_optional_pip_packages:
   - "git+{{ magnum_dashboard_git_repo }}@{{ magnum_dashboard_git_install_branch }}#egg=magnum-ui"
 horizon_manila_optional_pip_packages:
