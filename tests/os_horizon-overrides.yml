@@ -35,5 +35,5 @@ horizon_config_overrides:
 
 # This has to be set here because the common test-vars
 # has haproxy_ssl set to no.
-horizon_enable_ssl: yes
+horizon_backend_ssl: yes
 

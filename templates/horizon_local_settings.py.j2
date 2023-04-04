@@ -59,7 +59,7 @@ SECURE_PROXY_SSL_HEADER = ('{{ horizon_secure_proxy_ssl_header_django }}', 'http
 SECURE_PROXY_ADDR_HEADER = 'HTTP_X_FORWARDED_FOR'
 {% endif %}
 
-{% if horizon_enable_ssl | bool %}
+{% if horizon_backend_ssl | bool %}
 # If Horizon is being served through SSL, then uncomment the following two
 # settings to better secure the cookies from security exploits
 CSRF_COOKIE_SECURE = True

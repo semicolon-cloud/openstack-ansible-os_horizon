@@ -57,21 +57,21 @@
 
 - import_tasks: horizon_ssl_self_signed.yml
   when:
-    - horizon_enable_ssl | bool
+    - horizon_backend_ssl | bool
     - horizon_user_ssl_cert is not defined or horizon_user_ssl_key is not defined
   tags:
     - horizon-config
 
 - import_tasks: horizon_ssl_user_provided.yml
   when:
-    - horizon_enable_ssl | bool
+    - horizon_backend_ssl | bool
   tags:
     - horizon-config
 
 - name: Update the ca certificates
   command: "update-ca-certificates -f"
   when:
-    - horizon_enable_ssl | bool
+    - horizon_backend_ssl | bool
     - ansible_facts['pkg_mgr'] == 'apt'
   tags:
     - horizon-config
