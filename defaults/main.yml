@@ -230,16 +230,9 @@ horizon_ssl_protocol: "{{ ssl_protocol | default('ALL -SSLv2 -SSLv3 -TLSv1 -TLSv
 horizon_ssl_cipher_suite_tls12: "{{ horizon_ssl_cipher_suite | default(ssl_cipher_suite | default('ECDH+AESGCM:ECDH+CHACHA20:ECDH+AES256:ECDH+AES128:!aNULL:!SHA1:!AESCCM')) }}"
 # TLS v1.3
 horizon_ssl_cipher_suite_tls13: "{{ ssl_cipher_suite_tls13 | default('TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256') }}"
-# if using a self-signed certificate, set this to true to regenerate it
-horizon_ssl_self_signed_regen: false
-horizon_ssl_self_signed_subject: "/C=US/ST=Texas/L=San Antonio/O=IT/CN={{ horizon_server_name }}/subjectAltName=IP.1={{ external_lb_vip_address }}"
 
-# Set these variables to deploy custom certificates
-# horizon_user_ssl_cert: <path to cert on ansible deployment host>
-# horizon_user_ssl_key: <path to cert on ansible deployment host>
-# horizon_user_ssl_ca_cert: <path to cert on ansible deployment host>
-
-# Toggle whether horizon should be served via SSL
+# Define if communication between haproxy and service backends should be
+# encrypted with TLS.
 # NOTE(damiandabrowski): Remove backward compatibility with horizon_enable_ssl in 2024.1
 horizon_backend_ssl: "{{ horizon_enable_ssl | default(openstack_service_backend_ssl | default(False)) }}"
 
@@ -532,3 +525,51 @@ horizon_websso_default_redirect: False
 horizon_websso_default_redirect_region: "{{ horizon_websso_keystone_url | default(horizon_keystone_endpoint) }}"
 horizon_websso_default_redirect_logout: ""
 horizon_websso_use_http_referer: True
+
+###
+### Backend TLS
+###
+
+# Storage location for SSL certificate authority
+horizon_pki_dir: "{{ openstack_pki_dir | default('/etc/openstack_deploy/pki') }}"
+
+# Delegated host for operating the certificate authority
+horizon_pki_setup_host: "{{ openstack_pki_setup_host | default('localhost') }}"
+
+# horizon server certificate
+horizon_pki_keys_path: "{{ horizon_pki_dir ~ '/certs/private/' }}"
+horizon_pki_certs_path: "{{ horizon_pki_dir ~ '/certs/certs/' }}"
+horizon_pki_intermediate_cert_name: "{{ openstack_pki_service_intermediate_cert_name | default('ExampleCorpIntermediate') }}"
+horizon_pki_intermediate_cert_path: "{{ horizon_pki_dir ~ '/roots/' ~ horizon_pki_intermediate_cert_name ~ '/certs/' ~ horizon_pki_intermediate_cert_name ~ '.crt' }}"
+horizon_pki_regen_cert: ''
+horizon_pki_san: "{{ openstack_pki_san | default('DNS:' ~ ansible_facts['hostname'] ~ ',IP:' ~ management_address) }}"
+horizon_pki_certificates:
+  - name: "horizon_{{ ansible_facts['hostname'] }}"
+    provider: ownca
+    cn: "{{ ansible_facts['hostname'] }}"
+    san: "{{ horizon_pki_san }}"
+    signed_by: "{{ horizon_pki_intermediate_cert_name }}"
+
+# Installation details for SSL certificates
+horizon_pki_install_certificates:
+  - src: "{{ horizon_user_ssl_cert | default(horizon_pki_certs_path ~ 'horizon_' ~ ansible_facts['hostname'] ~ '-chain.crt') }}"
+    dest: "{{ horizon_ssl_cert }}"
+    owner: "{{ horizon_system_user_name }}"
+    group: "{{ horizon_system_group_name }}"
+    mode: "0644"
+  - src: "{{ horizon_user_ssl_key | default(horizon_pki_keys_path ~ 'horizon_' ~ ansible_facts['hostname'] ~ '.key.pem') }}"
+    dest: "{{ horizon_ssl_key }}"
+    owner: "{{ horizon_system_user_name }}"
+    group: "{{ horizon_system_group_name }}"
+    mode: "0600"
+  - src: "{{ horizon_user_ssl_ca_cert | default(horizon_pki_intermediate_cert_path) }}"
+    dest: "{{ horizon_ssl_ca_cert }}"
+    owner: "{{ horizon_system_user_name }}"
+    group: "{{ horizon_system_group_name }}"
+    mode: "0644"
+    condition: "{{ horizon_user_ssl_ca_cert is defined }}"
+
+# Define user-provided SSL certificates
+#horizon_user_ssl_cert: <path to cert on ansible deployment host>
+#horizon_user_ssl_key: <path to cert on ansible deployment host>
+#horizon_user_ssl_ca_cert: <path to cert on ansible deployment host>

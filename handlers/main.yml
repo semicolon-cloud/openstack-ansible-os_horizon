@@ -30,3 +30,4 @@
     daemon_reload: "{{ (ansible_facts['service_mgr'] == 'systemd') | ternary('yes', omit) }}"
   listen:
     - "venv changed"
+    - "cert installed"
