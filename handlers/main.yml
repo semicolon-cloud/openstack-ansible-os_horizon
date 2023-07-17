@@ -17,6 +17,7 @@
   command: "{{ horizon_manage }} compilemessages"
   become: "{{ (horizon_install_method == 'source') }}"
   become_user: "{{ horizon_system_user_name }}"
+  changed_when: false
   args:
     chdir: "{{ horizon_lib_dir }}/"
   listen:

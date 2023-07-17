@@ -31,6 +31,7 @@
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default(horizon_system_user_name) }}"
     group: "{{ item.group | default(horizon_system_group_name) }}"
+    mode: "0644"
   with_items: "{{ horizon_apache_configs }}"
   notify: Restart wsgi process
 

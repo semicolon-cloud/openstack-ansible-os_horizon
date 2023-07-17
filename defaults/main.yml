@@ -20,7 +20,11 @@ debug: False
 # for the service setup. The host must already have
 # clouds.yaml properly configured.
 horizon_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
-horizon_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((horizon_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_facts['python']['executable'])) }}"
+horizon_service_setup_host_python_interpreter: >-
+  {{
+    openstack_service_setup_host_python_interpreter | default(
+      (horizon_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_facts['python']['executable']))
+  }}
 
 # Set the package install state for distribution packages
 # Options are 'present' and 'latest'
@@ -30,7 +34,8 @@ horizon_package_state: "{{ package_state | default('latest') }}"
 horizon_install_method: "{{ service_install_method | default('source') }}"
 horizon_venv_python_executable: "{{ openstack_venv_python_executable | default('python3') }}"
 
-horizon_upper_constraints_url: "{{ requirements_git_url | default('https://releases.openstack.org/constraints/upper/' ~ requirements_git_install_branch | default('master')) }}"
+horizon_upper_constraints_url: >-
+  {{ requirements_git_url | default('https://releases.openstack.org/constraints/upper/' ~ requirements_git_install_branch | default('master')) }}
 
 horizon_venv_extra_constraints: []
 
@@ -154,7 +159,7 @@ horizon_allowed_hosts:
 
 ## Installation directories
 # When horizon_lib_dir is not defined, it will be detected automatically
-#horizon_lib_dir: ""
+# horizon_lib_dir: ""
 horizon_lib_wsgi_file: "{{ horizon_lib_dir }}/openstack_dashboard/wsgi.py"
 
 horizon_endpoint_type: internalURL
@@ -219,7 +224,7 @@ horizon_disallow_iframe_embed: True
 
 ## Cap the maximun number of threads / workers when a user value is unspecified.
 horizon_wsgi_threads_max: 16
-horizon_wsgi_threads: "{{ [[ansible_facts['processor_vcpus']|default(2) // 2, 1] | max, horizon_wsgi_threads_max] | min }}"
+horizon_wsgi_threads: "{{ [[ansible_facts['processor_vcpus'] | default(2) // 2, 1] | max, horizon_wsgi_threads_max] | min }}"
 
 ## Horizon SSL
 horizon_ssl_cert: /etc/ssl/certs/horizon.pem
@@ -227,7 +232,8 @@ horizon_ssl_key: /etc/ssl/private/horizon.key
 horizon_ssl_ca_cert: /etc/ssl/certs/horizon-ca.pem
 horizon_ssl_protocol: "{{ ssl_protocol | default('ALL -SSLv2 -SSLv3 -TLSv1 -TLSv1.1') }}"
 # TLS v1.2 and below
-horizon_ssl_cipher_suite_tls12: "{{ horizon_ssl_cipher_suite | default(ssl_cipher_suite | default('ECDH+AESGCM:ECDH+CHACHA20:ECDH+AES256:ECDH+AES128:!aNULL:!SHA1:!AESCCM')) }}"
+horizon_ssl_cipher_suite_tls12: >-
+  {{ horizon_ssl_cipher_suite | default(ssl_cipher_suite | default('ECDH+AESGCM:ECDH+CHACHA20:ECDH+AES256:ECDH+AES128:!aNULL:!SHA1:!AESCCM')) }}
 # TLS v1.3
 horizon_ssl_cipher_suite_tls13: "{{ ssl_cipher_suite_tls13 | default('TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256') }}"
 
@@ -505,9 +511,9 @@ horizon_translations_pull: "{{ _horizon_translations_pull }}"
 horizon_config_overrides: {}
 
 # Set overrides for horizon embedded policies
-#horizon_policy_overrides:
-#  cinder:
-#    "volume:create": "rule:admin_or_owner"
+# horizon_policy_overrides:
+#   cinder:
+#     "volume:create": "rule:admin_or_owner"
 horizon_policy_overrides: {}
 
 horizon_init_overrides: {}
@@ -519,7 +525,7 @@ horizon_keystone_admin_roles:
 # Set the "credentials" authentication choice to show as default.
 # The list of authentication mechanisms which include keystone
 # federation protocols and identity provider/federation protocol
-#horizon_websso_keystone_url: "{{ horizon_keystone_endpoint }}"
+# horizon_websso_keystone_url: "{{ horizon_keystone_endpoint }}"
 horizon_websso_initial_choice: "credentials"
 horizon_websso_default_redirect: False
 horizon_websso_default_redirect_region: "{{ horizon_websso_keystone_url | default(horizon_keystone_endpoint) }}"
@@ -540,7 +546,8 @@ horizon_pki_setup_host: "{{ openstack_pki_setup_host | default('localhost') }}"
 horizon_pki_keys_path: "{{ horizon_pki_dir ~ '/certs/private/' }}"
 horizon_pki_certs_path: "{{ horizon_pki_dir ~ '/certs/certs/' }}"
 horizon_pki_intermediate_cert_name: "{{ openstack_pki_service_intermediate_cert_name | default('ExampleCorpIntermediate') }}"
-horizon_pki_intermediate_cert_path: "{{ horizon_pki_dir ~ '/roots/' ~ horizon_pki_intermediate_cert_name ~ '/certs/' ~ horizon_pki_intermediate_cert_name ~ '.crt' }}"
+horizon_pki_intermediate_cert_path: >-
+  {{ horizon_pki_dir ~ '/roots/' ~ horizon_pki_intermediate_cert_name ~ '/certs/' ~ horizon_pki_intermediate_cert_name ~ '.crt' }}
 horizon_pki_regen_cert: ''
 horizon_pki_san: "{{ openstack_pki_san | default('DNS:' ~ ansible_facts['hostname'] ~ ',IP:' ~ management_address) }}"
 horizon_pki_certificates:
@@ -570,6 +577,6 @@ horizon_pki_install_certificates:
     condition: "{{ horizon_user_ssl_ca_cert is defined }}"
 
 # Define user-provided SSL certificates
-#horizon_user_ssl_cert: <path to cert on ansible deployment host>
-#horizon_user_ssl_key: <path to cert on ansible deployment host>
-#horizon_user_ssl_ca_cert: <path to cert on ansible deployment host>
+# horizon_user_ssl_cert: <path to cert on ansible deployment host>
+# horizon_user_ssl_key: <path to cert on ansible deployment host>
+# horizon_user_ssl_ca_cert: <path to cert on ansible deployment host>

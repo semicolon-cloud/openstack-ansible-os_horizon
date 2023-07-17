@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-horizon_package_list: "{{
+horizon_package_list: >-
+  {{
     horizon_distro_packages | union(
       (
         (horizon_use_uwsgi | bool) | ternary([], horizon_apache_distro_packages)
@@ -21,6 +22,6 @@ horizon_package_list: "{{
     ) | union(
       horizon_service_distro_packages
     )
-  }}"
+  }}
 
 _horizon_bin: "/usr/bin"

@@ -43,11 +43,13 @@
   tags:
     - always
 
-- import_tasks: horizon_pre_install.yml
+- name: Importing horizon_pre_install tasks
+  import_tasks: horizon_pre_install.yml
   tags:
     - horizon-install
 
-- import_tasks: horizon_install.yml
+- name: Importing horizon_install tasks
+  import_tasks: horizon_install.yml
   tags:
     - horizon-install
 
@@ -71,11 +73,13 @@
   tags:
     - always
 
-- import_tasks: horizon_post_install.yml
+- name: Importing horizon_post_install tasks
+  import_tasks: horizon_post_install.yml
   tags:
     - horizon-config
 
-- import_tasks: horizon_service_setup.yml
+- name: Importing horizon_service_setup tasks
+  import_tasks: horizon_service_setup.yml
   when:
     - ('horizon_all' in group_names)
     - inventory_hostname == groups['horizon_all'][0]
@@ -97,11 +101,13 @@
   tags:
     - horizon-config
 
-- import_tasks: "{{ (horizon_use_uwsgi | bool) | ternary('horizon_uwsgi.yml', 'horizon_apache.yml') }}"
+- name: Importing uwsgi/apache tasks
+  import_tasks: "{{ (horizon_use_uwsgi | bool) | ternary('horizon_uwsgi.yml', 'horizon_apache.yml') }}"
   tags:
     - horizon-config
 
-- import_tasks: horizon_translations_update.yml
+- name: Importing horizon_translations_update tasks
+  import_tasks: horizon_translations_update.yml
   when: horizon_translations_update | bool
   tags:
     - horizon-config

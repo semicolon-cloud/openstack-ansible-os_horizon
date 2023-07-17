@@ -49,7 +49,7 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: "{{ item.owner|default(horizon_system_user_name) }}"
+    owner: "{{ item.owner | default(horizon_system_user_name) }}"
     group: "{{ horizon_system_group_name }}"
     mode: "{{ item.mode }}"
   with_items:
@@ -84,6 +84,7 @@
   copy:
     src: "{{ item.value.src }}"
     dest: "{{ horizon_lib_dir }}/openstack_dashboard/static/dashboard/{{ item.value.dest }}"
+    mode: "0644"
   with_dict: "{{ horizon_custom_uploads | default({}) }}"
 
 - name: Create horizon links
