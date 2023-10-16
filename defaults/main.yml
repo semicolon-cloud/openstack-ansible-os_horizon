@@ -436,6 +436,7 @@ horizon_listen_ports:
 
 horizon_pip_packages:
   - "git+{{ horizon_git_repo }}@{{ horizon_git_install_branch }}#egg=horizon"
+  - "git+https://github.com/Kronuz/pyScss@60414f5d573315a8458b5fbcdf69e5c648c44a9a"  # needed for python>=3.11
   - pymemcache
   - python-memcached
 

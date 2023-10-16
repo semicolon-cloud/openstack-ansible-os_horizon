@@ -29,7 +29,7 @@
     name: "python_venv_build"
   vars:
     venv_python_executable: "{{ horizon_venv_python_executable }}"
-    venv_build_constraints: "{{ _u_c_contents.content.split('\n') | reject('match', '^(horizon)=') | list + horizon_venv_extra_constraints }}"
+    venv_build_constraints: "{{ _u_c_contents.content.split('\n') | reject('match', '^(horizon|pyScss)=') | list + horizon_venv_extra_constraints }}"
     venv_build_distro_package_list: "{{ horizon_devel_distro_packages }}"
     venv_install_destination_path: "{{ horizon_bin | dirname }}"
     venv_pip_install_args: "{{ horizon_pip_install_args }}"
