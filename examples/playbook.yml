@@ -3,7 +3,9 @@
   hosts: horizon_all
   user: root
   roles:
-    - { role: "os_horizon", tags: [ "os-horizon" ] }
+    - role: "os_horizon"
+      tags:
+        - "os-horizon"
   vars:
     galera_client_drop_config_file: false
     external_lb_vip_address: 10.100.100.101
