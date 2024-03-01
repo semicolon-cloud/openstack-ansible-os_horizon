@@ -51,6 +51,21 @@
     use_regex: yes
   register: found_panels
 
+- name: Registering default policy files
+  find:
+    paths: |-
+      {% set policy_path = [] %}
+      {% for dashboard in found_dashboards.files %}
+      {%   for path in _dashboard_panels_location %}
+      {%     set _ = policy_path.append(dashboard.path + path + '/default_policies') %}
+      {%   endfor %}
+      {% endfor %}
+      {{ policy_path }}
+    patterns: ['^.*\.(json|yaml)$']
+    file_type: file
+    use_regex: yes
+  register: found_default_policy
+
 - name: Registering policy files
   find:
     paths: |-
@@ -65,6 +80,15 @@
     file_type: file
     use_regex: yes
   register: found_policy
+
+- name: Link default policy files
+  file:
+    src: "{{ item.path }}"
+    dest: "{{ horizon_lib_dir }}/openstack_dashboard/conf/default_policies/{{ item.path | basename }}"
+    state: link
+  with_items: "{{ found_default_policy.files }}"
+  notify:
+    - Compile messages
 
 - name: Link policy files
   file:
