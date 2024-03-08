@@ -146,7 +146,7 @@ horizon_service_name: horizon
 horizon_session_engine: 'django.contrib.sessions.backends.cache'
 horizon_session_caches:
   default:
-    BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
+    BACKEND: 'django.core.cache.backends.memcached.PyMemcacheCache'
     LOCATION: "{{ horizon_memcached_servers.split(',') }}"
 horizon_session_timeout: 1800
 
