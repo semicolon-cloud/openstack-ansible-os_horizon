@@ -847,3 +847,6 @@ OPENSTACK_KEYSTONE_ADMIN_ROLES = [
   '{{ item }}',
 {% endfor %}
 ]
+{% if horizon_adjutant_endpoint is defined %}
+OPENSTACK_ADJUTANT_URL = '{{ horizon_adjutant_endpoint }}'
+{% endif %}
