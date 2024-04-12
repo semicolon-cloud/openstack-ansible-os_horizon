@@ -76,7 +76,7 @@
     content: "{{ item.content | b64decode }}"
     dest: "{{ item.source }}"
     mode: "0644"
-    config_type: json
+    config_type: yaml
     config_overrides: "{{ horizon_policy_overrides[item.item] }}"
   with_items: "{{ _horizon_policy.results }}"
 
